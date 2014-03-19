@@ -1,0 +1,3 @@
+gs_usuario_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: GSUsuarioBundle:Default:index }

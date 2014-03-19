@@ -1,0 +1,7 @@
+parameters:
+#    gs_consultas.example.class: GS\ConsultasBundle\Example
+
+services:
+#    gs_consultas.example:
+#        class: %gs_consultas.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

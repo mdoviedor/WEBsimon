@@ -1,0 +1,7 @@
+parameters:
+#    gs_usuario.example.class: GS\UsuarioBundle\Example
+
+services:
+#    gs_usuario.example:
+#        class: %gs_usuario.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

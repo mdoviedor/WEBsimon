@@ -1,3 +1,27 @@
+gs_consultas:
+    resource: "@GSConsultasBundle/Resources/config/routing.yml"
+    prefix:   /
+
+gs_usuario:
+    resource: "@GSUsuarioBundle/Resources/config/routing.yml"
+    prefix:   /
+
+gs_proyectos:
+    resource: "@GSProyectosBundle/Resources/config/routing.yml"
+    prefix:   /
+
+gs_contenidos:
+    resource: "@GSContenidosBundle/Resources/config/routing.yml"
+    prefix:   /
+
+gs_semillero:
+    resource: "@GSSemilleroBundle/Resources/config/routing.yml"
+    prefix:   /
+
+gs_inventario:
+    resource: "@GSInventarioBundle/Resources/config/routing.yml"
+    prefix:   /
+
 gs_user:
     resource: "@GSUserBundle/Resources/config/routing.yml"
     prefix:   /

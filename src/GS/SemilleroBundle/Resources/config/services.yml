@@ -1,0 +1,7 @@
+parameters:
+#    gs_semillero.example.class: GS\SemilleroBundle\Example
+
+services:
+#    gs_semillero.example:
+#        class: %gs_semillero.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

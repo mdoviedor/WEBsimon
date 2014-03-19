@@ -1,0 +1,3 @@
+gs_contenidos_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: GSContenidosBundle:Default:index }

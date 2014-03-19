@@ -17,6 +17,12 @@ class AppKernel extends Kernel {
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new GS\UserBundle\GSUserBundle(),
+            new GS\InventarioBundle\GSInventarioBundle(),
+            new GS\SemilleroBundle\GSSemilleroBundle(),
+            new GS\ContenidosBundle\GSContenidosBundle(),
+            new GS\ProyectosBundle\GSProyectosBundle(),
+            new GS\UsuarioBundle\GSUsuarioBundle(),
+            new GS\ConsultasBundle\GSConsultasBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

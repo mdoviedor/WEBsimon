@@ -1,0 +1,7 @@
+parameters:
+#    gs_proyectos.example.class: GS\ProyectosBundle\Example
+
+services:
+#    gs_proyectos.example:
+#        class: %gs_proyectos.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
