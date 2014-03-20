@@ -1,3 +1,19 @@
 gs_usuario_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: GSUsuarioBundle:Default:index }
+
+gs_usuario_crear:
+    pattern: administrador/administrarUsuario/crear
+    defaults: { _controller: GSUsuarioBundle:Administrar:Crear }
+
+gs_usuario_modificar:
+    pattern: administrador/administrarUsuario/modificar/{id}.{mensaje}
+    defaults: { _controller: GSUsuarioBundle:Administrar:Modificar }
+
+gs_usuario_eliminar:
+    pattern: administrador/administrarUsuario/eliminar
+    defaults: { _controller: GSUsuarioBundle:Administrar:Eliminar }
+
+gs_usuario_buscar:
+    pattern: administrador/administrarUsuario
+    defaults: { _controller: GSUsuarioBundle:Administrar:Buscar }

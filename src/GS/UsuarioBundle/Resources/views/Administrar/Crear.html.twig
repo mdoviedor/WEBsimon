@@ -1,0 +1,13 @@
+{% extends "::administrar.html.twig" %}
+
+{% block title %}GSUsuarioBundle:Administrar:Crear{% endblock %}
+
+{% block contenido %}
+<h1>Welcome to the Administrar:Crear page</h1>
+
+<form action="{{ path('gs_usuario_crear') }}" method="post" {{ form_enctype(formUsuario) }}>
+    {{ form_widget(formUsuario) }}
+    <input type="submit" />
+</form>
+
+{% endblock %}

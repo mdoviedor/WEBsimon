@@ -1,0 +1,49 @@
+{% extends "::base.html.twig" %}
+
+{% block menu %}
+<nav class="navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="#"><span class="navbar-brand" >Grupo Simon</span></a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a  href="{{ path('gs_usuario_buscar') }}">Recibidos</a></li>
+                <li><a href="{{ path('gs_usuario_buscar') }}">Enviados</a></li>
+                <li><a href="{{ path('gs_usuario_buscar') }}">Eliminados</a></li>                     
+
+        </div><!-- /.navbar-collapse -->
+    </div>
+</nav>
+
+{% endblock %}
+{% block body %}
+<br><br><br>
+<div class="container">
+ {% block titulo %}
+{% endblock %}
+    <br>
+    <div class="row">
+        <div class="col-xs-6">
+            {% block submenuizquierdo %}
+            {% endblock %}
+        </div>
+        <div class="col-xs-6" style="text-align: right;">
+             {% block submenuderecho %}
+            {% endblock %}
+        </div>
+    </div>
+ {% block contenido %}
+{% endblock %}
+</div>
+
+{% endblock %}
+    {% block javascripts %}
+{% endblock %}
