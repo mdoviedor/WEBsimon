@@ -2,12 +2,106 @@
 
 {% block title %}GSUsuarioBundle:Administrar:Crear{% endblock %}
 
+{% block titulo %}  
+<h1>Usuario: <small>Crear.</small></h1>
+{% endblock %}
+
+{% block submenuderecho %}    
+<button type="submit" class="btn btn-success btn-xs" id="botonGuardar">
+    <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
+</button>
+<a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_tema_buscar') }}">
+    <span class="glyphicon glyphicon-log-out"></span> Salir
+</a>
+{% endblock %}
+
 {% block contenido %}
-<h1>Welcome to the Administrar:Crear page</h1>
+<form id="formulario" name="formulario" action="{{ path('gs_usuario_crear') }}" method="post" {{ form_enctype(formUsuario) }}>
 
-<form action="{{ path('gs_usuario_crear') }}" method="post" {{ form_enctype(formUsuario) }}>
-    {{ form_widget(formUsuario) }}
-    <input type="submit" />
+      {{ form_errors(formUsuario) }}
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-8">  
+
+        {{ form_label(formUsuario.numerodocumentoidentidad.first) }} <br>
+        {{ form_errors(formUsuario.numerodocumentoidentidad.first) }}
+        {{ form_widget(formUsuario.numerodocumentoidentidad.first) }}
+            <br>
+        {{ form_label(formUsuario.numerodocumentoidentidad.second) }}<br>
+        {{ form_errors(formUsuario.numerodocumentoidentidad.second) }}
+        {{ form_widget(formUsuario.numerodocumentoidentidad.second) }}
+
+            <br>
+        {{ form_label(formUsuario.primernombre) }} <br>
+        {{ form_errors(formUsuario.primernombre) }}
+        {{ form_widget(formUsuario.primernombre) }}
+            <br>
+        {{ form_label(formUsuario.segundonombre) }} <br>
+        {{ form_errors(formUsuario.segundonombre) }}
+        {{ form_widget(formUsuario.segundonombre) }}
+            <br>
+        {{ form_label(formUsuario.primerapellido) }} <br>
+        {{ form_errors(formUsuario.primerapellido) }}
+        {{ form_widget(formUsuario.primerapellido) }}
+            <br>
+        {{ form_label(formUsuario.segundoapellido) }} <br>
+        {{ form_errors(formUsuario.segundoapellido) }}
+        {{ form_widget(formUsuario.segundoapellido) }}
+            <br>
+
+        {{ form_label(formUsuario.telefonofijo) }} <br>
+        {{ form_errors(formUsuario.telefonofijo) }}
+        {{ form_widget(formUsuario.telefonofijo) }}
+            <br>
+        {{ form_label(formUsuario.telefonocelular) }} <br>
+        {{ form_errors(formUsuario.telefonocelular) }}
+        {{ form_widget(formUsuario.telefonocelular) }}
+
+            <br>
+        {{ form_label(formUsuario.tipodocumentoidentidad) }} <br>
+        {{ form_errors(formUsuario.tipodocumentoidentidad) }}
+        {{ form_widget(formUsuario.tipodocumentoidentidad) }}
+            <br>
+        {{ form_label(formUsuario.tipousuario) }} <br>
+        {{ form_errors(formUsuario.tipousuario) }}
+        {{ form_widget(formUsuario.tipousuario) }}
+            <br>           
+        {{ form_label(formUsuario.email.first) }} <br>
+        {{ form_errors(formUsuario.email.first) }}
+        {{ form_widget(formUsuario.email.first) }}
+            <br>
+        {{ form_label(formUsuario.email.second) }} <br>
+        {{ form_errors(formUsuario.email.second) }}
+        {{ form_widget(formUsuario.email.second) }}
+
+            <br>
+        {{ form_label(formUsuario.enable) }} <br>
+        {{ form_errors(formUsuario.enable) }}
+        {{ form_widget(formUsuario.enable) }}
+        </div>
+        <div class="col-xs-6 col-md-4">
+        </div>
+    </div>
+       {{ form_rest(formUsuario) }}
+    <br>
 </form>
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript">
+    var x;
+    x = $(document);
+    x.ready(inicializarEventos);
 
+
+    function inicializarEventos() {
+
+        var btn;
+        btn = $('#botonGuardar');
+        btn.click(enviarFormulario)
+    }
+    function enviarFormulario() {
+        var frm;
+        frm = $('#formulario');
+        frm.submit();
+    }
+</script>
 {% endblock %}

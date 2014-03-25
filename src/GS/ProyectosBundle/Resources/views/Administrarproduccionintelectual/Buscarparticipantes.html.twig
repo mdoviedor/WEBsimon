@@ -1,0 +1,38 @@
+{% extends "::base.html.twig" %}
+{% block body %}
+<h4>Participantes</h4>
+{%if temaUsuario is empty   %}
+<div class="alert alert-danger">
+    <p> Alerta. No existen usuarios relacionados con este tema.</p>
+</div>
+
+{%else%}
+
+<blockquote>
+    <p>Autor(es)</p>
+    {%for usuario in temaUsuario%}
+  {%if usuario.funcionusuario.nombre == "Autor"   %}
+    <footer>{{ usuario.usuario.primernombre }} {{ usuario.usuario.segundonombre }} {{ usuario.usuario.primerapellido }} {{ usuario.usuario.segundoapellido }}</footer>
+  {% endif %}
+    {% endfor %}
+</blockquote>
+<blockquote>
+    <p>Director(es)</p>
+    {%for usuario in temaUsuario%}
+  {%if usuario.funcionusuario.nombre == "Director"   %}
+    <footer>{{ usuario.usuario.primernombre }} {{ usuario.usuario.segundonombre }} {{ usuario.usuario.primerapellido }} {{ usuario.usuario.segundoapellido }}</footer>
+  {% endif %}
+     {% endfor %}
+</blockquote>
+<blockquote>
+    <p>Codirector(es)</p>
+      {%for usuario in temaUsuario%}
+  {%if usuario.funcionusuario.nombre == "Codirector"   %}
+    <footer>{{ usuario.usuario.primernombre }} {{ usuario.usuario.segundonombre }} {{ usuario.usuario.primerapellido }} {{ usuario.usuario.segundoapellido }}</footer>
+  {% endif %}
+        {% endfor %}
+</blockquote>
+
+
+{% endif %}
+{% endblock %}

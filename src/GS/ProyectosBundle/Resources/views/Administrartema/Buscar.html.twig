@@ -1,0 +1,52 @@
+{% extends "::administrar.html.twig" %}
+
+{% block title %}Grupo Simon: Administrar Tema{% endblock %}
+
+{% block titulo %}  
+<h1>Administrar Tema</h1>
+{% endblock %}
+
+
+
+{% block submenuderecho %}    
+<a type="submit" class="btn btn-success btn-xs" id="botonNuevoTema" href="{{ path('gs_proyectos_tema_crear') }}">
+    <span class="glyphicon glyphicon-plus"></span> Nuevo
+</a>
+
+<a type="submit" class="btn btn-primary btn-xs" id="botonAsignarUsuario" href="{{ path('gs_proyectos_tema_buscar') }}">
+    <span class="glyphicon glyphicon-plus-sign"></span> Asignar Usuario
+</a>
+<a type="submit" class="btn btn-primary btn-xs" id="botonAsignarEspacioTrabajo" href="{{ path('gs_proyectos_tema_buscar') }}">
+    <span class="glyphicon glyphicon-plus-sign"></span> Asignar Espacio Trabajo
+</a>
+
+<a type="submit" class="btn btn-default btn-xs" id="botonModificarTema" href="{{ path('gs_proyectos_tema_crear') }}">
+    <span class="glyphicon glyphicon-refresh"></span> Modificar
+</a>
+<button type="submit" class="btn btn-danger btn-xs" id="botonEliminarTema" href="{{ path('gs_proyectos_tema_buscar') }}">
+    <span class="glyphicon glyphicon-trash"></span> Eliminar
+</button>
+
+
+<a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_tema_buscar') }}">
+    <span class="glyphicon glyphicon-log-out"></span> Salir
+</a>
+{% endblock %}
+
+
+
+
+{% block contenido %}
+<br>
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-8">  
+
+
+    </div>
+    <div class="col-xs-6 col-md-4">
+
+
+    </div>
+</div>
+
+{% endblock %}

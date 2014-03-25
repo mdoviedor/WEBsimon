@@ -1,0 +1,126 @@
+{% extends "::administrar.html.twig" %}
+
+{% block title %}GSProyectosBundle:Administrartema:Asignarusuario{% endblock %}
+
+{% block titulo %}  
+<h1>Tema: <small>Asignar usuario.</small></h1>
+{% endblock %}
+
+
+
+{% block submenuderecho %}    
+<button type="submit" class="btn btn-success btn-xs" id="botonGuardar">
+    <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
+</button>
+<a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_tema_buscar') }}">
+    <span class="glyphicon glyphicon-log-out"></span> Salir
+</a>
+{% endblock %}
+
+{% block contenido %}
+<br>
+<h3><label>Titulo:</label> {{ tema.titulo }}</h3>
+<form id="formulario" name="formulario"  action="{{ path('gs_proyectos_tema_asignarsuario',{'tema':tema.idtema}) }}" method="post" {{ form_enctype(formTemaUsuario) }}>
+    {{ form_errors(formTemaUsuario) }}
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-8">  
+        {{ form_label(formTemaUsuario.funcionusuario) }} <br>
+        {{ form_errors(formTemaUsuario.funcionusuario) }}
+        {{ form_widget(formTemaUsuario.funcionusuario) }}
+
+            <label>Buscar usuario</label><br>
+            <div class="form-inline">
+                <label>Primer Nombre:</label> <input type="text" id="nombre" class="form-control" /> <label>Primer Apellido: </label> <input type="text" id="apellido" class="form-control" />
+            </div>
+           
+            <div id="listadoUsuarios">
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-4">
+        </div>
+    </div>
+       {{ form_rest(formTemaUsuario) }}
+</form> 
+<br>
+{%if usuariosAsignados is empty   %}
+{% else %}
+<label>Usuarios asignados al tema: </label>
+<table class="table table-hover">  
+    <thead>
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Función
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {%for usuario in usuariosAsignados %}
+        <tr>
+            <td>
+                {{ usuario.usuario.primernombre }} {{ usuario.usuario.segundonombre }} {{ usuario.usuario.primerapellido }} {{ usuario.usuario.segundoapellido }}
+            </td>
+            <td>
+                  {{ usuario.funcionusuario.nombre }} 
+            </td>
+            <td>
+                <a href="{{ path('gs_proyectos_tema_eliminarusuarioasignado',{'id':usuario.idtemaUsuario}) }}">Eliminar</a> 
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endif %}
+{% endblock %}
+
+ {% block javascripts %}
+<script type="text/javascript">
+    var x;
+    x = $(document);
+    x.ready(inicializarEventos);
+
+
+    function inicializarEventos() {
+
+        var btn;
+        btn = $('#botonGuardar');
+        btn.click(enviarFormulario)
+
+        var campoNombre;
+        campoNombre = $('#nombre');
+        campoNombre.keypress(buscarUsuarioNombre);
+
+        var campoApellido;
+        campoApellido = $('#apellido');
+        campoApellido.keypress(buscarUsuarioApellido);
+    }
+    function enviarFormulario() {
+        var frm;
+        frm = $('#formulario');
+        frm.submit();
+    }
+    function buscarUsuarioNombre() {
+        var nombre = $("#nombre").val();
+        var apellido = $("#apellido").val();
+        var url = "{{ path('gs_proyectos_tema_buscarusuario', {'primernombre': 'text','primerapellido': 'text1'}) }}";
+        url = url.replace("text", nombre);
+        url = url.replace("text1", apellido);
+        $('#listadoUsuarios').load(url);
+    }
+
+    function buscarUsuarioApellido() {
+        var nombre = $("#nombre").val();
+        var apellido = $("#apellido").val();
+        var url = "{{ path('gs_proyectos_tema_buscarusuario', {'primernombre': 'text','primerapellido': 'text1'}) }}";
+        url = url.replace("text", nombre);
+        url = url.replace("text1", apellido);
+        $('#listadoUsuarios').load(url);
+    }
+
+
+</script>
+
+ {% endblock %}

@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\UserBundle\Model\UserManagerInterface;
 use GS\UsuarioBundle\Entity\Usuario;
+use GS\UsuarioBundle\Entity\Tema;
 use GS\UsuarioBundle\Form\UsuarioType;
 use GS\UsuarioBundle\Form\UserType;
 use GS\UserBundle\Entity\User;
@@ -54,10 +55,10 @@ class AdministrarController extends Controller {
                 $em = $this->getDoctrine()->getManager(); //
 
                 $fechaRegistro = new \DateTime("now");
-                $modified = $fechaRegistro->setTimezone(new \DateTimezone("America/Bogota"));
+                //$modified = $fechaRegistro->setTimezone(new \DateTimezone("America/Bogota"));
                 $usr = $em->getRepository('GSUsuarioBundle:User')->findBy(array('username' => $numeroDocumentoIdentidad)); // Busqueda del usuario por el numero de documento de identidad
                 $usuario->setUser($usr[0]); //Instancia del objeto usuario
-                $usuario->setFecharegistro($modified); //Instancia del objeto usuario
+                $usuario->setFecharegistro($fechaRegistro); //Instancia del objeto usuario
 
                 $em = $this->getDoctrine()->getManager(); //
                 $em->persist($usuario); //
@@ -71,7 +72,6 @@ class AdministrarController extends Controller {
     }
 
     public function ModificarAction(Request $request, $id, $mensaje) {
-
         $usuario = new Usuario(); // Objeto del modelos Usuario
         $usuarioType = new UsuarioType();
         $userType = new UserType();
@@ -134,6 +134,13 @@ class AdministrarController extends Controller {
         }
 
         return $this->render('GSUsuarioBundle:Administrar:modificar.html.twig', array('formUser' => $formUser->createView(), 'formUsuario' => $formUsuario->createView(), 'id' => $id, 'mensaje' => $mensaje, 'email' => $u->getEmail()));
+    }
+
+    public function AgregarespaciotrabajoAction() {
+        $tema = new Tema();
+        $em = $this->getDoctrine()->getManager();
+        $temasDisponibles = $em->getRepository('GSUsuarioBundle:Tema')->findBy(array('estado' => true));
+        return $this->render('GSUsuarioBundle:Administrar:agregarespaciotrabajo.html.twig', array('temasDisponibles' => $temasDisponibles));
     }
 
     public function EliminarAction() {

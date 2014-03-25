@@ -1,0 +1,95 @@
+{% extends "::administrar.html.twig" %}
+
+{% block title %}GSProyectosBundle:Administrartema:Asignarespaciotrabajo{% endblock %}
+
+{% block titulo %}  
+<h1>Tema: <small>Asignar espacio de trabajo.</small></h1>
+{% endblock %}
+
+{% block submenuderecho %}    
+<button type="submit" class="btn btn-success btn-xs" id="botonGuardar">
+    <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
+</button>
+<a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_tema_buscar') }}">
+    <span class="glyphicon glyphicon-log-out"></span> Salir
+</a>
+{% endblock %}
+
+{% block contenido %}
+<br>
+<h3><label>Titulo:</label> {{ tema.titulo }}</h3>
+<form id="formulario" name="formulario"  action="{{ path('gs_proyectos_tema_asignarespaciotrabajo',{'tema':tema.idtema}) }}" method="post" {{ form_enctype(formEspacioTrabajo) }}>
+    {{ form_errors(formEspacioTrabajo) }}
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-8">  
+        {{ form_label(formEspacioTrabajo.nombre) }} <br>
+        {{ form_errors(formEspacioTrabajo.nombre) }}
+        {{ form_widget(formEspacioTrabajo.nombre) }}
+            <br>
+           
+        {{ form_label(formEspacioTrabajo.url) }} <br>
+        {{ form_errors(formEspacioTrabajo.url) }}
+        {{ form_widget(formEspacioTrabajo.url) }}
+        </div>
+        <div class="col-xs-6 col-md-4">
+        </div>
+    </div>
+       {{ form_rest(formEspacioTrabajo) }}
+</form> 
+<br>
+{%if espaciosAsignados is empty   %}
+{% else %}
+<label>Espacios asignados al tema: </label>
+<table class="table table-hover">  
+    <thead>
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Url
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {%for espacio in espaciosAsignados %}
+        <tr>
+            <td>
+                {{ espacio.nombre }} 
+            </td>
+            <td>
+                <a href="{{ espacio.url }}" target="_blank">{{ espacio.url }} </a>  
+            </td>
+            <td>
+                <a href="{{ path('gs_proyectos_tema_eliminarespaciotrabajo',{'id':espacio.idespaciotrabajo}) }}">Eliminar</a> 
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+    var x;
+    x = $(document);
+    x.ready(inicializarEventos);
+
+
+    function inicializarEventos() {
+
+        var btn;
+        btn = $('#botonGuardar');
+        btn.click(enviarFormulario)
+
+    }
+    function enviarFormulario() {
+        var frm;
+        frm = $('#formulario');
+        frm.submit();
+    }
+    
+   
+</script>
+{% endblock %}

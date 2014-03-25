@@ -18,8 +18,12 @@ class UserType extends AbstractType {
                     'type' => 'password',
                     'invalid_message' => 'Los campos deben coincidir.',
                     'required' => false,
-                    'first_options' => array('label' => '* Contraseña:'),
-                    'second_options' => array('label' => '* Repita Contraseña:')))
+                    'first_options' => array(
+                        'label' => '* Contraseña:',
+                        'attr' => array('class' => 'form-control')),
+                    'second_options' => array(
+                        'label' => '* Repita Contraseña:',
+                        'attr' => array('class' => 'form-control'))))
         ;
     }
 

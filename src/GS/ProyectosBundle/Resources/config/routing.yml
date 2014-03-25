@@ -1,3 +1,64 @@
 gs_proyectos_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: GSProyectosBundle:Default:index }
+
+#
+#ADMINISTRAR PRODUCCION TEMA
+#
+gs_proyectos_tema_crear:
+    pattern: administrador/administrarTema/crear
+    defaults: { _controller: GSProyectosBundle:Administrartema:Crear }
+
+gs_proyectos_tema_modificar:
+    pattern: administrador/administrarTema/modificar/{id}.{mensaje}
+    defaults: { _controller: GSProyectosBundle:Administrartema:Modificar }
+
+gs_proyectos_tema_eliminar:
+    pattern: administrador/administrarTema/eliminar
+    defaults: { _controller: GSProyectosBundle:Administrartema:Eliminar }
+
+gs_proyectos_tema_buscar:
+    pattern: administrador/administrarTema
+    defaults: { _controller: GSProyectosBundle:Administrartema:Buscar }
+
+gs_proyectos_tema_asignarsuario:
+    pattern: administrador/administrarTema/asignarUsuario/{tema}
+    defaults: { _controller: GSProyectosBundle:Administrartema:Asignarusuario }
+    
+gs_proyectos_tema_eliminarusuarioasignado:
+    pattern: administrador/administrarTema/eliminarUsuarioAsignado/{id}
+    defaults: { _controller: GSProyectosBundle:Administrartema:Eliminarusuarioasignado }
+ 
+gs_proyectos_tema_buscarusuario:
+    pattern: administrador/administrarTema/buscarUsuario/{primernombre}.{primerapellido}
+    defaults: { _controller: GSProyectosBundle:Administrartema:Buscarusuario }
+    
+gs_proyectos_tema_asignarespaciotrabajo:
+    pattern: administrador/administrarTema/asignarEspacioTrabajo/{tema}
+    defaults: { _controller: GSProyectosBundle:Administrartema:Asignarespaciotrabajo }
+    
+gs_proyectos_tema_eliminarespaciotrabajo:
+    pattern: administrador/administrarTema/eliminarEspacioTrabajo/{id}
+    defaults: { _controller: GSProyectosBundle:Administrartema:Eliminarespaciotrabajo }
+#
+#ADMINISTRAR PRODUCCION INTELECTUAL
+#
+gs_proyectos_produccionintelectual_crear:
+    pattern: administrador/administrarProduccionIntelectual/crear
+    defaults: { _controller: GSProyectosBundle:Administrarproduccionintelectual:Crear }
+
+gs_proyectos_produccionintelectual_modificar:
+    pattern: administrador/administrarProduccionIntelectual/modificar
+    defaults: { _controller: GSProyectosBundle:Administrarproduccionintelectual:Modificar }
+
+gs_proyectos_produccionintelectual_eliminar:
+    pattern: administrador/administrarProduccionIntelectual/eliminar
+    defaults: { _controller: GSProyectosBundle:Administrarproduccionintelectual:Eliminar }
+
+gs_proyectos_produccionintelectual_buscar:
+    pattern: administrador/administrarProduccionIntelectual
+    defaults: { _controller: GSProyectosBundle:Administrarproduccionintelectual:Buscar }
+    
+gs_proyectos_produccionintelectual_buscarparticipantes:
+    pattern: administrador/administrarProduccionIntelectual/buscarParticipantes/{id}
+    defaults: { _controller: GSProyectosBundle:Administrarproduccionintelectual:Buscarparticipantes }

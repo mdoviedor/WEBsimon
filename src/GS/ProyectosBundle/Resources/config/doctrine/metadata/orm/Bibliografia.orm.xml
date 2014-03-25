@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Bibliografia" table="bibliografia">
+    <indexes>
+      <index name="categoria_bibliografia_idx" columns="categoria"/>
+      <index name="tipoElementoBibliografico_bibliografia_idx" columns="tipoElementoBibliografico"/>
+      <index name="areaInvestigacion_bibliografia_idx" columns="areaInvestigacion"/>
+    </indexes>
+    <id name="idbibliografia" type="string" column="idbibliografia" length="10">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="autores" type="text" column="autores" nullable="false"/>
+    <field name="traduccion" type="boolean" column="traduccion" nullable="true"/>
+    <field name="fechaedicion" type="datetime" column="fechaEdicion" nullable="true"/>
+    <field name="editorial" type="text" column="editorial" nullable="true"/>
+    <field name="resumen" type="text" column="resumen" nullable="true"/>
+    <field name="recomendacionesuso" type="text" column="recomendacionesUso" nullable="true"/>
+    <field name="tablacontenido" type="text" column="tablaContenido" nullable="true"/>
+    <field name="palabrasclave" type="text" column="palabrasClave" nullable="false"/>
+    <field name="archivo" type="string" column="archivo" length="100" nullable="true"/>
+    <field name="fecharegistro" type="datetime" column="fechaRegistro" nullable="false"/>
+    <many-to-one field="tipoelementobibliografico" target-entity="Tipoelementobibliografico">
+      <join-columns>
+        <join-column name="tipoElementoBibliografico" referenced-column-name="idtipoElementoBibliografico"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="categoria" target-entity="Categoriabibliografia">
+      <join-columns>
+        <join-column name="categoria" referenced-column-name="idcategoria"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="areainvestigacion" target-entity="Areainvestigacion">
+      <join-columns>
+        <join-column name="areaInvestigacion" referenced-column-name="idareaInvestigacion"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

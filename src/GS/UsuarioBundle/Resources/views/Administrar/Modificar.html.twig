@@ -1,8 +1,7 @@
 {% extends "::administrar.html.twig" %}
 {% block title %}GSUsuarioBundle:Administrar:Modificar{% endblock %}
  {% block titulo %}
-
-<h1>Welcome to the Administrar:Modificar page {{ email }}</h1>
+<h1>Usuario: <small>Modificar.</small></h1>
 {% endblock %}
 
 {% block submenuderecho %}    
@@ -19,88 +18,93 @@
 
 
 {% block contenido %}
+
 <form id="formulario" action="{{ path('gs_usuario_modificar',{'id':id, 'mensaje':'0'}) }}" method="post" {{ form_enctype(formUsuario) }}>
 
 {% if mensaje == '1'%}
     <br>
     <div class="alert alert-info">
-        <p><b>Felicidades.</b> Usuario guardado exitosamente</p>
+        <p><b>Mensaje.</b> Usuario guardado exitosamente</p>
     </div>
-
+    <br>
 {% endif %}
-
-
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-8">  
   {{ form_errors(formUsuario) }}     
        {{ form_label(formUsuario.numerodocumentoidentidad.first) }}
         {{ form_errors(formUsuario.numerodocumentoidentidad.first) }}      
         {{ form_widget(formUsuario.numerodocumentoidentidad.first) }}
 
-    <br>
+            <br>
         {{ form_label(formUsuario.numerodocumentoidentidad.second) }}
         {{ form_errors(formUsuario.numerodocumentoidentidad.second) }}
         {{ form_widget(formUsuario.numerodocumentoidentidad.second) }}
-    <br>
-            {{ form_label(formUsuario.primernombre) }}
+            <br>
+        {{ form_label(formUsuario.primernombre) }}
         {{ form_errors(formUsuario.primernombre) }}
         {{ form_widget(formUsuario.primernombre) }}
-    <br>
+            <br>
         {{ form_label(formUsuario.segundonombre) }}
         {{ form_errors(formUsuario.segundonombre) }}
         {{ form_widget(formUsuario.segundonombre) }}
-    <br>
+            <br>
         {{ form_label(formUsuario.primerapellido) }}
         {{ form_errors(formUsuario.primerapellido) }}
         {{ form_widget(formUsuario.primerapellido) }}
-    <br>
+            <br>
          {{ form_label(formUsuario.segundoapellido) }}
         {{ form_errors(formUsuario.segundoapellido) }}
         {{ form_widget(formUsuario.segundoapellido) }}
-    <br>
+            <br>
         {{ form_label(formUsuario.email.first) }}
         {{ form_errors(formUsuario.email.first) }}
         {{ form_widget(formUsuario.email.first,{'attr':{'value': email}}) }}        
-    <br>
+            <br>
         {{ form_label(formUsuario.email.second) }}
         {{ form_errors(formUsuario.email.second) }}
         {{ form_widget(formUsuario.email.second,{'attr':{'value': email}}) }}
-    <br>
+            <br>
         {{ form_label(formUsuario.telefonofijo) }}
         {{ form_errors(formUsuario.telefonofijo) }}
         {{ form_widget(formUsuario.telefonofijo) }}
-    <br>
+            <br>
          {{ form_label(formUsuario.telefonocelular) }}
         {{ form_errors(formUsuario.telefonocelular) }}
         {{ form_widget(formUsuario.telefonocelular) }}
-    <br>
+            <br>
         {{ form_label(formUsuario.tipodocumentoidentidad) }}
         {{ form_errors(formUsuario.tipodocumentoidentidad) }}
         {{ form_widget(formUsuario.tipodocumentoidentidad) }}
-    <br>
+            <br>
          {{ form_label(formUsuario.tipousuario) }}
         {{ form_errors(formUsuario.tipousuario) }}
         {{ form_widget(formUsuario.tipousuario) }}
-    <br>
+            <br>
         {{ form_label(formUsuario.enable) }}
         {{ form_errors(formUsuario.enable) }}
         {{ form_widget(formUsuario.enable) }}
-    <br>
+            <br>
         {{ form_label(formUser.password.first) }}
         {{ form_errors(formUser.password.first) }}
         {{ form_widget(formUser.password.first) }}
-    <br>
+            <br>
         {{ form_label(formUser.password.second) }}
         {{ form_errors(formUser.password.second) }}
         {{ form_widget(formUser.password.second) }}
 
-    <br>
+            <br>
+        </div>
+        <div class="col-xs-6 col-md-4">
+        </div>
+    </div>
 
     {{ form_rest(formUsuario) }}
     {{ form_rest(formUser) }}
 </form>
 {% endblock %}
 
-    {% block javascripts %}
-{{parent()}}
+{% block javascripts %}
+
 <script type="text/javascript">
 
     var x;

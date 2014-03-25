@@ -1,0 +1,111 @@
+{% extends "::administrar.html.twig" %}
+
+{% block title %}GSProyectosBundle:Administrarproduccionintelectual:Crear{% endblock %}
+
+{% block titulo %}  
+<h1>Producción Intelectual: <small>Crear.</small></h1>
+{% endblock %}
+
+{% block submenuderecho %}    
+<button type="submit" class="btn btn-success btn-xs" id="botonGuardar">
+    <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
+</button>
+<a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_produccionintelectual_buscar') }}">
+    <span class="glyphicon glyphicon-log-out"></span> Salir
+</a>
+{% endblock %}
+
+{% block contenido %}
+<br>
+
+<form id="formulario" name="formulario"  action="{{ path('gs_proyectos_produccionintelectual_buscar') }}" method="post" {{ form_enctype(formProduccionIntelectual) }}>
+    {{ form_errors(formProduccionIntelectual) }}
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-8">  
+        {{ form_label(formProduccionIntelectual.tema) }} <br>
+        {{ form_errors(formProduccionIntelectual.tema) }}
+        {{ form_widget(formProduccionIntelectual.tema) }}
+
+
+            <div id="participantes">
+
+            </div>        
+
+        {{ form_label(formProduccionIntelectual.acceso) }} <br>
+        {{ form_errors(formProduccionIntelectual.acceso) }}
+        {{ form_widget(formProduccionIntelectual.acceso) }}
+            <br>
+            
+         {{ form_label(formProduccionIntelectual.estado) }} <br>
+        {{ form_errors(formProduccionIntelectual.estado) }}
+        {{ form_widget(formProduccionIntelectual.estado) }}
+          <br>
+         {{ form_label(formProduccionIntelectual.destacado) }} <br>
+        {{ form_errors(formProduccionIntelectual.destacado) }}
+        {{ form_widget(formProduccionIntelectual.destacado) }}
+          <br>
+          {{ form_label(formProduccionIntelectual.tipoproduccion) }} <br>
+        {{ form_errors(formProduccionIntelectual.tipoproduccion) }}
+        {{ form_widget(formProduccionIntelectual.tipoproduccion) }}
+            <br>
+          {{ form_label(formProduccionIntelectual.resumen) }} <br>
+        {{ form_errors(formProduccionIntelectual.resumen) }}
+        {{ form_widget(formProduccionIntelectual.resumen) }}
+          <br>
+         {{ form_label(formProduccionIntelectual.palabrasclave) }} <br>
+        {{ form_errors(formProduccionIntelectual.palabrasclave) }}
+        {{ form_widget(formProduccionIntelectual.palabrasclave) }}
+         <br>
+         {{ form_label(formProduccionIntelectual.archivo) }} <br>
+        {{ form_errors(formProduccionIntelectual.archivo) }}
+        {{ form_widget(formProduccionIntelectual.archivo) }}
+        </div>
+        <div class="col-xs-6 col-md-4">
+             <br>
+         {{ form_label(formProduccionIntelectual.fechainiciopublicacion) }} <br>
+        {{ form_errors(formProduccionIntelectual.fechainiciopublicacion) }}
+        {{ form_widget(formProduccionIntelectual.fechainiciopublicacion) }}
+         <br>
+         {{ form_label(formProduccionIntelectual.fechafinpublicacion) }} <br>
+        {{ form_errors(formProduccionIntelectual.fechafinpublicacion) }}
+        {{ form_widget(formProduccionIntelectual.fechafinpublicacion) }}
+        </div>
+    </div>
+       {{ form_rest(formProduccionIntelectual) }}
+</form> 
+
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+    var x;
+    x = $(document);
+    x.ready(inicializarEventos);
+
+
+    function inicializarEventos() {
+        traerParticipantes();
+
+        var btn;
+        btn = $('#botonGuardar');
+        btn.click(enviarFormulario)
+
+        var sltTema;
+        sltTema = $('#gs_proyectosbundle_produccionintelectual_tema');
+        sltTema.change(traerParticipantes);
+    }
+    function enviarFormulario() {
+        var frm;
+        frm = $('#formulario');
+        frm.submit();
+    }
+
+    function traerParticipantes() {
+        var valor = $("#gs_proyectosbundle_produccionintelectual_tema").val();
+        var url = "{{ path('gs_proyectos_produccionintelectual_buscarparticipantes', {'id': 'text'}) }}";
+        url = url.replace("text", valor);
+        $('#participantes').load(url);
+
+    }
+</script>
+{% endblock %}
