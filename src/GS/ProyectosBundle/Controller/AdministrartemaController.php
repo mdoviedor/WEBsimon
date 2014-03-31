@@ -51,7 +51,7 @@ class AdministrartemaController extends Controller {
                 $em->flush();
 
                 return $this->redirect($this->generateUrl('gs_proyectos_tema_buscar'));
-                //return $this->redirect($this->generateUrl('gs_proyectos_tema_modificar', array('id'=>$id,'mensaje'=>'1')));
+               
             }
         }
         return $this->render('GSProyectosBundle:Administrartema:crear.html.twig', array('formTema' => $formTema->createView()));

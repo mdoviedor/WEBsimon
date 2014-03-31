@@ -1,7 +1,159 @@
-{% extends "::base.html.twig" %}
+{% extends "::administrar.html.twig" %}
 
-{% block title %}GSProyectosBundle:Administrarproduccionintelectual:Buscar{% endblock %}
+{% block title %}Grupo Simon: Administrar Producción Intelectual{% endblock %}
 
-{% block body %}
-<h1>Welcome to the Administrarproduccionintelectual:Buscar page</h1>
+{% block titulo %}  
+<h1>Administrar Producción Intelectual</h1>
+{% endblock %}
+
+{% block submenuderecho %}    
+<a type="submit" class="btn btn-success btn-xs" id="botonNuevoTema" href="{{ path('gs_proyectos_produccionintelectual_crear') }}">
+    <span class="glyphicon glyphicon-plus"></span> Nuevo
+</a>
+
+<a type="submit" class="btn btn-default btn-xs" id="botonModificarTema" href="{{ path('gs_proyectos_tema_crear') }}">
+    <span class="glyphicon glyphicon-refresh"></span> Modificar
+</a>
+<button type="submit" class="btn btn-danger btn-xs" id="botonEliminarTema" data-toggle="modal" data-target="#myModal">
+    <span class="glyphicon glyphicon-trash"></span> Eliminar
+</button>
+<a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_tema_buscar') }}">
+    <span class="glyphicon glyphicon-log-out"></span> Salir
+</a>
+
+
+
+{% endblock %}
+
+{% block submenuizquierdo %}  
+<div class="form-inline">
+    <div class="form-group">
+        <input type="search" class="form-control">
+    </div>
+    <div class="form-group">
+        <button type="button" class="btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-search"> Buscar</span> 
+        </button>
+    </div>
+</div>
+{% endblock %}
+
+{% block contenido %}
+<br>
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-8">  
+
+
+    </div>
+    <div class="col-xs-6 col-md-4">
+
+
+    </div>
+</div>
+
+<table class="table table-hover">
+    <thead>
+        <tr align="center">
+            <th>
+
+            </th>
+            <th>
+                Tema
+            </th>
+            <th>
+                Autor
+            </th>
+            <th>
+                Codirector
+            </th>
+            <th>
+                Director
+            </th>
+            <th>
+                Tipo de Producción
+            </th>
+            <th>
+                Estado Tema
+            </th>
+            <td>
+                Descargar
+            </td>
+        </tr>
+
+    </thead>
+    <tbody>
+    {%for produccion in produccionIntelectual%}
+        <tr align="center">
+            <td>
+                <input type="radio" value="{{ produccion.idproduccionintelectual }}">
+            </td>
+            <td>
+                {{ produccion.tema.titulo  }}
+            </td>
+            <td>
+                {{ produccion.tema.titulo  }}
+            </td>
+            <td>
+                {{ produccion.tema.titulo  }}
+            </td>
+            <td>
+                {{ produccion.tema.titulo  }}
+            </td>
+            <td>
+                {{ produccion.tipoproduccion.nombre }}
+            </td>
+            <td >
+                 {%if produccion.tema.estado%}
+                <a type="submit"  href="{{path('gs_proyectos_produccionintelectual_habilitartema',{'id': produccion.idproduccionintelectual}) }}">
+                    <span class="glyphicon glyphicon-ok-circle" ></span></a>
+                {%else%}
+                <a type="submit"  href="{{path('gs_proyectos_produccionintelectual_habilitartema',{'id': produccion.idproduccionintelectual}) }}">
+                    <span class="glyphicon glyphicon-remove-circle"></span></a>
+                {%endif%}
+
+            </td>
+            <td>
+                <a href="{{ path('_welcome')}}{{ produccion.archivo }}{{ produccion.nombre }}.zip">Ver</a>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+    <tfoot>
+        <tr align="center">
+            <td colspan="8">
+                <select>
+                    <option>30</option>
+                </select>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+
+{% endblock %}
+
+
+
+
+
+{% block javascripts %}
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Alerta</h4>
+            </div>
+            <div class="modal-body">
+                Realmente desea eliminar este contenido.  
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+                <button type="button" class="btn btn-danger" href="{{ path('gs_proyectos_tema_buscar') }}">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

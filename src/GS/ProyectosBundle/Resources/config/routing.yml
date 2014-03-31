@@ -56,9 +56,53 @@ gs_proyectos_produccionintelectual_eliminar:
     defaults: { _controller: GSProyectosBundle:Administrarproduccionintelectual:Eliminar }
 
 gs_proyectos_produccionintelectual_buscar:
-    pattern: administrador/administrarProduccionIntelectual
+    pattern: administrador/administrarProduccionIntelectual/{limite}
     defaults: { _controller: GSProyectosBundle:Administrarproduccionintelectual:Buscar }
     
 gs_proyectos_produccionintelectual_buscarparticipantes:
     pattern: administrador/administrarProduccionIntelectual/buscarParticipantes/{id}
     defaults: { _controller: GSProyectosBundle:Administrarproduccionintelectual:Buscarparticipantes }
+    
+ 
+gs_proyectos_produccionintelectual_habilitartema:
+    pattern: administrador/administrarProduccionIntelectual/habilitarTema/{id}
+    defaults: { _controller: GSProyectosBundle:Administrarproduccionintelectual:Habilitartema }
+
+#
+#DESARROLLAR PRODUCCION INTELECTUAL
+#
+gs_proyectos_desarrollarproduccionintelectual_buscar:
+    pattern: usuario/produccionIntelectual/
+    defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Buscar }
+    
+gs_proyectos_desarrollarproduccionintelectual_vista:
+    pattern: usuario/produccionIntelectual/vista/{id}
+    defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Vista }
+
+gs_proyectos_desarrollarproduccionintelectual_agregarbibliografia:
+    pattern: usuario/produccionIntelectual/bibliografia/agregar
+    defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Agregarbibliografia }
+
+gs_proyectos_desarrollarproduccionintelectual_eliminarbibliografia:
+    pattern: usuario/produccionIntelectual/bibliografia/eliminar
+    defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Eliminarbibliografia }
+
+gs_proyectos_desarrollarproduccionintelectual_modificarbibliografia:
+    pattern: usuario/produccionIntelectual/bibliografia/modificar
+    defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Modificarbibliografia }
+
+gs_proyectos_desarrollarproduccionintelectual_buscarbibliografia:
+    pattern: usuario/produccionIntelectual/bibliografia/buscar
+    defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Buscarbibliografia }
+
+gs_proyectos_desarrollarproduccionintelectual_agregaractividadcronograma:
+    pattern: usuario/produccionIntelectual/cronograma/agregarActividad
+    defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Agregaractividadcronograma }
+
+gs_proyectos_desarrollarproduccionintelectual_eliminaractividadcronograma:
+    pattern: usuario/produccionIntelectual/cronograma/eliminarActividad
+    defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Eliminaractividadcronograma }
+
+gs_proyectos_desarrollarproduccionintelectual_modificaractividadcronograma:
+    pattern: usuario/produccionIntelectual/cronograma/modificarActividad
+    defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Modificaractividadcronograma }

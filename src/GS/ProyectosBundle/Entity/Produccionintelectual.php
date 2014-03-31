@@ -26,6 +26,14 @@ class Produccionintelectual
      * @ORM\Column(name="archivo", type="string", length=100, nullable=false)
      */
     private $archivo;
+    
+      /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=45, nullable=false)
+     */
+    private $nombre;
+
 
     /**
      * @var string
@@ -81,7 +89,7 @@ class Produccionintelectual
      *
      * @ORM\Column(name="estado", type="boolean", nullable=false)
      */
-    private $estado = '1';
+    private $estado = '0';
 
     /**
      * @var boolean
@@ -163,6 +171,29 @@ class Produccionintelectual
     public function getArchivo()
     {
         return $this->archivo;
+    }
+    
+     /**
+     * Set nombre
+     *
+     * @param string $nombre
+     * @return Produccionintelectual
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string 
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
     }
 
     /**

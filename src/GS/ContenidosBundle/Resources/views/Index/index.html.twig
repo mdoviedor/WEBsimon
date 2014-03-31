@@ -1,0 +1,20 @@
+{# empty Twig template #}
+<h3>Iniciar Sesión</h3>
+
+
+{% if error %}
+<div id="login-error">{{ error.message|trans }}</div>
+{% endif %}
+<form action="{{ path('login_check') }}" method="post">
+    <input type="hidden" name="_csrf_token" value="{% render(controller('GSUserBundle:Security:getToken')) %}" />
+
+    <label for="username">Usuario</label><br>
+    <input id="username" type="text" name="_username" value="{{ last_username }}" />  <br>
+
+    <label for="password">Contraseña</label><br>
+    <input id="password" type="password" name="_password" /><br><br>
+
+    <input type="submit" name="login" value="Iniciar sesión" />  
+
+
+</form>

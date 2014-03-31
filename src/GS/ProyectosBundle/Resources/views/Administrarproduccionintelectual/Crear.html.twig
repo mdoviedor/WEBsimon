@@ -10,15 +10,22 @@
 <button type="submit" class="btn btn-success btn-xs" id="botonGuardar">
     <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
 </button>
-<a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_produccionintelectual_buscar') }}">
+<a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_produccionintelectual_buscar',{'limite':'30'}) }}">
     <span class="glyphicon glyphicon-log-out"></span> Salir
 </a>
 {% endblock %}
 
 {% block contenido %}
 <br>
+{%if mensaje == '1'%}
 
-<form id="formulario" name="formulario"  action="{{ path('gs_proyectos_produccionintelectual_buscar') }}" method="post" {{ form_enctype(formProduccionIntelectual) }}>
+<div class="alert alert-danger">
+    <b>Mensaje.</b> El archivo que intenta cargar es incorrecto. 
+    
+</div>
+{% endif %}
+
+<form id="formulario" name="formulario"  action="{{ path('gs_proyectos_produccionintelectual_crear') }}" method="post" {{ form_enctype(formProduccionIntelectual) }}>
     {{ form_errors(formProduccionIntelectual) }}
     <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-8">  
@@ -35,15 +42,15 @@
         {{ form_errors(formProduccionIntelectual.acceso) }}
         {{ form_widget(formProduccionIntelectual.acceso) }}
             <br>
-            
+
          {{ form_label(formProduccionIntelectual.estado) }} <br>
         {{ form_errors(formProduccionIntelectual.estado) }}
         {{ form_widget(formProduccionIntelectual.estado) }}
-          <br>
+            <br>
          {{ form_label(formProduccionIntelectual.destacado) }} <br>
         {{ form_errors(formProduccionIntelectual.destacado) }}
         {{ form_widget(formProduccionIntelectual.destacado) }}
-          <br>
+            <br>
           {{ form_label(formProduccionIntelectual.tipoproduccion) }} <br>
         {{ form_errors(formProduccionIntelectual.tipoproduccion) }}
         {{ form_widget(formProduccionIntelectual.tipoproduccion) }}
@@ -51,21 +58,21 @@
           {{ form_label(formProduccionIntelectual.resumen) }} <br>
         {{ form_errors(formProduccionIntelectual.resumen) }}
         {{ form_widget(formProduccionIntelectual.resumen) }}
-          <br>
+            <br>
          {{ form_label(formProduccionIntelectual.palabrasclave) }} <br>
         {{ form_errors(formProduccionIntelectual.palabrasclave) }}
         {{ form_widget(formProduccionIntelectual.palabrasclave) }}
-         <br>
+            <br>
          {{ form_label(formProduccionIntelectual.archivo) }} <br>
         {{ form_errors(formProduccionIntelectual.archivo) }}
         {{ form_widget(formProduccionIntelectual.archivo) }}
         </div>
         <div class="col-xs-6 col-md-4">
-             <br>
+            <br>
          {{ form_label(formProduccionIntelectual.fechainiciopublicacion) }} <br>
         {{ form_errors(formProduccionIntelectual.fechainiciopublicacion) }}
         {{ form_widget(formProduccionIntelectual.fechainiciopublicacion) }}
-         <br>
+            <br>
          {{ form_label(formProduccionIntelectual.fechafinpublicacion) }} <br>
         {{ form_errors(formProduccionIntelectual.fechafinpublicacion) }}
         {{ form_widget(formProduccionIntelectual.fechafinpublicacion) }}

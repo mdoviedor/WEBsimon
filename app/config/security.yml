@@ -42,12 +42,12 @@ security:
         FOS\UserBundle\Model\UserInterface: sha512
 
     role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: ROLE_ADMIN
+        ROLE_ADMINISTRADOR:       ROLE_ADMINISTRADOR
+        ROLE_USUARIO:        ROLE_USUARIO
 
     providers:
         fos_userbundle:
-            id: fos_user.user_provider.username
+            id: fos_user.user_provider.username_email
 
     firewalls:
         main:
@@ -57,6 +57,12 @@ security:
                 csrf_provider: form.csrf_provider
             logout:       true
             anonymous:    true
+            security: true
+            remember_me:
+                key:      "%secret%"
+                lifetime: 60
+                path:     /
+                domain:   ~
 
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
