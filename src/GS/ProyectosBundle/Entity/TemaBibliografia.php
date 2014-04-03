@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * TemaBibliografia
  *
  * @ORM\Table(name="tema_bibliografia", indexes={@ORM\Index(name="tema_temabibliografia_idx", columns={"tema"}), @ORM\Index(name="bibliografica_temabibliografia_idx", columns={"bibliografia"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="GS\ProyectosBundle\Entity\TemaBibliografiaRepository")
  */
 class TemaBibliografia
 {
@@ -17,7 +17,6 @@ class TemaBibliografia
      *
      * @ORM\Column(name="idtema_bibliografia", type="string", length=10, nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idtemaBibliografia;
 
@@ -51,6 +50,19 @@ class TemaBibliografia
     public function getIdtemaBibliografia()
     {
         return $this->idtemaBibliografia;
+    }
+    
+     /**
+     * Set idtemaBibliografia
+     *
+     * @param string $idtemaBibliografia
+     * @return TemaBibliografia
+     */
+    public function setIdtemaBibliografia($idtemaBibliografia)
+    {
+        $this->idtemaBibliografia= $idtemaBibliografia;
+
+        return $this;
     }
 
     /**

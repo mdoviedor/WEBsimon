@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Bibliografia
  *
  * @ORM\Table(name="bibliografia", indexes={@ORM\Index(name="categoria_bibliografia_idx", columns={"categoria"}), @ORM\Index(name="tipoElementoBibliografico_bibliografia_idx", columns={"tipoElementoBibliografico"}), @ORM\Index(name="areaInvestigacion_bibliografia_idx", columns={"areaInvestigacion"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="GS\ProyectosBundle\Entity\BibliografiaRepository")
  */
 class Bibliografia
 {
@@ -17,9 +17,29 @@ class Bibliografia
      *
      * @ORM\Column(name="idbibliografia", type="string", length=10, nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idbibliografia;
+    
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=100, nullable=false)
+     */
+    private $nombre;
+    
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="nombrearchivo", type="string", length=45, nullable=true)
+     */
+    private $nombrearchivo;
+    
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="ubicacion", type="text", nullable=true)
+     */
+    private $ubicacion;
 
     /**
      * @var string
@@ -31,7 +51,7 @@ class Bibliografia
     /**
      * @var boolean
      *
-     * @ORM\Column(name="traduccion", type="boolean", nullable=true)
+     * @ORM\Column(name="traduccion", type="boolean", nullable=false)
      */
     private $traduccion;
 
@@ -132,6 +152,89 @@ class Bibliografia
     {
         return $this->idbibliografia;
     }
+    
+     /**
+     * Set idbibliografia
+     *
+     * @param string $idbibliografia
+     * @return Bibliografia
+     */
+    public function setIdbibliografia($idbibliografia)
+    {
+        $this->idbibliografia= $idbibliografia;
+
+        return $this;
+    }
+    
+       /**
+     * Set nombre
+     *
+     * @param string $nombre
+     * @return Bibliografia
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get ubicacion
+     *
+     * @return string 
+     */
+    public function getUbicacion()
+    {
+        return $this->ubicacion;
+    }
+    
+         /**
+     * Set ubicacion
+     *
+     * @param string $ubicacion
+     * @return Bibliografia
+     */
+    public function setUbicacion($ubicacion)
+    {
+        $this->ubicacion = $ubicacion;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string 
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+    
+        /**
+     * Set nombrearchivo
+     *
+     * @param string $nombrearchivo
+     * @return Bibliografia
+     */
+    public function setNombrearchivo($nombrearchivo)
+    {
+        $this->nombrearchivo = $nombrearchivo;
+
+        return $this;
+    }
+
+    /**
+     * Get nombrearchivo
+     *
+     * @return string 
+     */
+    public function getNombrearchivo()
+    {
+        return $this->nombrearchivo;
+    }
+
 
     /**
      * Set autores

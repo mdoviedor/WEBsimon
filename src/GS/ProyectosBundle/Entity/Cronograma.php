@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Cronograma
  *
  * @ORM\Table(name="cronograma", indexes={@ORM\Index(name="tema_cronograma_idx", columns={"tema"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="GS\ProyectosBundle\Entity\CronogramaRepository")
  */
 class Cronograma
 {
@@ -17,7 +17,6 @@ class Cronograma
      *
      * @ORM\Column(name="idcronograma", type="string", length=10, nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idcronograma;
 
@@ -69,6 +68,19 @@ class Cronograma
     public function getIdcronograma()
     {
         return $this->idcronograma;
+    }
+    
+    /**
+     * Set idcronograma
+     *
+     * @param string $idcronograma
+     * @return Cronograma
+     */
+    public function setIdcronograma($idcronograma)
+    {
+        $this->idcronograma = $idcronograma;
+
+        return $this;
     }
 
     /**

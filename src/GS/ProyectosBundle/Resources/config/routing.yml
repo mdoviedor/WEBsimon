@@ -8,7 +8,7 @@ gs_proyectos_homepage:
 gs_proyectos_tema_crear:
     pattern: administrador/administrarTema/crear
     defaults: { _controller: GSProyectosBundle:Administrartema:Crear }
-
+#Se pasa el idtema correspondiente al modelo Tema y mensaje que informa del estado de la accion
 gs_proyectos_tema_modificar:
     pattern: administrador/administrarTema/modificar/{id}.{mensaje}
     defaults: { _controller: GSProyectosBundle:Administrartema:Modificar }
@@ -20,23 +20,25 @@ gs_proyectos_tema_eliminar:
 gs_proyectos_tema_buscar:
     pattern: administrador/administrarTema
     defaults: { _controller: GSProyectosBundle:Administrartema:Buscar }
-
+#Se pasa el idtema correspondiente al modelo Tema
 gs_proyectos_tema_asignarsuario:
     pattern: administrador/administrarTema/asignarUsuario/{tema}
     defaults: { _controller: GSProyectosBundle:Administrartema:Asignarusuario }
-    
+#Se pasa el numerodocumentoidentidad correspondiente al modelo Usuario
 gs_proyectos_tema_eliminarusuarioasignado:
     pattern: administrador/administrarTema/eliminarUsuarioAsignado/{id}
     defaults: { _controller: GSProyectosBundle:Administrartema:Eliminarusuarioasignado }
- 
+#Se pasa el primer nombre y primer apellidos correspondiente al modelo Usuario
 gs_proyectos_tema_buscarusuario:
     pattern: administrador/administrarTema/buscarUsuario/{primernombre}.{primerapellido}
     defaults: { _controller: GSProyectosBundle:Administrartema:Buscarusuario }
-    
+ 
+#Se pasa el idtema correspondiente al modelo Tema
 gs_proyectos_tema_asignarespaciotrabajo:
     pattern: administrador/administrarTema/asignarEspacioTrabajo/{tema}
     defaults: { _controller: GSProyectosBundle:Administrartema:Asignarespaciotrabajo }
-    
+  
+#Se pasa el idtema correspondiente al modelo Tema
 gs_proyectos_tema_eliminarespaciotrabajo:
     pattern: administrador/administrarTema/eliminarEspacioTrabajo/{id}
     defaults: { _controller: GSProyectosBundle:Administrartema:Eliminarespaciotrabajo }
@@ -55,15 +57,17 @@ gs_proyectos_produccionintelectual_eliminar:
     pattern: administrador/administrarProduccionIntelectual/eliminar
     defaults: { _controller: GSProyectosBundle:Administrarproduccionintelectual:Eliminar }
 
+#El limite por defecto sera 30, el cual corresponde al maximo de elementos mostrados de la consulta
 gs_proyectos_produccionintelectual_buscar:
     pattern: administrador/administrarProduccionIntelectual/{limite}
     defaults: { _controller: GSProyectosBundle:Administrarproduccionintelectual:Buscar }
-    
+ 
+#Se pasa el idtema correspondiente al modelo Tema
 gs_proyectos_produccionintelectual_buscarparticipantes:
     pattern: administrador/administrarProduccionIntelectual/buscarParticipantes/{id}
     defaults: { _controller: GSProyectosBundle:Administrarproduccionintelectual:Buscarparticipantes }
     
- 
+#Se pasa el idtema correspondiente al modelo Tema 
 gs_proyectos_produccionintelectual_habilitartema:
     pattern: administrador/administrarProduccionIntelectual/habilitarTema/{id}
     defaults: { _controller: GSProyectosBundle:Administrarproduccionintelectual:Habilitartema }
@@ -75,12 +79,18 @@ gs_proyectos_desarrollarproduccionintelectual_buscar:
     pattern: usuario/produccionIntelectual/
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Buscar }
     
-gs_proyectos_desarrollarproduccionintelectual_vista:
-    pattern: usuario/produccionIntelectual/vista/{id}
+#Se pasa el idtema correspondiente al modelo Tema
+gs_proyectos_desarrollarproduccionintelectual_vista: 
+    pattern: usuario/produccionIntelectual/vista/{id} 
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Vista }
+    
+#
+#DESARROLLAR PRODUCCION INTELECTUAL - Bibliografia
+#
 
+#Se pasa el idtema correspondiente al modelo Tema
 gs_proyectos_desarrollarproduccionintelectual_agregarbibliografia:
-    pattern: usuario/produccionIntelectual/bibliografia/agregar
+    pattern: usuario/produccionIntelectual/bibliografia/agregar/{id}
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Agregarbibliografia }
 
 gs_proyectos_desarrollarproduccionintelectual_eliminarbibliografia:
@@ -95,8 +105,13 @@ gs_proyectos_desarrollarproduccionintelectual_buscarbibliografia:
     pattern: usuario/produccionIntelectual/bibliografia/buscar
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Buscarbibliografia }
 
+#
+#DESARROLLAR PRODUCCION INTELECTUAL - Cronograma
+#
+
+#Se pasa el idtema correspondiente al modelo Tema
 gs_proyectos_desarrollarproduccionintelectual_agregaractividadcronograma:
-    pattern: usuario/produccionIntelectual/cronograma/agregarActividad
+    pattern: usuario/produccionIntelectual/cronograma/agregarActividad/{id}
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Agregaractividadcronograma }
 
 gs_proyectos_desarrollarproduccionintelectual_eliminaractividadcronograma:

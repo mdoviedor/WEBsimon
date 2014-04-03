@@ -3,10 +3,18 @@
 namespace GS\ProyectosBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\UserBundle\Model\UserManagerInterface;
 use GS\ProyectosBundle\Entity\TemaUsuario;
+use GS\ProyectosBundle\Entity\TemaBibliografia;
 use GS\ProyectosBundle\Entity\Tema;
+use GS\ProyectosBundle\Entity\Espaciotrabajo;
+use GS\ProyectosBundle\Entity\Cronograma;
+use GS\ProyectosBundle\Form\CronogramaType;
+use GS\ProyectosBundle\Entity\Bibliografia;
+use GS\ProyectosBundle\Form\BibliografiaType;
+use GS\ProyectosBundle\Funciones\IdentificadorFecha;
 
 class DesarrollarproduccionintelectualController extends Controller {
 
@@ -14,8 +22,111 @@ class DesarrollarproduccionintelectualController extends Controller {
         return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:buscar.html.twig');
     }
 
-    public function AgregarbibliografiaAction() {
-        
+    /*
+     * Recibe el idtema correspondiente al modelo Tema.
+     * Acción para agregar una nueva cita bibliografica a un tema.
+     * Se guarda en la tabla Bibliografia a traves del modelo Bibliografia y 
+     * en la tabala TemaBibliografia a traves del modelo Tema. 
+     */
+
+    public function AgregarbibliografiaAction(Request $request, $id) {
+
+        /*
+         * Obtener username de la sesion
+         */
+        $userManager = $this->get('security.context')->getToken()->getUser();
+        $user = $userManager->getUsername();
+        /*
+         * 
+         */
+        $em = $this->getDoctrine()->getManager();
+        $temaUsuario = new TemaUsuario(); // Objeto del modelo TemaUsuario
+        $tema = new Tema(); // Objeto del modelo Tema
+        $bibliografia = new Bibliografia(); // Objeto del modelo Bibliografia
+        $temaBibliografia = new TemaBibliografia(); // Objeto del modelo TemaBibliografia
+        $identificadorFecha = new IdentificadorFecha(); // Objeto de la clase IdentificaorFehca
+        $formBibliografia = $this->createForm(new BibliografiaType(), $bibliografia); // Formulario del modelo Bibliografia 
+        $temaUsuario = $em->getRepository('GSProyectosBundle:TemaUsuario')->findBy(array('tema' => $id)); // Consulta 
+
+        /*
+         * Si el usuario es participante del proyecto podra ver el entorno de 
+         * trabajo para desarrollar la produccion intelectual 
+         */
+
+        foreach ($temaUsuario as $value) {
+            if ($value->getUsuario()->getNumerodocumentoidentidad() == $user) { //Si el usuario es propietario del tema que intenta modificar
+                if ($request->getMethod() == 'POST') {
+                    $formBibliografia->handleRequest($request);
+                    if ($formBibliografia->isValid()) { // Si el formulario es validao
+                        $em = $this->getDoctrine()->getManager();
+                        $ultimoRegistro = $em->getRepository('GSProyectosBundle:Bibliografia')->buscarUltimoBibliografia();
+                        $bibliografia->setIdbibliografia($identificadorFecha->generarIdBibliografia($ultimoRegistro)); // Generacion de llave primaria del nuevo registro a partir del ultimo hecho en la bd
+
+                        $fechaRegistro = new \DateTime("now");
+                        $bibliografia->setFecharegistro($fechaRegistro);
+
+                        /*
+                         * MANEJO DEL ARCHIVO
+                         */
+
+                        //Generación del nombre y direccion del archivo    
+                        if ($formBibliografia->get('archivo')->getData()) {
+                            $dir = 'bibliografia/';
+                            $nombreArchivo = $id . rand(10000, 99999);
+                            $bibliografia->setNombrearchivo($nombreArchivo); //Instancia del modelo Produccionintelectual, nombre
+                            $file = $formBibliografia['archivo']->getData();
+                            $extension = $file->guessExtension(); //Obtener la extensión del archivo cargado
+                            if ($extension && $extension == "zip") {
+                                $file->move($dir, $nombreArchivo . '.' . $extension); //Mover el archivo al directorio
+                                $bibliografia->setArchivo($dir); //Instancia del modelo Produccionintelectual, arcivo
+                                $em->persist($bibliografia);
+                                $em->flush();
+
+                                /*
+                                 * Guardar Registro. TemaBibliografia
+                                 */
+
+                                $em = $this->getDoctrine()->getManager();
+                                $ultimoRegistro = $em->getRepository('GSProyectosBundle:TemaBibliografia')->buscarUltimoTemaBibliografia();
+                                $temaBibliografia->setIdtemaBibliografia($identificadorFecha->generarIdTemaBibliografia($ultimoRegistro));  // Generacion de llave primaria del nuevo registro a partir del ultimo hecho en la bd
+                                $tema = $em->getRepository('GSProyectosBundle:Tema')->find($id);
+
+                                $temaBibliografia->setTema($tema);
+                                $temaBibliografia->setBibliografia($bibliografia);
+
+                                $em->persist($temaBibliografia);
+                                $em->flush();
+
+                                return $this->redirect($this->generateUrl('gs_proyectos_produccionintelectual_buscar', array('limite' => '30')));
+                            }
+                        } else {
+
+                            $em->persist($bibliografia);
+                            $em->flush();
+
+                            /*
+                             * Guardar Registro. TemaBibliografia
+                             */
+
+                            $em = $this->getDoctrine()->getManager();
+                            $ultimoRegistro = $em->getRepository('GSProyectosBundle:TemaBibliografia')->buscarUltimoTemaBibliografia();
+                            $temaBibliografia->setIdtemaBibliografia($identificadorFecha->generarIdTemaBibliografia($ultimoRegistro));
+                            $tema = $em->getRepository('GSProyectosBundle:Tema')->find($id);
+
+                            $temaBibliografia->setTema($tema);
+                            $temaBibliografia->setBibliografia($bibliografia);
+
+                            $em->persist($temaBibliografia);
+                            $em->flush();
+
+                            return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_vista', array('id' => $id)));
+                        }
+                        //return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_vista', array('id' => $id)));
+                    }
+                }
+                return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Agregarbibliografia.html.twig', array('formBibliografia' => $formBibliografia->createView(), 'idTema' => $id));
+            }
+        }
     }
 
     public function EliminarbibliografiaAction() {
@@ -30,8 +141,56 @@ class DesarrollarproduccionintelectualController extends Controller {
         
     }
 
-    public function AgregaractividadcronogramaAction() {
-        
+    /*
+     * Recibe el idtema correspondiente al modelo Tema.
+     */
+
+    public function AgregaractividadcronogramaAction(Request $request, $id) {
+        /*
+         * Obtener username de la sesion
+         */
+        $userManager = $this->get('security.context')->getToken()->getUser();
+        $user = $userManager->getUsername();
+        /*
+         * 
+         */
+        $temaUsuario = new TemaUsuario(); // Objeto del modelo TemaUsuario
+        $cronograma = new Cronograma();
+        $tema = new Tema();
+        $identificadorFecha = new IdentificadorFecha();
+        $formCronograma = $this->createForm(new CronogramaType(), $cronograma);
+        $em = $this->getDoctrine()->getManager();
+
+        $temaUsuario = $em->getRepository('GSProyectosBundle:TemaUsuario')->findBy(array('tema' => $id)); // Consulta 
+        $tema = $em->getRepository('GSProyectosBundle:Tema')->find($id); // Consulta 
+
+        /*
+         * Si el usuario es participante del proyecto podra ver el entorno de 
+         * trabajo para desarrollar la produccion intelectual 
+         */
+
+        foreach ($temaUsuario as $value) {
+            if ($value->getUsuario()->getNumerodocumentoidentidad() == $user) {
+                if ($request->getMethod() == 'POST') {
+                    $formCronograma->handleRequest($request);
+                    if ($formCronograma->isValid()) {
+                        $em = $this->getDoctrine()->getManager();
+                        $ultimoRegistro = $em->getRepository('GSProyectosBundle:Cronograma')->buscarUltimoCronograma();
+                        $cronograma->setIdcronograma($identificadorFecha->generarIdCronograma($ultimoRegistro));
+                        $cronograma->setTema($tema);
+                        $em->persist($cronograma);
+                        $em->flush();
+                        return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_vista', array('id' => $id)));
+
+//                 $fechaRegistro = new \DateTime("now"); //Obtener la fecha de ahora                 
+//                 $cronograma->setFecharegistro($fechaRegistro);
+                    }
+                }
+                return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Agregaractividadcronograma.html.twig', array('formCronograma' => $formCronograma->createView(), 'idTema' => $id));
+            }
+        }
+
+        return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_buscar')); // Ruta tomada si el usuario que intenta acceder no tiene privilegios.
     }
 
     public function EliminaractividadcronogramaAction() {
@@ -42,8 +201,11 @@ class DesarrollarproduccionintelectualController extends Controller {
         
     }
 
-    public function VistaAction($id) {
+    /*
+     * Recibe el idtema correspondiente al modelo Tema.
+     */
 
+    public function VistaAction($id) {
         /*
          * Obtener username de la sesion
          */
@@ -53,17 +215,30 @@ class DesarrollarproduccionintelectualController extends Controller {
          * 
          */
 
+        $tema = new Tema();
+        $espacioTrabajo = new Espaciotrabajo(); // Objeto del modelo Espaciotrabajo
         $temaUsuario = new TemaUsuario(); // Objeto del modelo TemaUsuario
+        $temaBibliografia = new TemaBibliografia(); // Objeto del modelo TemaUsuario
+        $cronograma = new Cronograma();
         $em = $this->getDoctrine()->getManager(); // Manejador
+
+
         $temaUsuario = $em->getRepository('GSProyectosBundle:TemaUsuario')->findBy(array('tema' => $id)); // Consulta 
+        $tema = $em->getRepository('GSProyectosBundle:Tema')->find($id); // Consulta 
+        $cronograma = $em->getRepository('GSProyectosBundle:Cronograma')->findBy(array('tema' => $id)); // Consulta 
+        $espacioTrabajo = $em->getRepository('GSProyectosBundle:Espaciotrabajo')->findBy(array('tema' => $id)); // Consulta 
+        $temaBibliografia = $em->getRepository('GSProyectosBundle:TemaBibliografia')->findBy(array('tema' => $id)); // Consulta 
 
         /*
-         *Si el usuario es participante del proyecto podra ver el entorno de 
+         * Si el usuario es participante del proyecto podra ver el entorno de 
          * trabajo para desarrollar la produccion intelectual 
          */
-        foreach ($temaUsuario as $value) {             
+
+        foreach ($temaUsuario as $value) {
             if ($value->getUsuario()->getNumerodocumentoidentidad() == $user) {
-                return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:vista.html.twig', array('temaUsuario' => $temaUsuario, 'user' => $user));
+
+                $descripcionTema = html_entity_decode($tema->getDescripcion()); // Decodificar caracteres especiales almacenados en la descripcion del Tema
+                return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:vista.html.twig', array('temaUsuario' => $temaUsuario, 'tema' => $tema, 'temaBibliografia' => $temaBibliografia, 'espacioTrabajo' => $espacioTrabajo, 'descripcionTema' => $descripcionTema, 'cronograma' => $cronograma));
             }
         }
         return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_buscar')); // Ruta tomada si el usuario que intenta acceder no tiene privilegios.

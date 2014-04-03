@@ -1,7 +1,87 @@
-{% extends "::base.html.twig" %}
+{% extends "::usuario.html.twig" %}
 
 {% block title %}GSProyectosBundle:Desarrollarproduccionintelectual:Agregarbibliografia{% endblock %}
 
-{% block body %}
-<h1>Welcome to the Desarrollarproduccionintelectual:Agregarbibliografia page</h1>
+{% block titulo %}  
+<h1>Bibliografía: <small>Crear.</small></h1>
+{% endblock %}
+
+{% block submenuderecho %} 
+<form  action="{{ path('gs_proyectos_desarrollarproduccionintelectual_agregarbibliografia',{'id':idTema}) }}" method="post" {{ form_enctype(formBibliografia) }}>
+    <button type="submit"  class="btn btn-success btn-xs" id="botonGuardar">
+        <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
+    </button>
+    <a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_produccionintelectual_buscar',{'limite':'30'}) }}">
+        <span class="glyphicon glyphicon-log-out"></span> Salir
+    </a>
+{% endblock %}
+
+{% block contenido %}
+
+{{ form_errors(formBibliografia) }}
+
+     {{ form_label(formBibliografia.tipoelementobibliografico) }}
+     {{ form_errors(formBibliografia.tipoelementobibliografico) }}
+     {{ form_widget(formBibliografia.tipoelementobibliografico) }}
+
+     {{ form_label(formBibliografia.categoria) }}
+     {{ form_errors(formBibliografia.categoria) }}
+     {{ form_widget(formBibliografia.categoria) }}
+
+     {{ form_label(formBibliografia.areainvestigacion) }}
+     {{ form_errors(formBibliografia.areainvestigacion) }}
+     {{ form_widget(formBibliografia.areainvestigacion) }}
+
+     {{ form_label(formBibliografia.nombre) }}
+     {{ form_errors(formBibliografia.nombre) }}
+     {{ form_widget(formBibliografia.nombre) }}
+
+     {{ form_label(formBibliografia.autores) }}
+     {{ form_errors(formBibliografia.autores) }}
+     {{ form_widget(formBibliografia.autores) }}
+
+     {{ form_label(formBibliografia.traduccion) }}
+     {{ form_errors(formBibliografia.traduccion) }}
+     {{ form_widget(formBibliografia.traduccion) }}
+
+     {{ form_label(formBibliografia.fechaedicion) }}
+     {{ form_errors(formBibliografia.fechaedicion) }}
+     {{ form_widget(formBibliografia.fechaedicion) }}
+
+     {{ form_label(formBibliografia.editorial) }}
+     {{ form_errors(formBibliografia.editorial) }}
+     {{ form_widget(formBibliografia.editorial) }}
+
+       {{ form_label(formBibliografia.ubicacion) }}
+     {{ form_errors(formBibliografia.ubicacion) }}
+     {{ form_widget(formBibliografia.ubicacion  ) }}
+
+    {{ form_label(formBibliografia.resumen) }}
+     {{ form_errors(formBibliografia.resumen) }}
+     {{ form_widget(formBibliografia.resumen) }}
+
+    {{ form_label(formBibliografia.recomendacionesuso) }}
+     {{ form_errors(formBibliografia.recomendacionesuso) }}
+     {{ form_widget(formBibliografia.recomendacionesuso) }}
+
+      {{ form_label(formBibliografia.tablacontenido) }}
+     {{ form_errors(formBibliografia.tablacontenido) }}
+     {{ form_widget(formBibliografia.tablacontenido) }}
+
+      {{ form_label(formBibliografia.palabrasclave) }}
+     {{ form_errors(formBibliografia.palabrasclave) }}
+     {{ form_widget(formBibliografia.palabrasclave) }}    
+
+      {{ form_label(formBibliografia.archivo) }}
+     {{ form_errors(formBibliografia.archivo) }}
+     {{ form_widget(formBibliografia.archivo) }}
+
+{{ form_rest(formBibliografia) }}
+
+</form> 
+
+{% endblock %}
+
+
+{% block javascripts %}
 {% endblock %}

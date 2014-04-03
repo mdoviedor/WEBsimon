@@ -72,9 +72,7 @@ class AdministrarproduccionintelectualController extends Controller {
                     $em->flush();
 
                     return $this->redirect($this->generateUrl('gs_proyectos_produccionintelectual_buscar', array('limite' => '30')));
-                } else {
-                    
-                }
+                } 
             }
             $mensaje = 1;
         }
