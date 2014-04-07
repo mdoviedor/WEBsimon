@@ -8,16 +8,14 @@ use Doctrine\ORM\Mapping as ORM;
  * Lecturaconproposito
  *
  * @ORM\Table(name="lecturaconproposito", indexes={@ORM\Index(name="bibliografia_lecturaConProposito_idx", columns={"bibliografia"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="GS\ProyectosBundle\Entity\LecturaconpropositoRepository")
  */
 class Lecturaconproposito
 {
     /**
      * @var string
-     *
      * @ORM\Column(name="idlecturaConProposito", type="string", length=10, nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idlecturaconproposito;
 
@@ -132,6 +130,19 @@ class Lecturaconproposito
     public function getIdlecturaconproposito()
     {
         return $this->idlecturaconproposito;
+    }
+    
+     /**
+     * Set idlecturaconproposito
+     *
+     * @param string $idlecturaconproposito
+     * @return Lecturaconproposito
+     */
+    public function setIdlecturaconproposito($idlecturaconproposito)
+    {
+        $this->idlecturaconproposito = $idlecturaconproposito;
+
+        return $this;
     }
 
     /**

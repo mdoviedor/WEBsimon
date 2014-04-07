@@ -59,7 +59,7 @@ gs_proyectos_produccionintelectual_eliminar:
 
 #El limite por defecto sera 30, el cual corresponde al maximo de elementos mostrados de la consulta
 gs_proyectos_produccionintelectual_buscar:
-    pattern: administrador/administrarProduccionIntelectual/{limite}
+    pattern: administrador/administrarProduccionIntelectual/
     defaults: { _controller: GSProyectosBundle:Administrarproduccionintelectual:Buscar }
  
 #Se pasa el idtema correspondiente al modelo Tema
@@ -79,10 +79,30 @@ gs_proyectos_desarrollarproduccionintelectual_buscar:
     pattern: usuario/produccionIntelectual/
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Buscar }
     
+gs_proyectos_desarrollarproduccionintelectual_catalogobibliografico:
+    pattern: usuario/produccionIntelectual/catalogoBibliografico
+    defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Catalogobibliografico }
+
+#Se pasa el idproduccionintelectual correspondiente al modelo ProduccionIntelectual
+gs_proyectos_desarrollarproduccionintelectual_catalogobibliografico_vista:
+    pattern: usuario/produccionIntelectual/catalogoBibliografico/vista/{id}
+    defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Catalogobibliograficovista }
+
+#Se pasa el idusuario correspondiente al modelo Usuario
+#Mostrar el perfil de cualquier usuario, junto a su produccion intelectual
+gs_proyectos_desarrollarproduccionintelectual_perfilusuario:
+    pattern: usuario/produccionIntelectual/perfilUsuario/{id}
+    defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Perfilusuario }
+    
 #Se pasa el idtema correspondiente al modelo Tema
 gs_proyectos_desarrollarproduccionintelectual_vista: 
     pattern: usuario/produccionIntelectual/vista/{id} 
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Vista }
+
+    #Se pasa el idbibliografia correspondiente al modelo Bibliografia
+gs_proyectos_desarrollarproduccionintelectual_elementobibliografia_vista: 
+    pattern: usuario/produccionIntelectual/bibliografia/vista/{id} 
+    defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Bibliografiavista }
     
 #
 #DESARROLLAR PRODUCCION INTELECTUAL - Bibliografia
@@ -92,6 +112,11 @@ gs_proyectos_desarrollarproduccionintelectual_vista:
 gs_proyectos_desarrollarproduccionintelectual_agregarbibliografia:
     pattern: usuario/produccionIntelectual/bibliografia/agregar/{id}
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Agregarbibliografia }
+    
+#Se pasa el idbibliografia correspondiente al modelo Bibliografia
+gs_proyectos_desarrollarproduccionintelectual_agregarbibliografia:
+    pattern: usuario/produccionIntelectual/lectuaraConProposito/agregar/{id}
+    defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Agregarlecturaproposito }
 
 gs_proyectos_desarrollarproduccionintelectual_eliminarbibliografia:
     pattern: usuario/produccionIntelectual/bibliografia/eliminar
@@ -104,6 +129,12 @@ gs_proyectos_desarrollarproduccionintelectual_modificarbibliografia:
 gs_proyectos_desarrollarproduccionintelectual_buscarbibliografia:
     pattern: usuario/produccionIntelectual/bibliografia/buscar
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Buscarbibliografia }
+
+#Buscar miembros del equipo de trabajo y visualizarlos en la pagina de inicio del Desarrollo de la Producción Intelectual
+#Se pasa el idtema correspondiente al modelo Tema
+gs_proyectos_desarrollarproduccionintelectual_buscarmiembros:
+    pattern: usuario/produccionIntelectual/buscarmiembro/{tema}.{funcion}
+    defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro }
 
 #
 #DESARROLLAR PRODUCCION INTELECTUAL - Cronograma

@@ -9,17 +9,104 @@ use FOS\UserBundle\Model\UserManagerInterface;
 use GS\ProyectosBundle\Entity\TemaUsuario;
 use GS\ProyectosBundle\Entity\TemaBibliografia;
 use GS\ProyectosBundle\Entity\Tema;
+use GS\ProyectosBundle\Entity\Produccionintelectual;
 use GS\ProyectosBundle\Entity\Espaciotrabajo;
 use GS\ProyectosBundle\Entity\Cronograma;
 use GS\ProyectosBundle\Form\CronogramaType;
 use GS\ProyectosBundle\Entity\Bibliografia;
+use GS\ProyectosBundle\Entity\Lecturaconproposito;
 use GS\ProyectosBundle\Form\BibliografiaType;
+use GS\ProyectosBundle\Form\LecturaconpropositoType;
 use GS\ProyectosBundle\Funciones\IdentificadorFecha;
 
 class DesarrollarproduccionintelectualController extends Controller {
+    /*
+     * Produccion en desarrollo del usuario. 
+     * Pagina inicia de acceso, tras inicio de sesión del usuario.
+     */
 
     public function BuscarAction() {
-        return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:buscar.html.twig');
+        /*
+         * Obtener username de la sesion
+         */
+        $userManager = $this->get('security.context')->getToken()->getUser();
+        $user = $userManager->getUsername();
+        /*
+         * 
+         */
+        $em = $this->getDoctrine()->getManager();
+        $temaUsuario = new TemaUsuario();
+        $temaUsuario = $em->getRepository('GSProyectosBundle:TemaUsuario')->findBy(array('usuario' => $user));
+
+        return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:buscar.html.twig', array('temaUsuario' => $temaUsuario));
+    }
+
+    public function BuscarmiembroAction($tema, $funcion) {
+        $em = $this->getDoctrine()->getManager();
+        $temaUsuario = new TemaUsuario();
+        $temaUsuario = $em->getRepository('GSProyectosBundle:TemaUsuario')->findBy(array('tema' => $tema, 'funcionusuario' => $funcion));
+        return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:buscarmiembros.html.twig', array('temaUsuario' => $temaUsuario));
+    }
+
+    /*
+     * Agregar y modificar lectura con proposito correspondiente a una bibliografia. 
+     * Se recibe el id correspondiente al idBibliografia de la que se requiere crear o modificar 
+     * la lectura con proposito. 
+     * Se comprueba que la lectura con proposito corresponda a la bibliografia del usuario
+     * que esta intentando crearla . 
+     */
+
+    function AgregarlecturapropositoAction(Request $request, $id) {
+        /*
+         * Obtener username de la sesion
+         */
+        $userManager = $this->get('security.context')->getToken()->getUser();
+        $user = $userManager->getUsername();
+        /*
+         * 
+         */
+        $lecturaConProposito = new Lecturaconproposito(); //Objeto del modelo Lecturaconproposito
+        $lectura = new Lecturaconproposito(); //Objeto del modelo Lecturaconproposito
+        $bibliografia = new Bibliografia(); //Objeto del modelo Bibliografia
+        $temaBibliografia = new TemaBibliografia(); //Objeto del modelo Temabibliografia
+        $temaUsuario = new TemaUsuario(); //Objeto del modelo Temausuario
+        $identificadorFecha = new IdentificadorFecha(); // Objeto de la clase IdentificaorFehca
+        $em = $this->getDoctrine()->getManager();
+
+        $temaBibliografia = $em->getRepository('GSProyectosBundle:TemaBibliografia')->findBy(array('bibliografia' => $id)); //Consulta para obtener el idTema que corresponde a la Bibliografia
+        $temaUsuario = $em->getRepository('GSProyectosBundle:TemaUsuario')->findBy(array('tema' => $temaBibliografia[0]->getTema()->getIdtema(), 'usuario' => $user)); //Consultar si el tema corresponde al usuario
+
+        $lectura = $em->getRepository('GSProyectosBundle:Lecturaconproposito')->findBy(array('bibliografia' => $id)); //Consulta para comprobar la existencia de una lectura con proposito correspondiente a la bibliografia
+
+        if ($lectura) { //Si existe una lectura con proposito correspondiente a la bibliografia
+            $lecturaConProposito = $em->getRepository('GSProyectosBundle:Lecturaconproposito')->find($lectura[0]->getBibliografia()->getIdbibliografia());
+            $formLecturaConProposito = $this->createForm(new LecturaconpropositoType(), $lecturaConProposito); // Se crea el formulario con los datos del modelo Lectura con proposito, puesto corresponde a una modificación
+        } else {
+            $formLecturaConProposito = $this->createForm(new LecturaconpropositoType(), $lecturaConProposito); //Se crea el formulario vacion, para una nueva lectura con proposito
+        }
+
+        if ($temaUsuario) {
+
+            if ($request->getMethod() == 'POST') {
+                $formLecturaConProposito->handleRequest($request);
+                if ($formLecturaConProposito->isValid()) {
+                    if (!$lectura) { // Si es falso, indica que la lectura con proposito se va a crear, de lo contrario se modificara. 
+                        $ultimoRegistro = $em->getRepository('GSProyectosBundle:Lecturaconproposito')->buscarUltimaLectura();
+                        $lecturaConProposito->setIdlecturaconproposito($identificadorFecha->generarIdLecturaConProposito($ultimoRegistro));
+                        $bibliografia = $em->getRepository('GSProyectosBundle:Bibliografia')->find($id);
+                        $lecturaConProposito->setBibliografia($bibliografia);
+                        $fechaRegistro = new \DateTime("now");
+                        $lecturaConProposito->setFecharegistro($fechaRegistro);
+                    }
+
+                    $em->persist($lecturaConProposito);
+                    $em->flush($lecturaConProposito);
+                }
+            }
+            return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Agregarlecturaproposito.html.twig', array('formLecturaConProposito' => $formLecturaConProposito->createView(), 'idBibliografia' => $id));
+        } else {
+            return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_buscar'));
+        }
     }
 
     /*
@@ -218,7 +305,7 @@ class DesarrollarproduccionintelectualController extends Controller {
         $tema = new Tema();
         $espacioTrabajo = new Espaciotrabajo(); // Objeto del modelo Espaciotrabajo
         $temaUsuario = new TemaUsuario(); // Objeto del modelo TemaUsuario
-        $temaBibliografia = new TemaBibliografia(); // Objeto del modelo TemaUsuario
+        $temaBibliografia = new TemaBibliografia(); // Objeto del modelo TemaUsuario        
         $cronograma = new Cronograma();
         $em = $this->getDoctrine()->getManager(); // Manejador
 
@@ -227,7 +314,7 @@ class DesarrollarproduccionintelectualController extends Controller {
         $tema = $em->getRepository('GSProyectosBundle:Tema')->find($id); // Consulta 
         $cronograma = $em->getRepository('GSProyectosBundle:Cronograma')->findBy(array('tema' => $id)); // Consulta 
         $espacioTrabajo = $em->getRepository('GSProyectosBundle:Espaciotrabajo')->findBy(array('tema' => $id)); // Consulta 
-        $temaBibliografia = $em->getRepository('GSProyectosBundle:TemaBibliografia')->findBy(array('tema' => $id)); // Consulta 
+        $temaBibliografia = $em->getRepository('GSProyectosBundle:TemaBibliografia')->findBy(array('tema' => $id)); // Consulta         
 
         /*
          * Si el usuario es participante del proyecto podra ver el entorno de 
@@ -242,6 +329,41 @@ class DesarrollarproduccionintelectualController extends Controller {
             }
         }
         return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_buscar')); // Ruta tomada si el usuario que intenta acceder no tiene privilegios.
+    }
+    public function ExistelecturaconpropositoAction ($id){
+        $lecturaConProposito = new Lecturaconproposito();
+        $em = $this->getDoctrine()->getManager();
+        $lecturaConProposito= $em->getRepository('GSProyectosBundle:Lecturaconproposito')->findBy(array('bibliografia'=>$id));
+       
+        return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Existelecturaconproposito.html.twig', array('lectura'=>$lecturaConProposito));
+               
+    }
+
+    public function CatalogobibliograficoAction() {
+        $em = $this->getDoctrine()->getManager();
+        $produccionIntelectual = new Produccionintelectual();
+        $produccionIntelectual = $em->getRepository('GSProyectosBundle:Produccionintelectual')->findBy(array(), array('fecharegistro' => 'DESC'), 30);
+        return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Catalogobibliografico.html.twig', array('produccionIntelectual' => $produccionIntelectual));
+    }
+
+    public function CatalogobibliograficovistaAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $produccionIntelectual = new Produccionintelectual();
+        $temaUsuario = new TemaUsuario();
+        $temaBibliografia = new TemaBibliografia();
+        $produccionIntelectual = $em->getRepository('GSProyectosBundle:Produccionintelectual')->find($id);
+        $temaUsuario = $em->getRepository('GSProyectosBundle:TemaUsuario')->findBy(array('tema' => $produccionIntelectual->getTema()->getIdtema()));
+        $temaBibliografia = $em->getRepository('GSProyectosBundle:TemaBibliografia')->findBy(array('tema' => $produccionIntelectual->getTema()->getIdtema()));
+        return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Catalogobibliograficovista.html.twig', array('produccionIntelectual' => $produccionIntelectual, 'temaUsuario' => $temaUsuario, 'temaBibliografia' => $temaBibliografia));
+    }
+
+    public function BibliografiavistaAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $bibliografia = new Produccionintelectual();
+        $lecturaConProposito = new Lecturaconproposito();
+        $bibliografia = $em->getRepository('GSProyectosBundle:Bibliografia')->find($id);
+        $lecturaConProposito = $em->getRepository('GSProyectosBundle:Lecturaconproposito')->findBy(array('bibliografia' => $id));
+        return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Bibliografiavista.html.twig', array('bibliografia' => $bibliografia, 'lecturaConProposito' => $lecturaConProposito));
     }
 
 }

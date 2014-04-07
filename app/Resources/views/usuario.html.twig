@@ -19,11 +19,20 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Mi Producción</a></li>
-                <li><a href="#">Catalogo Bibliográfico</a></li>                
-                <li><a href="#">Perfil</a></li>
-                <li><a href="#">Producción en Desarrollo GS</a></li>   
-                <li class="active"><a href="#">Ayuda</a></li>
+                <li><a href="{{ path('gs_proyectos_desarrollarproduccionintelectual_buscar') }}">Mi Producción</a></li>
+                <li><a href="{{ path('gs_proyectos_desarrollarproduccionintelectual_catalogobibliografico')}}">Catalogo Bibliográfico</a></li>                
+                <li><a href="#">Producción en Desarrollo GS</a></li>                   
+                 <li class="dropdown active">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Opciones<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                         <li><a href="#">Perfil</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Ayuda</a></li>
+                        <li class="divider"></li>
+                        <li><a href="{{ path('logout') }}">Salir</a></li>                       
+                    
+                    </ul>
+                </li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

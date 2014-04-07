@@ -3,7 +3,7 @@
 {% block title %}Grupo Simon: Desarrollar Producción Intelectual{% endblock %}
 
 {% block titulo %}  
-<h1>Mi Producción</h1>
+<h1>Catalogo Bibliografíco:<small> Buscar.</small></h1>
 {% endblock %}
 
 {% block submenuderecho %}    
@@ -35,65 +35,49 @@
 
     </div>
 </div>
-<div id="produccion">
+<div id="catalogoBibliografico">
     <table class="table table-hover">
         <thead>
             <tr>
-              
-                <th>
-                    Tema
-                </th>
-                <th>
-                    Autor(es)
-                </th>
-                <th>
-                    Director(es)
-                </th>
-                <th>
-                    Coodirector(es)
-                </th>
-                <th>
-                    Estado
-                </th>
-                  <th>
-
-                </th>
+                <th>Titulo</th>
+                  <th>Autor(es)</th>
+                <th>Director(es)</th>
+                <th>Codirector(es)</th>
+                <th>Fecha</th>
+                <th></th>
             </tr>
+
         </thead>
+
         <tbody>
-            {%for informacion in temaUsuario %}
+            {%for produccion in produccionIntelectual%}
             <tr>
-               
                 <td>
-                    {{ informacion.tema.titulo }}
+                    {{ produccion.titulo | upper}}. <b>Tema:</b> {{ produccion.tema.titulo }}
                 </td>
                 <td>
-                   {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': informacion.tema.idtema , 'funcion': '1' })) }}
+                   {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '1' })) }}
                 </td>
                 <td>
-                    {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': informacion.tema.idtema , 'funcion': '3' })) }}
+                    {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '3' })) }}
                 </td>
                 <td>                         
-                     {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': informacion.tema.idtema , 'funcion': '2' })) }}
+                     {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '2' })) }}
                 </td>
                 <td>
-                       {%if informacion.tema.estado %}
-                    En desarrollo
-                         {% else %}
-                    Terminado
-                      {% endif %}
+                    {{ produccion.fecharegistro | date('m-Y') }}
                 </td>
-                 <td>
-                    
-                    <a href="{{ path('gs_proyectos_desarrollarproduccionintelectual_vista',{'id':informacion.tema.idtema}) }}">
+                <td>
+                    <a href="{{ path('gs_proyectos_desarrollarproduccionintelectual_catalogobibliografico_vista',{'id': produccion.idproduccionintelectual})}}">
                         <span class="glyphicon glyphicon-eye-open"></span> Abrir
                     </a>
                 </td>
+
             </tr>
             {% endfor %}
         </tbody>
         <tfoot>
-            <tr align="center">
+  <tr align="center">
                 <td colspan="6">
                     <select >
                         <option>30</option>

@@ -41,6 +41,13 @@ class Produccionintelectual
      * @ORM\Column(name="resumen", type="text", nullable=false)
      */
     private $resumen;
+    
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="titulo", type="text", nullable=false)
+     */
+    private $titulo;
 
     /**
      * @var string
@@ -217,6 +224,29 @@ class Produccionintelectual
     public function getResumen()
     {
         return $this->resumen;
+    }
+    
+        /**
+     * Set titulo
+     *
+     * @param string $titulo
+     * @return Produccionintelectual
+     */
+    public function setTitulo($titulo)
+    {
+        $this->titulo = $titulo;
+
+        return $this;
+    }
+
+    /**
+     * Get titulo
+     *
+     * @return string 
+     */
+    public function getTitulo()
+    {
+        return $this->titulo;
     }
 
     /**

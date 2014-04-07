@@ -23,6 +23,10 @@ class ProduccionintelectualType extends AbstractType {
                     'label' => '* Resumen:',
                     'attr' => array('class' => 'form-control'),
                 ))
+                 ->add('titulo', 'textarea', array(
+                    'label' => '* Titulo:',
+                    'attr' => array('class' => 'form-control'),
+                ))
                 ->add('palabrasclave', 'textarea', array(
                     'label' => '* Palabras Clave:',
                     'attr' => array('class' => 'form-control'),

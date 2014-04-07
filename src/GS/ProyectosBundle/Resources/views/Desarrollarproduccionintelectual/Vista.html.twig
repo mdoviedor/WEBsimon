@@ -4,6 +4,12 @@
 {% block titulo %}  
 <h1>Desarrollo Producción Intelectual</h1>
 {% endblock %}
+{% block submenuderecho %}    
+<a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_desarrollarproduccionintelectual_buscar') }}">
+    <span class="glyphicon glyphicon-log-out"></span> Salir
+</a>
+{% endblock %}
+
 
 {% block contenido %}
 <br>
@@ -17,17 +23,19 @@
 
     </div>
 </div>
-
 <h2>Tema: <small>{{tema.titulo}}</small></h2>
-<blockquote>
-    <p>Autor(es)</p>
+<div class="row">
+    <div class="col-md-4">
+        <blockquote>
+            <p>Autor(es)</p>
     {%for usuario in temaUsuario%}
   {%if usuario.funcionusuario.nombre == "Autor"   %}
-    <footer>{{ usuario.usuario.primernombre }} {{ usuario.usuario.segundonombre }} {{ usuario.usuario.primerapellido }} {{ usuario.usuario.segundoapellido }}</footer>
+            <footer>{{ usuario.usuario.primernombre }} {{ usuario.usuario.segundonombre }} {{ usuario.usuario.primerapellido }} {{ usuario.usuario.segundoapellido }}</footer>
   {% endif %}
     {% endfor %}
-</blockquote>
-<blockquote>
+        </blockquote></div>
+    <div class="col-md-4">
+        <blockquote>
     <p>Director(es)</p>
     {%for usuario in temaUsuario%}
   {%if usuario.funcionusuario.nombre == "Director"   %}
@@ -35,7 +43,9 @@
   {% endif %}
      {% endfor %}
 </blockquote>
-<blockquote>
+    </div>
+    <div class="col-md-4">
+        <blockquote>
     <p>Codirector(es)</p>
       {%for usuario in temaUsuario%}
   {%if usuario.funcionusuario.nombre == "Codirector"   %}
@@ -43,6 +53,8 @@
   {% endif %}
         {% endfor %}
 </blockquote>
+    </div>
+</div>
 
 <h4>Producción:</h4>
 <table class="table table-hover " align="center" style="width: 700px;">
@@ -148,6 +160,7 @@
             <th>Lectura con proposito</th>
             <th>Categoría</th>
             <th>Fecha de Registro</th>
+            <th></th>
         </tr>
 
     </thead>
@@ -157,9 +170,12 @@
             <td><input type="radio" id="radioBibliografia" value="{{ bibliografia.bibliografia.idbibliografia }}"></td>
             <td>{{ bibliografia.bibliografia.nombre }}</td>
             <td>{{ bibliografia.bibliografia.tipoelementobibliografico.nombre }}</td>
-            <td></td>
+            <td>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Existelecturaconproposito', { 'id': bibliografia.bibliografia.idbibliografia })) }}</td>
             <td>{{ bibliografia.bibliografia.categoria.nombre }}</td>
             <td>{{ bibliografia.bibliografia.fecharegistro | date ('d-m-y') }}</td>
+            <td>  <a  href="{{ path('gs_proyectos_desarrollarproduccionintelectual_elementobibliografia_vista',{'id': bibliografia.bibliografia.idbibliografia}) }}" target="_blank" onClick="window.open(this.href, this.target, 'width=702,height=600'); return false;">
+                        <span class="glyphicon glyphicon-eye-open"></span> Ver
+                    </a></td>
         </tr>
            {%endfor%}
     </tbody>

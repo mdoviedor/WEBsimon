@@ -1,0 +1,89 @@
+{% extends "::usuario.html.twig" %}
+{% block title %}Grupo Simon: Usuario{% endblock %}
+
+{% block titulo %}  
+<h1>Título: <small>{{produccionIntelectual.titulo}}</small></h1>
+{% endblock %}
+{% block submenuderecho %}    
+<a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_desarrollarproduccionintelectual_buscar') }}">
+    <span class="glyphicon glyphicon-log-out"></span> Salir
+</a>
+{% endblock %}
+
+
+{% block contenido %}
+<br>
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-8">  
+
+
+    </div>
+    <div class="col-xs-6 col-md-4">
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <blockquote>
+            <p>Autor(es)</p>
+    {%for usuario in temaUsuario%}
+  {%if usuario.funcionusuario.nombre == "Autor"   %}
+            <footer>{{ usuario.usuario.primernombre }} {{ usuario.usuario.segundonombre }} {{ usuario.usuario.primerapellido }} {{ usuario.usuario.segundoapellido }}</footer>
+  {% endif %}
+    {% endfor %}
+        </blockquote></div>
+    <div class="col-md-4">
+        <blockquote>
+            <p>Director(es)</p>
+    {%for usuario in temaUsuario%}
+  {%if usuario.funcionusuario.nombre == "Director"   %}
+            <footer>{{ usuario.usuario.primernombre }} {{ usuario.usuario.segundonombre }} {{ usuario.usuario.primerapellido }} {{ usuario.usuario.segundoapellido }}</footer>
+  {% endif %}
+     {% endfor %}
+        </blockquote>
+    </div>
+    <div class="col-md-4">
+        <blockquote>
+            <p>Codirector(es)</p>
+      {%for usuario in temaUsuario%}
+  {%if usuario.funcionusuario.nombre == "Codirector"   %}
+            <footer>{{ usuario.usuario.primernombre }} {{ usuario.usuario.segundonombre }} {{ usuario.usuario.primerapellido }} {{ usuario.usuario.segundoapellido }}</footer>
+  {% endif %}
+        {% endfor %}
+        </blockquote>
+    </div>
+</div>
+<h3>Tipo de Producción:</h3>
+<p>{{produccionIntelectual.tipoproduccion.nombre}}</p>
+<h3>Resumen:</h3>
+<p>{{produccionIntelectual.resumen}}</p>
+<h3>Palabras Clave:</h3>
+<p>{{produccionIntelectual.palabrasclave}}</p>
+<h3>Bibliografía</h3>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for bibliografia in temaBibliografia %}
+        <tr>
+            <td>
+                <a href="{{ path('gs_proyectos_desarrollarproduccionintelectual_elementobibliografia_vista',{'id': bibliografia.bibliografia.idbibliografia}) }}" target="_blank" onClick="window.open(this.href, this.target, 'width=702,height=600');
+                        return false;">{{ bibliografia.bibliografia.nombre | upper }}.  <i>{{ bibliografia.bibliografia.autores }}</i>. {{ bibliografia.bibliografia.tipoelementobibliografico.nombre }}.</a>
+            </td>
+
+        </tr>
+        {% endfor %}
+
+    </tbody>
+    <tfoot>
+
+    </tfoot>
+</table></div>
+
+{% endblock %}

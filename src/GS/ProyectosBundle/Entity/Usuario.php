@@ -61,6 +61,13 @@ class Usuario
      * @ORM\Column(name="telefonoCelular", type="string", length=45, nullable=true)
      */
     private $telefonocelular;
+    
+      /**
+     * @var string
+     *
+     * @ORM\Column(name="foto", type="string", length=100, nullable=true)
+     */
+    private $foto;
 
     /**
      * @var \DateTime
@@ -132,6 +139,29 @@ class Usuario
     public function getPrimernombre()
     {
         return $this->primernombre;
+    }
+    
+     /**
+     * Set foto
+     *
+     * @param string $foto
+     * @return Usuario
+     */
+    public function setFoto($foto)
+    {
+        $this->foto = $foto;
+
+        return $this;
+    }
+
+    /**
+     * Get foto
+     *
+     * @return string 
+     */
+    public function getFoto()
+    {
+        return $this->foto;
     }
 
     /**

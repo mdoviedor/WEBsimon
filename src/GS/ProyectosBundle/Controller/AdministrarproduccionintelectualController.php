@@ -87,11 +87,11 @@ class AdministrarproduccionintelectualController extends Controller {
         
     }
 
-    public function BuscarAction($limite) {
+    public function BuscarAction() {
         $produccionIntelectual = new Produccionintelectual();
         $temaUsuario = new TemaUsuario();
         $em = $this->getDoctrine()->getManager();
-        $produccionIntelectual = $em->getRepository('GSProyectosBundle:Produccionintelectual')->findBy(array(), array('tema' => 'ASC', 'fecharegistro' => 'ASC'), $limite);
+        $produccionIntelectual = $em->getRepository('GSProyectosBundle:Produccionintelectual')->findBy(array(), array('tema' => 'ASC', 'fecharegistro' => 'ASC'), 30);
 
 
         return $this->render('GSProyectosBundle:Administrarproduccionintelectual:buscar.html.twig', array('produccionIntelectual' => $produccionIntelectual));
@@ -123,7 +123,7 @@ class AdministrarproduccionintelectualController extends Controller {
         }
         $em->persist($tema);
         $em->flush();
-        return $this->redirect($this->generateUrl('gs_proyectos_produccionintelectual_buscar', array('limite' => '30')));
+        return $this->redirect($this->generateUrl('gs_proyectos_produccionintelectual_buscar'));
     }
 
 }
