@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\UserBundle\Model\UserManagerInterface;
 use GS\ProyectosBundle\Entity\TemaUsuario;
+use GS\ProyectosBundle\Entity\Usuario;
+use GS\UserBundle\Entity\User;
 use GS\ProyectosBundle\Entity\TemaBibliografia;
 use GS\ProyectosBundle\Entity\Tema;
 use GS\ProyectosBundle\Entity\Produccionintelectual;
@@ -18,6 +20,8 @@ use GS\ProyectosBundle\Entity\Lecturaconproposito;
 use GS\ProyectosBundle\Form\BibliografiaType;
 use GS\ProyectosBundle\Form\LecturaconpropositoType;
 use GS\ProyectosBundle\Funciones\IdentificadorFecha;
+use GS\ProyectosBundle\Funciones\RedimencionarImagen;
+use GS\ProyectosBundle\Form\UsuarioType;
 
 class DesarrollarproduccionintelectualController extends Controller {
     /*
@@ -330,13 +334,13 @@ class DesarrollarproduccionintelectualController extends Controller {
         }
         return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_buscar')); // Ruta tomada si el usuario que intenta acceder no tiene privilegios.
     }
-    public function ExistelecturaconpropositoAction ($id){
+
+    public function ExistelecturaconpropositoAction($id) {
         $lecturaConProposito = new Lecturaconproposito();
         $em = $this->getDoctrine()->getManager();
-        $lecturaConProposito= $em->getRepository('GSProyectosBundle:Lecturaconproposito')->findBy(array('bibliografia'=>$id));
-       
-        return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Existelecturaconproposito.html.twig', array('lectura'=>$lecturaConProposito));
-               
+        $lecturaConProposito = $em->getRepository('GSProyectosBundle:Lecturaconproposito')->findBy(array('bibliografia' => $id));
+
+        return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Existelecturaconproposito.html.twig', array('lectura' => $lecturaConProposito));
     }
 
     public function CatalogobibliograficoAction() {
@@ -364,6 +368,61 @@ class DesarrollarproduccionintelectualController extends Controller {
         $bibliografia = $em->getRepository('GSProyectosBundle:Bibliografia')->find($id);
         $lecturaConProposito = $em->getRepository('GSProyectosBundle:Lecturaconproposito')->findBy(array('bibliografia' => $id));
         return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Bibliografiavista.html.twig', array('bibliografia' => $bibliografia, 'lecturaConProposito' => $lecturaConProposito));
+    }
+
+    public function PerfilAction(Request $request) {
+        /*
+         * Obtener username de la sesion
+         */
+        $u = $this->get('security.context')->getToken()->getUser();
+
+        /*
+         * 
+         */
+        $redimencionarImagen = new RedimencionarImagen();
+        $usuario = new Usuario();
+        $usere = new User();
+        $em = $this->getDoctrine()->getManager();
+        $usuario = $em->getRepository('GSProyectosBundle:Usuario')->find($u->getUsername());
+        $formUsuario = $this->createForm(new UsuarioType(), $usuario);
+
+        $userManager = $this->get('fos_user.user_manager'); // Instancia del manejador del bundle FOSUser
+        $user = $userManager->createUser();
+        $usere = $userManager->findUserByUsername($u->getUsername());
+
+        if ($request->getMethod() == 'POST') {
+            $formUsuario->handleRequest($request);
+            if ($formUsuario->isValid()) {
+                $password = $formUsuario->get('password')->getData();
+
+                if ($password) {
+                    $usere->setPlainPassword($password);
+                    $userManager->updateUser($usere, false); //Actualizacion del contenido del manejador
+                    $this->getDoctrine()->getManager()->flush(); //Guarda en la base de datos U
+                }
+
+                /*
+                 * MANEJO DE LA FOTO
+                 */
+                $archivo = $formUsuario->get('archivo')->getData();
+                if ($archivo) {
+                    $dir = 'images/fotos/';
+                    $nombreArchivo = $usuario->getUser()->getEmail();
+                   // $file = $formUsuario['archivo']->getData();
+                    $extension = $archivo->guessExtension(); //Obtener la extensión del archivo cargado                     
+                    if ($extension && ($extension == "JPG" || $extension == "JPeG" || $extension == "jpeg" || $extension == "jpg")) {
+                        $usuario->setFoto($dir . $nombreArchivo . '.' . "jpg"); //Instancia del modelo Produccionintelectual, nombre 
+                        $archivo->move($dir, $nombreArchivo . '.' . "jpg"); //Mover el archivo al directorio
+                        $redimencionarImagen->redimencionar($usuario->getFoto(), $dir);
+                    }
+                }
+
+                $em->persist($usuario);
+                $em->flush();
+            }
+        }
+
+        return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Perfil.html.twig', array('usuario' => $usuario, 'formUsuario' => $formUsuario->createView()));
     }
 
 }

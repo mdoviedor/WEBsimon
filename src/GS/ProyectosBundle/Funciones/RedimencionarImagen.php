@@ -58,7 +58,7 @@ class RedimencionarImagen {
 
 //Se crea la imagen final en el directorio indicado
         
-        imagejpeg($lienzo, $dir, $cal);
+        imagejpeg($lienzo, $rtOriginal, $cal);
     }
 
 }

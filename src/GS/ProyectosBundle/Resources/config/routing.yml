@@ -79,6 +79,10 @@ gs_proyectos_desarrollarproduccionintelectual_buscar:
     pattern: usuario/produccionIntelectual/
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Buscar }
     
+gs_proyectos_desarrollarproduccionintelectual_perfil:
+    pattern: usuario/produccionIntelectual/perfil/
+    defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Perfil }
+    
 gs_proyectos_desarrollarproduccionintelectual_catalogobibliografico:
     pattern: usuario/produccionIntelectual/catalogoBibliografico
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Catalogobibliografico }
