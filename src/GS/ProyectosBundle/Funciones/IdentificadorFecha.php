@@ -54,7 +54,7 @@ class IdentificadorFecha {
             return $this->ano . '000000'; //Registro inicial
         }
     }
-    
+
     public function generarIdProduccionIntelectual($ultimoRegistro) {
         if ($ultimoRegistro != null && $ultimoRegistro != "") {//Si no existe ningun registro previo en la base de datos
             $variable = $ultimoRegistro[0]['idproduccionintelectual']; //Se pasa el valor del array
@@ -69,7 +69,8 @@ class IdentificadorFecha {
             return $this->ano . '000000'; //Registro inicial
         }
     }
-     public function generarIdTemaBibliografia($ultimoRegistro) {
+
+    public function generarIdTemaBibliografia($ultimoRegistro) {
         if ($ultimoRegistro != null && $ultimoRegistro != "") {//Si no existe ningun registro previo en la base de datos
             $variable = $ultimoRegistro[0]['idtemaBibliografia']; //Se pasa el valor del array
             $ano = substr($variable, 0, 4); //Se separa el año del array
@@ -83,8 +84,8 @@ class IdentificadorFecha {
             return $this->ano . '000000'; //Registro inicial
         }
     }
-    
-      public function generarIdCronograma($ultimoRegistro) {
+
+    public function generarIdCronograma($ultimoRegistro) {
         if ($ultimoRegistro != null && $ultimoRegistro != "") {//Si no existe ningun registro previo en la base de datos
             $variable = $ultimoRegistro[0]['idcronograma']; //Se pasa el valor del array
             $ano = substr($variable, 0, 4); //Se separa el año del array
@@ -98,8 +99,8 @@ class IdentificadorFecha {
             return $this->ano . '000000'; //Registro inicial
         }
     }
-    
-     public function generarIdBibliografia($ultimoRegistro) {
+
+    public function generarIdBibliografia($ultimoRegistro) {
         if ($ultimoRegistro != null && $ultimoRegistro != "") {//Si no existe ningun registro previo en la base de datos
             $variable = $ultimoRegistro[0]['idbibliografia']; //Se pasa el valor del array
             $ano = substr($variable, 0, 4); //Se separa el año del array
@@ -113,10 +114,40 @@ class IdentificadorFecha {
             return $this->ano . '000000'; //Registro inicial
         }
     }
-    
-      public function generarIdLecturaConProposito($ultimoRegistro) {
+
+    public function generarIdLecturaConProposito($ultimoRegistro) {
         if ($ultimoRegistro != null && $ultimoRegistro != "") {//Si no existe ningun registro previo en la base de datos
             $variable = $ultimoRegistro[0]['idlecturaconproposito']; //Se pasa el valor del array
+            $ano = substr($variable, 0, 4); //Se separa el año del array
+            if ($ano == $this->ano) {
+                $consecutivo = $variable + 1; //Se suma uno al id
+                return $consecutivo;
+            } else {
+                return $this->ano . '000000'; //Si ha cambiado el año, empieza el consecutivo nuevamente en cero
+            }
+        } else {
+            return $this->ano . '000000'; //Registro inicial
+        }
+    }
+
+    public function generarIdMensajeEnviado($ultimoRegistro) {
+        if ($ultimoRegistro != null && $ultimoRegistro != "") {//Si no existe ningun registro previo en la base de datos
+            $variable = $ultimoRegistro[0]['idmensajeenviado']; //Se pasa el valor del array
+            $ano = substr($variable, 0, 4); //Se separa el año del array
+            if ($ano == $this->ano) {
+                $consecutivo = $variable + 1; //Se suma uno al id
+                return $consecutivo;
+            } else {
+                return $this->ano . '000000'; //Si ha cambiado el año, empieza el consecutivo nuevamente en cero
+            }
+        } else {
+            return $this->ano . '000000'; //Registro inicial
+        }
+    }
+
+    public function generarIdMensajeRecibido($ultimoRegistro) {
+        if ($ultimoRegistro != null && $ultimoRegistro != "") {//Si no existe ningun registro previo en la base de datos
+            $variable = $ultimoRegistro[0]['idmensajerecibido']; //Se pasa el valor del array
             $ano = substr($variable, 0, 4); //Se separa el año del array
             if ($ano == $this->ano) {
                 $consecutivo = $variable + 1; //Se suma uno al id

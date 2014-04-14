@@ -8,16 +8,15 @@ use Doctrine\ORM\Mapping as ORM;
  * Mensajerecibido
  *
  * @ORM\Table(name="mensajerecibido", indexes={@ORM\Index(name="para_mensajeRecibido_idx", columns={"para"}), @ORM\Index(name="de_mnensajeRecibido_idx", columns={"de"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="GS\ProyectosBundle\Entity\MensajerecibidoRepository")
  */
-class Mensajerecibido
-{
+class Mensajerecibido {
+
     /**
      * @var string
      *
      * @ORM\Column(name="idmensajeRecibido", type="string", length=10, nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idmensajerecibido;
 
@@ -69,16 +68,25 @@ class Mensajerecibido
      */
     private $para;
 
-
-
     /**
      * Get idmensajerecibido
      *
      * @return string 
      */
-    public function getIdmensajerecibido()
-    {
+    public function getIdmensajerecibido() {
         return $this->idmensajerecibido;
+    }
+
+    /**
+     * Set idmensajerecibido
+     *
+     * @param string $idmensajerecibido
+     * @return Mensajeenviado
+     */
+    public function setIdmensajerecibido($idmensajerecibido) {
+        $this->idmensajerecibido = $idmensajerecibido;
+
+        return $this;
     }
 
     /**
@@ -87,8 +95,7 @@ class Mensajerecibido
      * @param string $asunto
      * @return Mensajerecibido
      */
-    public function setAsunto($asunto)
-    {
+    public function setAsunto($asunto) {
         $this->asunto = $asunto;
 
         return $this;
@@ -99,8 +106,7 @@ class Mensajerecibido
      *
      * @return string 
      */
-    public function getAsunto()
-    {
+    public function getAsunto() {
         return $this->asunto;
     }
 
@@ -110,8 +116,7 @@ class Mensajerecibido
      * @param string $mensaje
      * @return Mensajerecibido
      */
-    public function setMensaje($mensaje)
-    {
+    public function setMensaje($mensaje) {
         $this->mensaje = $mensaje;
 
         return $this;
@@ -122,8 +127,7 @@ class Mensajerecibido
      *
      * @return string 
      */
-    public function getMensaje()
-    {
+    public function getMensaje() {
         return $this->mensaje;
     }
 
@@ -133,8 +137,7 @@ class Mensajerecibido
      * @param \DateTime $fecha
      * @return Mensajerecibido
      */
-    public function setFecha($fecha)
-    {
+    public function setFecha($fecha) {
         $this->fecha = $fecha;
 
         return $this;
@@ -145,8 +148,7 @@ class Mensajerecibido
      *
      * @return \DateTime 
      */
-    public function getFecha()
-    {
+    public function getFecha() {
         return $this->fecha;
     }
 
@@ -156,8 +158,7 @@ class Mensajerecibido
      * @param boolean $revisado
      * @return Mensajerecibido
      */
-    public function setRevisado($revisado)
-    {
+    public function setRevisado($revisado) {
         $this->revisado = $revisado;
 
         return $this;
@@ -168,8 +169,7 @@ class Mensajerecibido
      *
      * @return boolean 
      */
-    public function getRevisado()
-    {
+    public function getRevisado() {
         return $this->revisado;
     }
 
@@ -179,8 +179,7 @@ class Mensajerecibido
      * @param \GS\ProyectosBundle\Entity\Usuario $de
      * @return Mensajerecibido
      */
-    public function setDe(\GS\ProyectosBundle\Entity\Usuario $de = null)
-    {
+    public function setDe(\GS\ProyectosBundle\Entity\Usuario $de = null) {
         $this->de = $de;
 
         return $this;
@@ -191,8 +190,7 @@ class Mensajerecibido
      *
      * @return \GS\ProyectosBundle\Entity\Usuario 
      */
-    public function getDe()
-    {
+    public function getDe() {
         return $this->de;
     }
 
@@ -202,8 +200,7 @@ class Mensajerecibido
      * @param \GS\ProyectosBundle\Entity\Usuario $para
      * @return Mensajerecibido
      */
-    public function setPara(\GS\ProyectosBundle\Entity\Usuario $para = null)
-    {
+    public function setPara(\GS\ProyectosBundle\Entity\Usuario $para = null) {
         $this->para = $para;
 
         return $this;
@@ -214,8 +211,8 @@ class Mensajerecibido
      *
      * @return \GS\ProyectosBundle\Entity\Usuario 
      */
-    public function getPara()
-    {
+    public function getPara() {
         return $this->para;
     }
+
 }

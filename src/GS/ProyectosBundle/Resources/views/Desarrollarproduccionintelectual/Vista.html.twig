@@ -36,23 +36,23 @@
         </blockquote></div>
     <div class="col-md-4">
         <blockquote>
-    <p>Director(es)</p>
+            <p>Director(es)</p>
     {%for usuario in temaUsuario%}
   {%if usuario.funcionusuario.nombre == "Director"   %}
-    <footer>{{ usuario.usuario.primernombre }} {{ usuario.usuario.segundonombre }} {{ usuario.usuario.primerapellido }} {{ usuario.usuario.segundoapellido }}</footer>
+            <footer>{{ usuario.usuario.primernombre }} {{ usuario.usuario.segundonombre }} {{ usuario.usuario.primerapellido }} {{ usuario.usuario.segundoapellido }}</footer>
   {% endif %}
      {% endfor %}
-</blockquote>
+        </blockquote>
     </div>
     <div class="col-md-4">
         <blockquote>
-    <p>Codirector(es)</p>
+            <p>Codirector(es)</p>
       {%for usuario in temaUsuario%}
   {%if usuario.funcionusuario.nombre == "Codirector"   %}
-    <footer>{{ usuario.usuario.primernombre }} {{ usuario.usuario.segundonombre }} {{ usuario.usuario.primerapellido }} {{ usuario.usuario.segundoapellido }}</footer>
+            <footer>{{ usuario.usuario.primernombre }} {{ usuario.usuario.segundonombre }} {{ usuario.usuario.primerapellido }} {{ usuario.usuario.segundoapellido }}</footer>
   {% endif %}
         {% endfor %}
-</blockquote>
+        </blockquote>
     </div>
 </div>
 
@@ -90,7 +90,8 @@
 <h4>Descripción:</h4>
 {{ descripcionTema|raw }}{# Decodificar html de la descripcion del tema #}
 <h4>Cronograma:</h4>
-
+  {%for usuario in temaUsuario%}
+  {%if usuario.funcionusuario.nombre == "Autor" and usuario.usuario.numerodocumentoidentidad == user   %}
 <div class="row">
     <div class="col-xs-6 col-md-4" style="border-color: #000;">
 
@@ -109,6 +110,8 @@
 
     </div>
 </div>
+{% endif %}
+{% endfor %}
 <table class="table table-hover " align="center">
     <thead>
         <tr>
@@ -133,10 +136,10 @@
     </tbody>
 </table>
 <h4>Bibliografia:</h4>
-
+ {%for usuario in temaUsuario%}
+  {%if usuario.funcionusuario.nombre == "Autor" and usuario.usuario.numerodocumentoidentidad == user   %}
 <div class="row">
     <div class="col-xs-6 col-md-4" style="border-color: #000;">
-
     </div>
     <div class="col-xs-12 col-sm-6 col-md-8" style="text-align: right;">
         <button type="button" class="btn btn-success btn-xs">
@@ -150,7 +153,8 @@
         </button>
     </div>
 </div>
-
+{% endif %}
+{% endfor %}
 <table class="table table-hover " align="center">
     <thead>
         <tr>
@@ -173,9 +177,10 @@
             <td>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Existelecturaconproposito', { 'id': bibliografia.bibliografia.idbibliografia })) }}</td>
             <td>{{ bibliografia.bibliografia.categoria.nombre }}</td>
             <td>{{ bibliografia.bibliografia.fecharegistro | date ('d-m-y') }}</td>
-            <td>  <a  href="{{ path('gs_proyectos_desarrollarproduccionintelectual_elementobibliografia_vista',{'id': bibliografia.bibliografia.idbibliografia}) }}" target="_blank" onClick="window.open(this.href, this.target, 'width=702,height=600'); return false;">
-                        <span class="glyphicon glyphicon-eye-open"></span> Ver
-                    </a></td>
+            <td>  <a  href="{{ path('gs_proyectos_desarrollarproduccionintelectual_elementobibliografia_vista',{'id': bibliografia.bibliografia.idbibliografia}) }}" target="_blank" onClick="window.open(this.href, this.target, 'width=702,height=600');
+                    return false;">
+                    <span class="glyphicon glyphicon-eye-open"></span> Ver
+                </a></td>
         </tr>
            {%endfor%}
     </tbody>

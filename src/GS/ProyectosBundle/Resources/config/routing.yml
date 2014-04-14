@@ -1,7 +1,3 @@
-gs_proyectos_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: GSProyectosBundle:Default:index }
-
 #
 #ADMINISTRAR PRODUCCION TEMA
 #
@@ -156,3 +152,38 @@ gs_proyectos_desarrollarproduccionintelectual_eliminaractividadcronograma:
 gs_proyectos_desarrollarproduccionintelectual_modificaractividadcronograma:
     pattern: usuario/produccionIntelectual/cronograma/modificarActividad
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Modificaractividadcronograma }
+
+#
+#MENSAJERIA
+#
+gs_proyectos_mensajes_numeromensajes:
+    pattern: usuario/mensajes/numeromensajes
+    defaults: { _controller: GSProyectosBundle:Mensajes:Numeromensajes }
+
+gs_proyectos_mensajes_enviar:
+    pattern: usuario/mensajes/enviar
+    defaults: { _controller: GSProyectosBundle:Mensajes:Enviar }
+
+gs_proyectos_mensajes_leer:
+    pattern: usuario/mensajes/leer
+    defaults: { _controller: GSProyectosBundle:Mensajes:Leer }
+
+gs_proyectos_mensajes_eliminar:
+    pattern: usuario/mensajes/eliminar�
+    defaults: { _controller: GSProyectosBundle:Mensajes:Eliminar }
+
+gs_proyectos_mensajes_buscar:
+    pattern: usuario/mensajes/
+    defaults: { _controller: GSProyectosBundle:Mensajes:Buscar }
+
+gs_proyectos_mensajes_buscarenviado:
+    pattern: usuario/mensajes/enviado
+    defaults: { _controller: GSProyectosBundle:Mensajes:Buscarenviado }
+
+gs_proyectos_mensajes_buscareliminado:
+    pattern: usuario/mensajes/eliminado
+    defaults: { _controller: GSProyectosBundle:Mensajes:Buscareliminado }
+
+gs_proyectos_mensajes_restaurar:
+    pattern: usuario/mensajes/restaurar
+    defaults: { _controller: GSProyectosBundle:Mensajes:Restaurar }

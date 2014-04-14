@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="usuario", uniqueConstraints={@ORM\UniqueConstraint(name="user_UNIQUE", columns={"user"})}, indexes={@ORM\Index(name="usuario_tipoDocumentoIdentidad_idx", columns={"tipoDocumentoIdentidad"}), @ORM\Index(name="usuario_tipoUsuario_idx", columns={"tipoUsuario"})})
  * @ORM\Entity(repositoryClass="GS\ProyectosBundle\Entity\UsuarioRepository")
  */
-class Usuario
-{
+class Usuario {
+
     /**
      * @var string
      *
@@ -61,8 +61,8 @@ class Usuario
      * @ORM\Column(name="telefonoCelular", type="string", length=45, nullable=true)
      */
     private $telefonocelular;
-    
-      /**
+
+    /**
      * @var string
      *
      * @ORM\Column(name="foto", type="string", length=100, nullable=true)
@@ -106,15 +106,12 @@ class Usuario
      */
     private $tipousuario;
 
-
-
     /**
      * Get numerodocumentoidentidad
      *
      * @return string 
      */
-    public function getNumerodocumentoidentidad()
-    {
+    public function getNumerodocumentoidentidad() {
         return $this->numerodocumentoidentidad;
     }
 
@@ -124,8 +121,7 @@ class Usuario
      * @param string $primernombre
      * @return Usuario
      */
-    public function setPrimernombre($primernombre)
-    {
+    public function setPrimernombre($primernombre) {
         $this->primernombre = $primernombre;
 
         return $this;
@@ -136,19 +132,17 @@ class Usuario
      *
      * @return string 
      */
-    public function getPrimernombre()
-    {
+    public function getPrimernombre() {
         return $this->primernombre;
     }
-    
-     /**
+
+    /**
      * Set foto
      *
      * @param string $foto
      * @return Usuario
      */
-    public function setFoto($foto)
-    {
+    public function setFoto($foto) {
         $this->foto = $foto;
 
         return $this;
@@ -159,8 +153,7 @@ class Usuario
      *
      * @return string 
      */
-    public function getFoto()
-    {
+    public function getFoto() {
         return $this->foto;
     }
 
@@ -170,8 +163,7 @@ class Usuario
      * @param string $segundonombre
      * @return Usuario
      */
-    public function setSegundonombre($segundonombre)
-    {
+    public function setSegundonombre($segundonombre) {
         $this->segundonombre = $segundonombre;
 
         return $this;
@@ -182,8 +174,7 @@ class Usuario
      *
      * @return string 
      */
-    public function getSegundonombre()
-    {
+    public function getSegundonombre() {
         return $this->segundonombre;
     }
 
@@ -193,8 +184,7 @@ class Usuario
      * @param string $primerapellido
      * @return Usuario
      */
-    public function setPrimerapellido($primerapellido)
-    {
+    public function setPrimerapellido($primerapellido) {
         $this->primerapellido = $primerapellido;
 
         return $this;
@@ -205,8 +195,7 @@ class Usuario
      *
      * @return string 
      */
-    public function getPrimerapellido()
-    {
+    public function getPrimerapellido() {
         return $this->primerapellido;
     }
 
@@ -216,8 +205,7 @@ class Usuario
      * @param string $segundoapellido
      * @return Usuario
      */
-    public function setSegundoapellido($segundoapellido)
-    {
+    public function setSegundoapellido($segundoapellido) {
         $this->segundoapellido = $segundoapellido;
 
         return $this;
@@ -228,8 +216,7 @@ class Usuario
      *
      * @return string 
      */
-    public function getSegundoapellido()
-    {
+    public function getSegundoapellido() {
         return $this->segundoapellido;
     }
 
@@ -239,8 +226,7 @@ class Usuario
      * @param string $telefonofijo
      * @return Usuario
      */
-    public function setTelefonofijo($telefonofijo)
-    {
+    public function setTelefonofijo($telefonofijo) {
         $this->telefonofijo = $telefonofijo;
 
         return $this;
@@ -251,8 +237,7 @@ class Usuario
      *
      * @return string 
      */
-    public function getTelefonofijo()
-    {
+    public function getTelefonofijo() {
         return $this->telefonofijo;
     }
 
@@ -262,8 +247,7 @@ class Usuario
      * @param string $telefonocelular
      * @return Usuario
      */
-    public function setTelefonocelular($telefonocelular)
-    {
+    public function setTelefonocelular($telefonocelular) {
         $this->telefonocelular = $telefonocelular;
 
         return $this;
@@ -274,8 +258,7 @@ class Usuario
      *
      * @return string 
      */
-    public function getTelefonocelular()
-    {
+    public function getTelefonocelular() {
         return $this->telefonocelular;
     }
 
@@ -285,8 +268,7 @@ class Usuario
      * @param \DateTime $fecharegistro
      * @return Usuario
      */
-    public function setFecharegistro($fecharegistro)
-    {
+    public function setFecharegistro($fecharegistro) {
         $this->fecharegistro = $fecharegistro;
 
         return $this;
@@ -297,8 +279,7 @@ class Usuario
      *
      * @return \DateTime 
      */
-    public function getFecharegistro()
-    {
+    public function getFecharegistro() {
         return $this->fecharegistro;
     }
 
@@ -308,8 +289,7 @@ class Usuario
      * @param \GS\ProyectosBundle\Entity\User $user
      * @return Usuario
      */
-    public function setUser(\GS\ProyectosBundle\Entity\User $user = null)
-    {
+    public function setUser(\GS\ProyectosBundle\Entity\User $user = null) {
         $this->user = $user;
 
         return $this;
@@ -320,8 +300,7 @@ class Usuario
      *
      * @return \GS\ProyectosBundle\Entity\User 
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 
@@ -331,8 +310,7 @@ class Usuario
      * @param \GS\ProyectosBundle\Entity\Tipodocumentoidentidad $tipodocumentoidentidad
      * @return Usuario
      */
-    public function setTipodocumentoidentidad(\GS\ProyectosBundle\Entity\Tipodocumentoidentidad $tipodocumentoidentidad = null)
-    {
+    public function setTipodocumentoidentidad(\GS\ProyectosBundle\Entity\Tipodocumentoidentidad $tipodocumentoidentidad = null) {
         $this->tipodocumentoidentidad = $tipodocumentoidentidad;
 
         return $this;
@@ -343,8 +321,7 @@ class Usuario
      *
      * @return \GS\ProyectosBundle\Entity\Tipodocumentoidentidad 
      */
-    public function getTipodocumentoidentidad()
-    {
+    public function getTipodocumentoidentidad() {
         return $this->tipodocumentoidentidad;
     }
 
@@ -354,8 +331,7 @@ class Usuario
      * @param \GS\ProyectosBundle\Entity\Tipousuario $tipousuario
      * @return Usuario
      */
-    public function setTipousuario(\GS\ProyectosBundle\Entity\Tipousuario $tipousuario = null)
-    {
+    public function setTipousuario(\GS\ProyectosBundle\Entity\Tipousuario $tipousuario = null) {
         $this->tipousuario = $tipousuario;
 
         return $this;
@@ -366,8 +342,7 @@ class Usuario
      *
      * @return \GS\ProyectosBundle\Entity\Tipousuario 
      */
-    public function getTipousuario()
-    {
+    public function getTipousuario() {
         return $this->tipousuario;
     }
 
@@ -377,10 +352,14 @@ class Usuario
      * @param string $numerodocumentoidentidad
      * @return Usuario
      */
-    public function setNumerodocumentoidentidad($numerodocumentoidentidad)
-    {
+    public function setNumerodocumentoidentidad($numerodocumentoidentidad) {
         $this->numerodocumentoidentidad = $numerodocumentoidentidad;
 
         return $this;
     }
+
+    public function __toString() {
+        return (string) $this->primernombre . ' ' . $this->primerapellido . ' ' . $this->segundoapellido. '  ' ;
+    }
+
 }

@@ -6,6 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class IndexController extends Controller
 {
+ /*
+  * Al cliente, hacer la peticion de acceso al index, se redirecciona a la ruta /login.
+  */
     function indexAction() {
          if ($this->get('security.context')->isGranted('ROLE_ADMINISTRADOR')) {//Existe una sesion con el usuario Rol User
 //            return $this->redirect($this->generateUrl('fundeuis_administrador_inicio'));

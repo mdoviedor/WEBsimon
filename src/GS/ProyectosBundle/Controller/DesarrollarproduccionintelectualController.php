@@ -27,8 +27,12 @@ class DesarrollarproduccionintelectualController extends Controller {
     /*
      * Produccion en desarrollo del usuario. 
      * Pagina inicia de acceso, tras inicio de sesión del usuario.
+     * A traves del username obtenido por la sesión del usuario se 
+     * consulta la trabla tema_usuario a traves del modelo TemaUsuario, así
+     * se trae toda la producción en desarrollo en la cual participa el Usuario,
+     * sea en calidad de Autor, Codirector o Director.  
+     * 
      */
-
     public function BuscarAction() {
         /*
          * Obtener username de la sesion
@@ -44,6 +48,13 @@ class DesarrollarproduccionintelectualController extends Controller {
 
         return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:buscar.html.twig', array('temaUsuario' => $temaUsuario));
     }
+    
+    /*
+     * Buscar los miembros que hacen parte del desarrollo. Sea cual sea la función. 
+     * Un metodo alternativo llamado desde algunas plantillas para mostrar a los 
+     * participantes. 
+     * 
+     */
 
     public function BuscarmiembroAction($tema, $funcion) {
         $em = $this->getDoctrine()->getManager();
@@ -57,7 +68,7 @@ class DesarrollarproduccionintelectualController extends Controller {
      * Se recibe el id correspondiente al idBibliografia de la que se requiere crear o modificar 
      * la lectura con proposito. 
      * Se comprueba que la lectura con proposito corresponda a la bibliografia del usuario
-     * que esta intentando crearla . 
+     * que esta intentando crearla; sino corresponde se restringe el acceso. 
      */
 
     function AgregarlecturapropositoAction(Request $request, $id) {
@@ -327,9 +338,8 @@ class DesarrollarproduccionintelectualController extends Controller {
 
         foreach ($temaUsuario as $value) {
             if ($value->getUsuario()->getNumerodocumentoidentidad() == $user) {
-
                 $descripcionTema = html_entity_decode($tema->getDescripcion()); // Decodificar caracteres especiales almacenados en la descripcion del Tema
-                return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:vista.html.twig', array('temaUsuario' => $temaUsuario, 'tema' => $tema, 'temaBibliografia' => $temaBibliografia, 'espacioTrabajo' => $espacioTrabajo, 'descripcionTema' => $descripcionTema, 'cronograma' => $cronograma));
+                return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:vista.html.twig', array('temaUsuario' => $temaUsuario, 'tema' => $tema, 'temaBibliografia' => $temaBibliografia, 'espacioTrabajo' => $espacioTrabajo, 'descripcionTema' => $descripcionTema, 'cronograma' => $cronograma, 'user'=>$user));
             }
         }
         return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_buscar')); // Ruta tomada si el usuario que intenta acceder no tiene privilegios.
