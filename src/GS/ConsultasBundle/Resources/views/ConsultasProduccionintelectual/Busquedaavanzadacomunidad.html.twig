@@ -1,0 +1,38 @@
+{% extends "::base.html.twig" %}
+{% block body %}  
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Titulo</th>
+            <th>Tipo de produccion intelectual</th>
+            <th>Autor(es)</th>
+            <th>Director(es)</th>
+            <th>Codirector(es)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%for produccionIntelectual in produccionesIntelectuales %}
+        <tr>
+            <td>
+                {{ produccionIntelectual.titulo}} 
+            </td>
+            <td>
+                {{ produccionIntelectual.tipoproduccion.nombre }} 
+            </td>
+            <td>
+                {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccionIntelectual.tema.idtema , 'funcion': '1' })) }}    
+            </td>
+            <td>
+                {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccionIntelectual.tema.idtema , 'funcion': '3' })) }}    
+            </td>
+              <td>
+                {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccionIntelectual.tema.idtema , 'funcion': '2' })) }}    
+            </td>
+            <td>
+                <a href="#">Ver más</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock%} 

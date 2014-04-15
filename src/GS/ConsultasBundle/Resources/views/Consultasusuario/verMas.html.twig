@@ -1,0 +1,51 @@
+{% extends "::base.html.twig" %}
+{% block body %}  
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Tipo de usuario</th>
+            <th>Documento de identidad</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Correo electrónico</th> 
+            <th>Telefono fijo</th>    
+            <th>Telefono celular</th> 
+            <th>Fecha de registro</th>
+            <th>Foto</th> 
+        </tr>
+    </thead>
+    <tbody>
+        {%for usuario in usuarios %}
+        <tr>
+            <td>
+                {{ usuario.tipousuario.nombre }} 
+            </td>
+            <td>
+                {{ usuario.numerodocumentoidentidad }} 
+            </td>
+            <td>
+                {{ usuario.primernombre }} {{ usuario.segundonombre }} 
+            </td>
+            <td>
+                {{ usuario.primerapellido }} {{ usuario.segundoapellido }} 
+            </td>
+            <td>
+                {{ usuario.user.email }} 
+            </td>   
+            <td>
+               {{ usuario.telefonofijo }} 
+            </td>
+            <td>
+               {{ usuario.telefonocelular }} 
+            </td>
+            <td>
+               {{ usuario.fecharegistro | date("m/d/Y")}} 
+            </td>
+            <td>
+               {{ usuario.foto }} 
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock%} 

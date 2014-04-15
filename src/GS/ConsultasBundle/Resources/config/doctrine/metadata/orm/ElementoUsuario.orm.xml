@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="ElementoUsuario" table="elemento_usuario">
+    <indexes>
+      <index name="elementoUsuario_usuario_idx" columns="usuario"/>
+      <index name="elementoUsuario_elementoInventario_idx" columns="elementoInventario"/>
+    </indexes>
+    <id name="idelementoUsuario" type="string" column="idelemento_usuario" length="10">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="fecha" type="datetime" column="fecha" nullable="false"/>
+    <field name="estado" type="string" column="estado" length="1" nullable="false"/>
+    <many-to-one field="elementoinventario" target-entity="Elementoinventario">
+      <join-columns>
+        <join-column name="elementoInventario" referenced-column-name="idelementoInventario"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="usuario" target-entity="Usuario">
+      <join-columns>
+        <join-column name="usuario" referenced-column-name="numeroDocumentoIdentidad"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,40 @@
+{% extends "::base.html.twig" %}
+{% block body %}  
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Seleccionar</th>
+            <th>Titulo del tema</th>
+            <th>Estado</th>
+            <th>Tiempo estimado</th>
+            <th>Descripcion</th>
+            <th>Fecha registro</th>
+            <th>Id</th>    
+        </tr>
+    </thead>
+    <tbody>
+        {%for tema in temas %}
+        <tr>
+            <td>
+                {{ tema.titulo }} 
+            </td>
+            <td>
+                {{ tema.estado }} 
+            </td>
+            <td>
+                {{ tema.tiempoestimado }} 
+            </td>
+            <td>
+                {{ tema.descripcion }} 
+            </td>
+             <td>
+               {{ tema.fecharegistro | date("m/d/Y")}} 
+            </td>
+            <td>
+                {{ tema.idtema }} 
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock%} 

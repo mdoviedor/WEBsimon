@@ -15,7 +15,6 @@ class AppKernel extends Kernel {
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-            new FOS\UserBundle\FOSUserBundle(),
             new GS\UserBundle\GSUserBundle(),
             new GS\InventarioBundle\GSInventarioBundle(),
             new GS\SemilleroBundle\GSSemilleroBundle(),
@@ -23,6 +22,7 @@ class AppKernel extends Kernel {
             new GS\ProyectosBundle\GSProyectosBundle(),
             new GS\UsuarioBundle\GSUsuarioBundle(),
             new GS\ConsultasBundle\GSConsultasBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

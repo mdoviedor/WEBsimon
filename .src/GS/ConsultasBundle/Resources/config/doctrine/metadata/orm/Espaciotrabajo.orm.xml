@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Espaciotrabajo" table="espaciotrabajo">
+    <indexes>
+      <index name="tema_espacioTrabajo_idx" columns="tema"/>
+    </indexes>
+    <id name="idespaciotrabajo" type="string" column="idespacioTrabajo" length="10">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="nombre" type="string" column="nombre" length="45" nullable="false"/>
+    <field name="compartirmiembros" type="boolean" column="compartirMiembros" nullable="false"/>
+    <field name="compartirdirector" type="boolean" column="compartirDirector" nullable="false"/>
+    <field name="url" type="string" column="url" length="400" nullable="false"/>
+    <many-to-one field="tema" target-entity="Tema">
+      <join-columns>
+        <join-column name="tema" referenced-column-name="idtema"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>
