@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="CategoriaArticulo" table="categoria_articulo">
+    <indexes>
+      <index name="categoria_categoriaArticulo_idx" columns="categoria"/>
+      <index name="articulo_categoriaArticulo_idx" columns="articuloo"/>
+    </indexes>
+    <id name="idcategoriaArticulo" type="string" column="idcategoria_articulo" length="10">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <many-to-one field="articuloo" target-entity="Articulo">
+      <join-columns>
+        <join-column name="articuloo" referenced-column-name="idarticulo"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="categoria" target-entity="Categoria">
+      <join-columns>
+        <join-column name="categoria" referenced-column-name="idcategoria"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

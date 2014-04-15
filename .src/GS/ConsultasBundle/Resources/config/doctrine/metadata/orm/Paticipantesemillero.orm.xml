@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Paticipantesemillero" table="paticipantesemillero">
+    <indexes>
+      <index name="semillero_participante_idx" columns="semillero"/>
+    </indexes>
+    <id name="idpaticipantesemillero" type="bigint" column="idpaticipanteSemillero">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="nombre" type="string" column="nombre" length="45" nullable="false"/>
+    <field name="apellido" type="string" column="apellido" length="45" nullable="false"/>
+    <field name="correoelectronico" type="string" column="correoElectronico" length="45" nullable="false"/>
+    <many-to-one field="semillero" target-entity="Semillero">
+      <join-columns>
+        <join-column name="semillero" referenced-column-name="idsemillero"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

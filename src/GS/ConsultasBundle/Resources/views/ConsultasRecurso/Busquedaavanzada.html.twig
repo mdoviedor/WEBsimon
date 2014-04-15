@@ -1,0 +1,43 @@
+{% extends "::base.html.twig" %}
+{% block body %}  
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Seleccionar</th>
+            <th>Nombre del recurso</th>
+            <th>Tipo de recurso</th>
+            <th>Creador</th>
+            <th>Fecha de registro</th>
+            <th>Id</th>    
+        </tr>
+    </thead>
+    <tbody>
+        {%for recurso in recursos %}
+        <tr>
+            <td>
+                <input type="radio" name="busquedaRecurso" value="{{ recurso.idrecursos }}" required="true">
+            </td>
+            <td>
+                {{ recurso.nombre }} 
+            </td>
+            <td>
+                {{ recurso.tiporecurso.nombre }} 
+            </td>
+            <td>
+                {{ recurso.usuario.primernombre }} 
+                {{ recurso.usuario.primerapellido}} 
+            </td>
+            <td>
+                {{ recurso.fecharegistro | date("m/d/Y")}} 
+            </td>
+            <td>
+                {{ recurso.idrecursos }} 
+            </td>
+            <td>
+               <a href="#">Ver más</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock%} 

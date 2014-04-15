@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Articulo" table="articulo">
+    <indexes>
+      <index name="prioridad_articulo_idx" columns="prioridad"/>
+      <index name="usuario_articulo_idx" columns="usuario"/>
+    </indexes>
+    <id name="idarticulo" type="string" column="idarticulo" length="10">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="titulo" type="string" column="titulo" length="100" nullable="false"/>
+    <field name="textointroduccion" type="string" column="textoIntroduccion" length="255" nullable="false"/>
+    <field name="fecharegistro" type="datetime" column="fechaRegistro" nullable="false"/>
+    <field name="fechamodificacion" type="datetime" column="fechaModificacion" nullable="false"/>
+    <field name="fechainiciopublicacion" type="datetime" column="fechaInicioPublicacion" nullable="false"/>
+    <field name="fechafinpublicacion" type="datetime" column="fechaFinPublicacion" nullable="true"/>
+    <field name="acceso" type="boolean" column="acceso" nullable="false"/>
+    <field name="mostrartitulo" type="boolean" column="mostrarTitulo" nullable="false"/>
+    <field name="mostrartextointroduccion" type="boolean" column="mostrarTextoIntroduccion" nullable="false"/>
+    <field name="mostrarcategoria" type="boolean" column="mostrarCategoria" nullable="false"/>
+    <field name="mostrarautor" type="boolean" column="mostrarAutor" nullable="false"/>
+    <field name="mostrarfechacreacion" type="boolean" column="mostrarFechaCreacion" nullable="false"/>
+    <field name="mostrarfechapublicacion" type="boolean" column="mostrarFechaPublicacion" nullable="false"/>
+    <field name="mostrarimage" type="boolean" column="mostrarImage" nullable="false"/>
+    <field name="image" type="string" column="image" length="255" nullable="true"/>
+    <field name="texto" type="text" column="texto" nullable="false"/>
+    <field name="vecesvisto" type="integer" column="vecesVisto" nullable="false"/>
+    <field name="estado" type="boolean" column="estado" nullable="false"/>
+    <field name="destacado" type="boolean" column="destacado" nullable="false"/>
+    <many-to-one field="usuario" target-entity="Usuario">
+      <join-columns>
+        <join-column name="usuario" referenced-column-name="numeroDocumentoIdentidad"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="prioridad" target-entity="Prioridad">
+      <join-columns>
+        <join-column name="prioridad" referenced-column-name="idprioridad"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>
