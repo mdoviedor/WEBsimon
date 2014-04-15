@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Accesousuario" table="accesousuario">
+    <indexes>
+      <index name="accesoUsuario_usuario_idx" columns="usuario"/>
+    </indexes>
+    <id name="idaccesousuario" type="string" column="idaccesoUsuario" length="10">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="fechaacceso" type="datetime" column="fechaAcceso" nullable="false"/>
+    <many-to-one field="usuario" target-entity="Usuario">
+      <join-columns>
+        <join-column name="usuario" referenced-column-name="numeroDocumentoIdentidad"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

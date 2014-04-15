@@ -1,3 +1,17 @@
 gs_contenidos_index:
     pattern:  /
     defaults: { _controller: GSContenidosBundle:Index:index }
+gs_contenidos_usuarios_ver:
+    pattern: contenidos/usuarios/ver
+    defaults: { _controller: GSContenidosBundle:Usuarios:Ver }
+
+gs_contenidos_produccionintelectual_buscar:
+    pattern: /contenidos/produccionIntelectual/{tamano}/{parametro}
+    defaults: { _controller: GSContenidosBundle:Produccionintelectual:Buscar, tamano: 30, parametro: xxx}
+    requirements:
+        tamano:  \d+
+        
+
+gs_contenidos_produccionintelectual_ver:
+    pattern: contenidos/produccionIntelectual/ver/
+    defaults: { _controller: GSContenidosBundle:Produccionintelectual:Ver }

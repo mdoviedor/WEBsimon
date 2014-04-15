@@ -20,8 +20,8 @@ class RedimencionarImagen {
         $original = imagecreatefromjpeg($rtOriginal);
 
 //Definir tamaño máximo y mínimo
-        $max_ancho = 150;
-        $max_alto = 150;
+        $max_ancho = 200;
+        $max_alto = 200;
 
 //Recoger ancho y alto de la original
         list($ancho, $alto) = getimagesize($rtOriginal);

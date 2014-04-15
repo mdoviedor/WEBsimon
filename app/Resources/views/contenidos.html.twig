@@ -1,0 +1,31 @@
+{% extends "::base.html.twig" %}
+{% block menu %}
+
+{% endblock %}
+
+{% block body %}
+<div class="container">
+
+<div class="page-header">
+{% block titulo %}
+{% endblock %}
+    </div>
+
+    <div class="row">
+        <div class="col-xs-6 col-md-4" style="border-color: #000;">
+            {% block submenuizquierdo %}
+            {% endblock %}
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-8" style="text-align: right;">
+             {% block submenuderecho %}
+            {% endblock %}
+        </div>
+    </div>
+
+{% block contenido %}
+{% endblock %}
+</div>
+
+{% endblock %}
+{% block javascripts %}
+{% endblock %}

@@ -1,0 +1,171 @@
+{% extends "::contenidos.html.twig" %}
+
+{% block title %}GSContenidosBundle:Usuarios:Ver{% endblock %}
+    {% block submenuizquierdo %}
+            {% endblock %}
+{% block submenuderecho %}
+            {% endblock %}
+{% block titulo %}
+<h1>Integrantes</h1>
+{% endblock %}
+
+
+{% block contenido %}
+
+<div style="width: auto;overflow-x: scroll;">
+    <table cellspacing="2">
+        <tbody>
+            <tr>
+              {%for usuario in usuarios %}
+                {% if usuario.user.enabled and usuario.tipousuario.idtipousuario == "5" %}
+                <td  width="305" align="center" >
+                    <table width="305">
+                        <tr>
+                            <td align="center" height="200" >
+                                <img src="../../{{ usuario.foto }}" width="200" alt="..." class="img-thumbnail">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <h4>{{ usuario.primernombre }} {{ usuario.segundonombre }} {{ usuario.primerapellido }} {{ usuario.segundoapellido }}</h4>
+                                <p>{{ usuario.user.email }}</p>
+                                <p><a href="#" class="btn btn-primary" role="button">Ver trabajo en el grupo</a></p>
+                            </td>
+                        </tr>
+                    </table>                
+                </td>
+                  {% endif %}  
+            {% endfor %}
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+<h3>Investigadores Asociados</h3>
+
+<div style="width: auto;overflow-x: scroll;">
+    <table cellspacing="2">
+        <tbody>
+            <tr>
+              {%for usuario in usuarios %}
+                {% if usuario.user.enabled and usuario.tipousuario.idtipousuario == "4" %}
+                <td  width="305" align="center" >
+                    <table width="305">
+                        <tr>
+                            <td align="center" height="200" >
+                                <img src="../../{{ usuario.foto }}" width="200" alt="..." class="img-thumbnail">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <h4>{{ usuario.primernombre }} {{ usuario.segundonombre }} {{ usuario.primerapellido }} {{ usuario.segundoapellido }}</h4>
+                                <p>{{ usuario.user.email }}</p>
+                                <p><a href="#" class="btn btn-primary" role="button">Ver trabajo en el grupo</a></p>
+                            </td>
+                        </tr>
+                    </table>                
+                </td>
+                  {% endif %}  
+            {% endfor %}
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+
+<h3>Estudiantes de Posgrado</h3>
+<div style="width: auto;overflow-x: scroll;">
+    <table cellspacing="2">
+        <tbody>
+            <tr>
+              {%for usuario in usuarios %}
+                {% if usuario.user.enabled and usuario.tipousuario.idtipousuario == "3" %}
+                <td  width="305" align="center" >
+                    <table width="305">
+                        <tr>
+                            <td align="center" height="200" >
+                                <img src="../../{{ usuario.foto }}" width="200" alt="..." class="img-thumbnail">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <h4>{{ usuario.primernombre }} {{ usuario.segundonombre }} {{ usuario.primerapellido }} {{ usuario.segundoapellido }}</h4>
+                                <p>{{ usuario.user.email }}</p>
+                                <p><a href="#" class="btn btn-primary" role="button">Ver trabajo en el grupo</a></p>
+                            </td>
+                        </tr>
+                    </table>                
+                </td>
+                  {% endif %}  
+            {% endfor %}
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+<h3>Estudiantes de pregrado</h3>
+<div style="width: auto;overflow-x: scroll;">
+    <table cellspacing="2">
+        <tbody>
+            <tr>
+              {%for usuario in usuarios %}
+                {% if usuario.user.enabled and usuario.tipousuario.idtipousuario == "2" %}
+                <td  width="305" align="center" >
+                    <table width="305">
+                        <tr>
+                            <td align="center" height="200" >
+                                <img src="../../{{ usuario.foto }}" width="200" alt="..." class="img-thumbnail">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <h4>{{ usuario.primernombre }} {{ usuario.segundonombre }} {{ usuario.primerapellido }} {{ usuario.segundoapellido }}</h4>
+                                <p>{{ usuario.user.email }}</p>
+                                <p><a href="#" class="btn btn-primary" role="button">Ver trabajo en el grupo</a></p>
+                            </td>
+                        </tr>
+                    </table>                
+                </td>
+                  {% endif %}  
+            {% endfor %}
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+<h3>Ex Integrantes</h3>
+<div style="width: auto;overflow-x: scroll;">
+    <table cellspacing="2">
+        <tbody>
+            <tr>
+              {%for usuario in usuarios %}
+                {% if usuario.user.enabled%}
+                 {% else %}
+                <td  width="305" align="center" >
+                    <table width="305">
+                        <tr>
+                            <td align="center" height="200" >
+                                <img src="../../{{ usuario.foto }}" width="200" alt="..." class="img-thumbnail">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <h4>{{ usuario.primernombre }} {{ usuario.segundonombre }} {{ usuario.primerapellido }} {{ usuario.segundoapellido }}</h4>
+                                <p>{{ usuario.user.email }}</p>
+                                <p>{{ usuario.tipousuario.nombre }}</p>
+                                <p><a href="#" class="btn btn-primary" role="button">Ver trabajo en el grupo</a></p>
+                            </td>
+                        </tr>
+                    </table>                
+                </td>
+                  {% endif %}  
+            {% endfor %}
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+{% endblock %}

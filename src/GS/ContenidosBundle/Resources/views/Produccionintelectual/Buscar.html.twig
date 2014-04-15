@@ -1,0 +1,125 @@
+{% extends "::contenidos.html.twig" %}
+
+{% block title %}Grupo Simon: Desarrollar Producción Intelectual{% endblock %}
+
+{% block titulo %}  
+<h1>Catalogo Bibliográfico</h1>
+{% endblock %}
+
+{% block submenuderecho %}    
+
+{% endblock %}
+
+{% block submenuizquierdo %}  
+<div class="form-inline">
+    <div class="form-group">
+        <input type="search" class="form-control" id="campoBuscar" name="campoBuscar">
+    </div>
+    <div class="form-group">
+        <button type="submit" id="botonBuscar" name="botonBuscar" class="btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-search"> Buscar</span> 
+        </button>
+    </div>
+</div>
+{% endblock %}
+
+{% block contenido %}
+<br>
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-8">  
+
+
+    </div>
+    <div class="col-xs-6 col-md-4">
+
+
+    </div>
+</div>
+<div id="catalogoBibliografico">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Titulo</th>
+                <th>Autor(es)</th>
+                <th>Director(es)</th>
+                <th>Codirector(es)</th>
+                <th>Fecha</th>
+                <th></th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+            {%for produccion in produccionIntelectual%}
+            <tr>
+                <td>
+                    {{ produccion.titulo | upper}}. <b>Tema:</b> {{ produccion.tema.titulo }}
+                </td>
+                <td>
+                   {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '1' })) }}
+                </td>
+                <td>
+                    {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '3' })) }}
+                </td>
+                <td>                         
+                     {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '2' })) }}
+                </td>
+                <td>
+                    {{ produccion.fecharegistro | date('m-Y') }}
+                </td>
+                <td>
+                    <a href="{{ path('gs_proyectos_desarrollarproduccionintelectual_catalogobibliografico_vista',{'id': produccion.idproduccionintelectual})}}">
+                        <span class="glyphicon glyphicon-eye-open"></span> Abrir
+                    </a>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr align="center">
+                <td colspan="6">
+                    <select >
+                        <option>30</option>
+                    </select>
+                </td>
+            </tr>
+        </tfoot>
+
+    </table>
+
+</div>
+
+{% endblock %}
+
+
+
+
+
+{% block javascripts %}
+{{ parent()}}
+<script type="text/javascript">
+    var x;
+            x = $(document);
+            x.ready(inicializarEventos);
+            function inicializarEventos() {
+            var btn;
+                    btn = $('#botonBuscar');
+                    btn.click(buscar);
+            }
+    function buscar() {
+    var parametro;
+            parametro = $('#campoBuscar').val();
+            if (parametro == "" || parametro == null){
+    var url;
+            url = "{{ path('gs_contenidos_produccionintelectual_buscar') }}";
+            window.open(url, '_parent');
+    } else {
+    var url;
+            url = "{{ path('gs_contenidos_produccionintelectual_buscar', {'tamano': 30, 'parametro': 'text'}) }}";
+            url = url.replace("text", parametro);
+            window.open(url, '_parent');
+    }
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="CategoriaSeminario" table="categoria_seminario">
+    <indexes>
+      <index name="categoriaSeminario_categoriaSeminario_idx" columns="categoriaPublicacion"/>
+      <index name="seminario_categoriaSeminario_idx" columns="seminario"/>
+    </indexes>
+    <id name="idcategoriaSeminario" type="string" column="idcategoria_seminario" length="10">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <many-to-one field="seminario" target-entity="Seminario">
+      <join-columns>
+        <join-column name="seminario" referenced-column-name="idseminario"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="categoriapublicacion" target-entity="Categoriapublicacion">
+      <join-columns>
+        <join-column name="categoriaPublicacion" referenced-column-name="idcategoriaPublicacion"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>
