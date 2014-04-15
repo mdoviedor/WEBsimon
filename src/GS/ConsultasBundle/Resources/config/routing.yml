@@ -27,5 +27,5 @@ gs_consultas_produccionintelectual_busquedaavanzadaadministrador:
     defaults: { _controller: GSConsultasBundle:ConsultasProduccionintelectual:Busquedaavanzada }
     
 gs_consultas_produccionintelectual_busquedaavanzadacomunidad:
-    pattern: consultas/produccionintelectual/busquedaAvanzada/{titulo}.{tipoproduccion}.{primernombre}.{primerapellido}.{numeroresultados}
+    pattern: consultas/produccionintelectual/busquedaAvanzada/{titulo}.{tipoproduccion}.{numeroresultados}.{primernombre}.{primerapellido}
     defaults: { _controller: GSConsultasBundle:ConsultasProduccionintelectual:Busquedaavanzadacomunidad }

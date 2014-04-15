@@ -25,101 +25,223 @@
 
 {% block contenido %}
 <br>
-<div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-8">  
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="collapsed">
+                    Filtros
+                </a>
+            </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="campoTitulo">Titulo</label>
+                        <input class="form-control" name="campoTitulo" id="campoTitulo">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="listaTipoProduccion">Tipo de Producción</label>
+                        <select id="listaTipoProduccion" name="listaTipoProduccion" class="form-control">
+                                    {%for tipo in tipoProduccion%}
+                            <option value="{{ tipo.idtipoproduccion }}"> {{ tipo.nombre }}</option>
+                                    {% endfor %}                        
+                        </select>
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="campoPrimerNombre">Primer Nombre</label>
+                        <input class="form-control" name="campoPrimerNombre" id="campoPrimerNombre">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="campoSegundoNombre">Primer Apellido</label>
+                        <input class="form-control" name="campoSegundoNombre" id="campoSegundoNombre" >
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <button type="submit" id="botonBuscarFiltro" name="botonBuscarFiltro" class="btn btn-default btn-sm">
+                                <span class="glyphicon glyphicon-search"> Buscar</span> 
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
     </div>
-    <div class="col-xs-6 col-md-4">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-8">  
 
 
+        </div>
+        <div class="col-xs-6 col-md-4">
+
+
+        </div>
     </div>
-</div>
-<div id="catalogoBibliografico">
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Titulo</th>
-                <th>Autor(es)</th>
-                <th>Director(es)</th>
-                <th>Codirector(es)</th>
-                <th>Fecha</th>
-                <th></th>
-            </tr>
+    <br>
+    <div id="catalogoBibliografico">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Titulo</th>
+                    <th>Autor(es)</th>
+                    <th>Director(es)</th>
+                    <th>Codirector(es)</th>
+                    <th>Fecha</th>
+                    <th></th>
+                </tr>
 
-        </thead>
+            </thead>
 
-        <tbody>
+            <tbody>
             {%for produccion in produccionIntelectual%}
-            <tr>
-                <td>
+                <tr>
+                    <td>
                     {{ produccion.titulo | upper}}. <b>Tema:</b> {{ produccion.tema.titulo }}
-                </td>
-                <td>
+                    </td>
+                    <td>
                    {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '1' })) }}
-                </td>
-                <td>
+                    </td>
+                    <td>
                     {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '3' })) }}
-                </td>
-                <td>                         
+                    </td>
+                    <td>                         
                      {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '2' })) }}
-                </td>
-                <td>
+                    </td>
+                    <td>
                     {{ produccion.fecharegistro | date('m-Y') }}
-                </td>
-                <td>
-                    <a href="{{ path('gs_proyectos_desarrollarproduccionintelectual_catalogobibliografico_vista',{'id': produccion.idproduccionintelectual})}}">
-                        <span class="glyphicon glyphicon-eye-open"></span> Abrir
-                    </a>
-                </td>
+                    </td>
+                    <td>
+                        <a href="{{ path('gs_proyectos_desarrollarproduccionintelectual_catalogobibliografico_vista',{'id': produccion.idproduccionintelectual})}}">
+                            <span class="glyphicon glyphicon-eye-open"></span> Abrir
+                        </a>
+                    </td>
 
-            </tr>
+                </tr>
             {% endfor %}
-        </tbody>
-        <tfoot>
-            <tr align="center">
-                <td colspan="6">
-                    <select >
-                        <option>30</option>
-                    </select>
-                </td>
-            </tr>
-        </tfoot>
+            </tbody>
+            <tfoot>
+                <tr align="center">
+                    <td colspan="6">
 
-    </table>
+                    </td>
+                </tr>
+            </tfoot>
 
-</div>
+        </table>
 
+    </div>    
+        <select class="center-block" id="listaTamano" name="listaTamano">
+            <option value="30">30</option>
+            <option value="60">60</option>
+            <option value="90">90</option>
+            <option value="120">120</option>
+            <option value="100000">Todos</option>                        
+        </select>
 {% endblock %}
-
-
-
-
 
 {% block javascripts %}
 {{ parent()}}
-<script type="text/javascript">
-    var x;
-            x = $(document);
-            x.ready(inicializarEventos);
-            function inicializarEventos() {
+    <script type="text/javascript">
+        var x;
+        x = $(document);
+        x.ready(inicializarEventos);
+        function inicializarEventos() {
             var btn;
-                    btn = $('#botonBuscar');
-                    btn.click(buscar);
-            }
-    function buscar() {
-    var parametro;
+            btn = $('#botonBuscar');
+            btn.click(buscar);
+            var btnFiltro;
+            btnFiltro = $('#botonBuscarFiltro');
+            btnFiltro.click(buscarFiltro);
+
+            var sltTamano;
+            sltTamano = $('#listaTamano');
+            sltTamano.change(buscarFiltroTamano);
+        }
+        function buscar() {
+            var parametro;
             parametro = $('#campoBuscar').val();
-            if (parametro == "" || parametro == null){
-    var url;
-            url = "{{ path('gs_contenidos_produccionintelectual_buscar') }}";
-            window.open(url, '_parent');
-    } else {
-    var url;
-            url = "{{ path('gs_contenidos_produccionintelectual_buscar', {'tamano': 30, 'parametro': 'text'}) }}";
-            url = url.replace("text", parametro);
-            window.open(url, '_parent');
-    }
-    }
-</script>
+            if (parametro == "" || parametro == null) {
+                var url;
+                url = "{{ path('gs_contenidos_produccionintelectual_buscar') }}";
+                window.open(url, '_self');
+            } else {
+                var url;
+                url = "{{ path('gs_contenidos_produccionintelectual_buscar', {'tamano': 100, 'parametro': 'text'}) }}";
+                url = url.replace("text", parametro);
+                window.open(url, '_self');
+            }
+        }
+        function buscarFiltro() {
+            var primerNombre;
+            var segundoNombre;
+            var titulo;
+            var tipoProduccion;
+            var tamano;
+
+            primerNombre = $('#campoPrimerNombre').val();
+            segundoNombre = $('#campoSegundoNombre').val();
+            titulo = $('#campoTitulo').val();
+            tipoProduccion = $('#listaTipoProduccion').val();
+            tamano = $('#listaTamano').val()
+            if (primerNombre == "" || primerNombre == null) {
+                primerNombre = "XXX";
+            }
+            if (segundoNombre == "" || segundoNombre == null) {
+                segundoNombre = "XXX";
+            }
+            if (titulo == "" || titulo == null) {
+                titulo = "XXX";
+            }
+
+            var url;
+            url = "{{ path('gs_consultas_produccionintelectual_busquedaavanzadacomunidad', {'titulo': 'text', 'tipoproduccion': 'text1', 'numeroresultados': 'text4', 'primernombre': 'text2', 'primerapellido': 'text3'}) }}";
+            url = url.replace("text", titulo);
+            url = url.replace("text1", tipoProduccion);
+            url = url.replace("text2", primerNombre);
+            url = url.replace("text3", segundoNombre);
+            url = url.replace("text4", tamano);
+            $('#catalogoBibliografico').load(url);
+
+        }
+        function buscarFiltroTamano() {
+
+            var primerNombre;
+            var segundoNombre;
+            var titulo;
+            var tipoProduccion;
+            var tamano;
+
+            primerNombre = $('#campoPrimerNombre').val();
+            segundoNombre = $('#campoSegundoNombre').val();
+            titulo = $('#campoTitulo').val();
+            tipoProduccion = $('#listaTipoProduccion').val();
+            tamano = $('#listaTamano').val()
+            if (primerNombre == "" || primerNombre == null) {
+                primerNombre = "XXX";
+            }
+            if (segundoNombre == "" || segundoNombre == null) {
+                segundoNombre = "XXX";
+            }
+            if (titulo == "" || titulo == null) {
+                titulo = "XXX";
+            }
+
+            var url;
+            url = "{{ path('gs_consultas_produccionintelectual_busquedaavanzadacomunidad', {'titulo': 'text', 'tipoproduccion': 'text1', 'numeroresultados': 'text4', 'primernombre': 'text2', 'primerapellido': 'text3'}) }}";
+            url = url.replace("text", titulo);
+            url = url.replace("text1", tipoProduccion);
+            url = url.replace("text2", primerNombre);
+            url = url.replace("text3", segundoNombre);
+            url = url.replace("text4", tamano);
+            $('#catalogoBibliografico').load(url);
+            inicializarEventos();
+        }
+
+    </script>
 {% endblock %}

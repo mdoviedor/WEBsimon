@@ -27,16 +27,13 @@ class ConsultasProduccionintelectualController extends Controller
       * debido a que tiene privilegios mas limitados
      * Implementada en la plantilla busqueda avanzada comunidad
      */
-          public function BusquedacomunidadAction($titulo,$tipoproduccion,$numeroresultados,$primernombre,$primerapellido,$estado)
+          public function BusquedaavanzadacomunidadAction($titulo,$tipoproduccion,$numeroresultados,$primernombre,$primerapellido)
         {
+             $estado = 3;
              $produccionIntelectual = new Produccionintelectual();
-             $em = $this->getDoctrine()->getEntityManager();
-             $produccionIntelectual = $em->getRepository('GSConsultasBundle:Produccionintelectual')->busquedaAvanzada($estado,$titulo,$tipoproduccion,$numeroresultados,$primernombre,$primerapellido);
-             
-
-             return $this->render('GSConsultasBundle:ConsultasProduccionintelectual:Busquedacomunidad.html.twig', array('produccionesIntelectuales' => $produccionIntelectual));
-
-
+             $em = $this->getDoctrine()->getManager();
+             $produccionIntelectual = $em->getRepository('GSConsultasBundle:Produccionintelectual')->busquedaAvanzada($estado,$titulo,$tipoproduccion,$numeroresultados,$primernombre,$primerapellido);            
+             return $this->render('GSConsultasBundle:ConsultasProduccionintelectual:Busquedaavanzadacomunidad.html.twig', array('produccionesIntelectuales' => $produccionIntelectual));
         }
     
 

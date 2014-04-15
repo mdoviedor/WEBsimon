@@ -24,6 +24,7 @@ class ProduccionintelectualRepository extends EntityRepository
                 . "(u.primerapellido LIKE :primerapellido AND p.titulo LIKE :titulo)OR "
                 . "(u.primerapellido LIKE :primerapellido AND p.tipoproduccion = :tipoproduccion)OR "
                 . "(p.titulo LIKE :titulo AND p.tipoproduccion = :tipoproduccion)OR "
+                . "(p.tipoproduccion = :tipoproduccion)OR "
                 . "(u.primernombre LIKE :primernombre AND u.primerapellido LIKE :primerapellido AND p.titulo LIKE :titulo)OR "
                 . "(u.primernombre LIKE :primernombre AND u.primerapellido LIKE :primerapellido AND p.tipoproduccion = :tipoproduccion)OR "
                 . "(u.primerapellido LIKE :primerapellido AND p.titulo LIKE :titulo AND p.tipoproduccion = :tipoproduccion)OR "

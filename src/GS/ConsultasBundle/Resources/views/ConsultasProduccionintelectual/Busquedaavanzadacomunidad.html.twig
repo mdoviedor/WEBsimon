@@ -4,35 +4,50 @@
     <thead>
         <tr>
             <th>Titulo</th>
-            <th>Tipo de produccion intelectual</th>
             <th>Autor(es)</th>
             <th>Director(es)</th>
             <th>Codirector(es)</th>
+            <th>Fecha</th>
+            <th></th>
         </tr>
+
     </thead>
+
     <tbody>
-        {%for produccionIntelectual in produccionesIntelectuales %}
+            {%for produccion in produccionesIntelectuales%}
         <tr>
             <td>
-                {{ produccionIntelectual.titulo}} 
+                    {{ produccion.titulo | upper}}. <b>Tema:</b> {{ produccion.tema.titulo }}
             </td>
             <td>
-                {{ produccionIntelectual.tipoproduccion.nombre }} 
+                   {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '1' })) }}
             </td>
             <td>
-                {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccionIntelectual.tema.idtema , 'funcion': '1' })) }}    
+                    {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '3' })) }}
+            </td>
+            <td>                         
+                     {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '2' })) }}
             </td>
             <td>
-                {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccionIntelectual.tema.idtema , 'funcion': '3' })) }}    
-            </td>
-              <td>
-                {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccionIntelectual.tema.idtema , 'funcion': '2' })) }}    
+                    {{ produccion.fecharegistro | date('m-Y') }}
             </td>
             <td>
-                <a href="#">Ver más</a>
+                <a href="{{ path('gs_proyectos_desarrollarproduccionintelectual_catalogobibliografico_vista',{'id': produccion.idproduccionintelectual})}}">
+                    <span class="glyphicon glyphicon-eye-open"></span> Abrir
+                </a>
+            </td>
+
+        </tr>
+            {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr align="center">
+            <td colspan="6">
+               
             </td>
         </tr>
-        {% endfor %}
-    </tbody>
+    </tfoot>
+
 </table>
+
 {% endblock%} 
