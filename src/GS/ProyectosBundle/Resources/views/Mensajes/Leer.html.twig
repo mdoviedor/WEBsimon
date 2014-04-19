@@ -1,7 +1,35 @@
-{% extends "::base.html.twig" %}
+{% extends "::usuario.html.twig" %}
+{% block title %}Grupo Simon: Usuario{% endblock %}
 
-{% block title %}GSProyectosBundle:Mensajes:Leer{% endblock %}
+{% block titulo %}  
+<h1>Mensajería</h1>
+{% endblock %}
+{% block submenuderecho %}  
+<a type="submit" class="btn btn-default btn-xs" id="botonComponer" href="{{ path('gs_proyectos_mensajes_enviar') }}">
+    <span class="glyphicon glyphicon-pencil"></span> Componer
+</a>
+<a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_mensajes_buscar') }}">
+    <span class="glyphicon glyphicon-log-out"></span> Salir
+</a>
+{% endblock %}
+{% block submenuizquierdo %}  
 
-{% block body %}
-<h1>Welcome to the Mensajes:Leer page</h1>
+{% endblock %}
+
+
+{% block contenido %}
+{{ mensaje | raw }}
+
+<br>
+<br>
+
+<address>
+    <em>  <strong>{{ mensajeRecibido.asunto }}</strong></em><br>
+    <em>   <strong>De: </strong>{{ mensajeRecibido.de  }}</em><br>
+    <em>   <strong>Enviado en: </strong>{{ mensajeRecibido.fecha | date}}</em><br>
+    <em>   <strong>Email: </strong> <a href="mailto:#">{{ mensajeRecibido.de.user.email }}</a></em>
+</address>
+
+{% endblock %}
+{% block javascripts %}
 {% endblock %}

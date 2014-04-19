@@ -5,6 +5,8 @@ namespace GS\ContenidosBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use GS\ContenidosBundle\Entity\Produccionintelectual;
 use GS\ContenidosBundle\Entity\Tipoproduccion;
+use GS\ContenidosBundle\Entity\TemaUsuario;
+use GS\ContenidosBundle\Entity\TemaBibliografia;
 
 class ProduccionintelectualController extends Controller {
 
@@ -17,8 +19,15 @@ class ProduccionintelectualController extends Controller {
         return $this->render('GSContenidosBundle:Produccionintelectual:Buscar.html.twig', array('produccionIntelectual' => $produccionintelectual, 'tipoProduccion' => $tipoProduccion));
     }
 
-    public function VerAction() {
-        
+    public function VerAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $produccionIntelectual = new Produccionintelectual();
+        $temaUsuario = new TemaUsuario();
+        $temaBibliografia = new TemaBibliografia();
+        $produccionIntelectual = $em->getRepository('GSProyectosBundle:Produccionintelectual')->find($id);
+        $temaUsuario = $em->getRepository('GSProyectosBundle:TemaUsuario')->findBy(array('tema' => $produccionIntelectual->getTema()->getIdtema()));
+        $temaBibliografia = $em->getRepository('GSProyectosBundle:TemaBibliografia')->findBy(array('tema' => $produccionIntelectual->getTema()->getIdtema()));
+        return $this->render('GSContenidosBundle:Produccionintelectual:Ver.html.twig', array('produccionIntelectual' => $produccionIntelectual, 'temaUsuario' => $temaUsuario, 'temaBibliografia' => $temaBibliografia));
     }
 
 }

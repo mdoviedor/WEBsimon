@@ -7,88 +7,87 @@
     <div class="page-header">
         <h1>Ficha Bibliográfica:</h1>
     </div>
-
-
-    <h3>Tipo elemento bibliográfico:</h3>
-{{ bibliografia.tipoelementobibliografico.nombre  }}
-    <h3>Categoría:</h3>
-{{ bibliografia.categoria.nombre  }}
-    <h3>Nombre:</h3>
-{{ bibliografia.nombre  }}
-    <h3>Autores:</h3>
-{{ bibliografia.autores  }}
-    <h3>Traducción</h3>
+    <pre>
+ <h3>Tipo elemento bibliográfico:</h3>
+    {{ bibliografia.tipoelementobibliografico.nombre  }}        
+<h3>Categoría:</h3>
+    {{ bibliografia.categoria.nombre  }}
+<h3>Nombre:</h3>
+    {{ bibliografia.nombre  }}
+<h3>Autores:</h3>
+    {{ bibliografia.autores  }}
+<h3>Traducción</h3>
 {%if bibliografia.traduccion %}
     SI
 {% else %}
     NO
 {% endif %}
-    <h3>Fecha de edición:</h3>
-{{ bibliografia.fechaedicion | date('D-M-Y')  }}
-    <h3>Editorial:</h3>
-{{ bibliografia.editorial }}
-    <h3>Resumen:</h3>
-{{ bibliografia.resumen  }}
-    <h3>Recomendaciones de uso:</h3>
-{{ bibliografia.recomendacionesuso  }}
-    <h3>Tabla de contenido:</h3>
-{{ bibliografia.tablacontenido  }}
-    <h3>Palabras clave:</h3>
-{{ bibliografia.palabrasclave  }}
-    <h3>Area de investigación:</h3>
-{{ bibliografia.areainvestigacion.nombre }}
-    <h3>Ubicación:</h3>
-{{ bibliografia.ubicacion }}
+<h3>Fecha de edición:</h3>
+    {{ bibliografia.fechaedicion | date('D-M-Y')  }}
+<h3>Editorial:</h3>
+    {{ bibliografia.editorial }}
+<h3>Resumen:</h3>
+    {{ bibliografia.resumen  }}
+<h3>Recomendaciones de uso:</h3>
+    {{ bibliografia.recomendacionesuso  }}
+<h3>Tabla de contenido:</h3>
+    {{ bibliografia.tablacontenido  }}
+<h3>Palabras clave:</h3>
+    {{ bibliografia.palabrasclave  }}
+<h3>Area de investigación:</h3>
+    {{ bibliografia.areainvestigacion.nombre }}
+<h3>Ubicación:</h3>
+    {{ bibliografia.ubicacion }}
+    </pre>
     <div class="page-header">
         <h1>Ficha Bibliográfica:<small> Lectura con proposito</small></h1>
     </div>
 {%for lectura in lecturaConProposito%}
-    <h3>Poropósito general de la lectura</h3>
-{{ lectura.propositogeneral }}
-    <h2>Inspección previa del contenido de la lectura: </h2>
+    <pre>
+<h3>Poropósito general de la lectura</h3>
+    {{ lectura.propositogeneral }}
+<h2>Inspección previa del contenido de la lectura: </h2>
     <h3>1. Ttítulos de los subcapítulos </h3>
-{{ lectura.titulosubcapitulos }}
+        {{ lectura.titulosubcapitulos }}
     <h3>2. Existe un resumen al principio o al final de los capítulos ?</h3>
 {%if lectura.resumen %}
-    SI
+        SI
 {% else %}
-    NO
+        NO
 {% endif %}
     <h3>3. Existe preguntas al final de los capítulos ?</h3>
 {%if lectura.preguntasfinalcapitulo %}
-    SI
+        SI
 {% else %}
-    NO
+        NO
 {% endif %}
     <h3>4. Existe un glosario o una lista de vocabulario al final del texto ?</h3>
 {%if lectura.glosario %}
-    SI
+        SI
 {% else %}
-    NO
+        NO
 {% endif %}
     <h3>5. Secciones que componen el texto</h3>
-{{ lectura.secciones }}
+        {{ lectura.secciones }}
     <h3>6. Descripción de las ilustraciones, graficas, esquemas, tablas o cuadros del texto</h3>
-{{ lectura.descripcionilustraciones }}
+        {{ lectura.descripcionilustraciones }}
     <h3>7. Resumen de la lectura</h3>
-{{ lectura.resumenlectura }}
-    <h2>Preguntar y predecir: </h2>
-    <h3>Inquietudes, problemas o intereses con relación
-        al proyecto que se podrían satisfacer con el contenido de esta lectura</h3>
-{{ lectura.preguntas }}
-    <h2>Leer con proposito: </h2>
+        {{ lectura.resumenlectura }}
+<h2>Preguntar y predecir: </h2>
+    <h3>Inquietudes, problemas o intereses con relación al proyecto que se podrían satisfacer con el contenido de esta lectura</h3>
+        {{ lectura.preguntas }}
+<h2>Leer con proposito: </h2>
     <h3>Posibles respuestas a 
         las preguntas que formulo anteriormente </h3>
-    {{ lectura.lecturaproposito }}
-    <h2>Resumir: </h2>
-    <h3>Breve resumen de cada capitulo o parte de acuerdo con los subtítulos y secciones,
-        a su vez una lista de las palabras clave que se descubre en cada una</h3>
-    {{ lectura.resumenseccion }}
-    <h2>Aplicar y transferir: </h2>
-    <h3>Recomendación sobre
-        la posible utilidad de esta lectura para el trabajo de investigación </h3>
-    {{ lectura.recomendaciones }}
+        {{ lectura.lecturaproposito }}
+<h2>Resumir: </h2>
+    <h3>Breve resumen de cada capitulo o parte de acuerdo con los subtítulos y secciones, a su vez una lista de las palabras clave que se descubre en cada una</h3>
+        {{ lectura.resumenseccion }}
+<h2>Aplicar y transferir: </h2>
+    <h3>Recomendación sobre la posible utilidad de esta lectura para el trabajo de investigación </h3>
+        {{ lectura.recomendaciones }}
 {% endfor  %}
+</pre>
     <br>
     <br>
 </div>

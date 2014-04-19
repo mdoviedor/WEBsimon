@@ -4,7 +4,8 @@
 {% block titulo %}  
 <h1>Mensajería</h1>
 {% endblock %}
-{% block submenuderecho %}      
+{% block submenuderecho %}   
+
 {% endblock %}
 {% block submenuizquierdo %}      
 {% endblock %}
@@ -12,6 +13,18 @@
 
 {% block contenido %}
 <form role="form"  action="{{ path('gs_proyectos_mensajes_enviar') }}" method="post" {{ form_enctype(formMensajeEnviado) }}>
+
+    <div class="row">
+        <div class="col-md-8"></div>
+        <div class="col-md-4">
+<button type="submit" class="btn btn-default btn-xs" id="botonEnviar">
+    <span class="glyphicon glyphicon-send"></span> Enviar
+</button>
+<a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_mensajes_buscar') }}">
+    <span class="glyphicon glyphicon-log-out"></span> Salir
+</a>
+</div>
+    </div>
     {{ form_errors(formMensajeEnviado) }}
     <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-8">  
@@ -24,6 +37,8 @@
             </textarea>
         </div>
         <div class="col-xs-6 col-md-4">
+            <br>
+            <br>
             <div style="width: auto; height: 400px; overflow-y: scroll;" >   
                 <div class="checkbox">
                 {%for usuario in usuarios%}
@@ -36,7 +51,7 @@
     </div>
 
         {{ form_rest(formMensajeEnviado) }}
-    <input type="submit">
+   
 </form>
 {% endblock %}
    {% block javascripts %}

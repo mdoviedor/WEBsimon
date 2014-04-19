@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Mensajeborrado
  *
  * @ORM\Table(name="mensajeborrado", indexes={@ORM\Index(name="para_mensajeBorrado_idx", columns={"para"}), @ORM\Index(name="de_mensajeBorrado_idx", columns={"de"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="GS\ProyectosBundle\Entity\MensajeborradoRepository")
  */
 class Mensajeborrado
 {
@@ -17,7 +17,6 @@ class Mensajeborrado
      *
      * @ORM\Column(name="idmensajeBorrado", type="string", length=10, nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idmensajeborrado;
 
@@ -79,6 +78,17 @@ class Mensajeborrado
     public function getIdmensajeborrado()
     {
         return $this->idmensajeborrado;
+    }
+        /**
+     * Set idmensajeborrado
+     *
+     * @param string $idmensajeborrado
+     * @return Mensajeborrado
+     */
+    public function setIdmensajeborrado($idmensajeborrado)
+    {
+        $this->idmensajeborrado = $idmensajeborrado;
+        return $this;
     }
 
     /**

@@ -101,7 +101,7 @@ gs_proyectos_desarrollarproduccionintelectual_vista:
 
     #Se pasa el idbibliografia correspondiente al modelo Bibliografia
 gs_proyectos_desarrollarproduccionintelectual_elementobibliografia_vista: 
-    pattern: usuario/produccionIntelectual/bibliografia/vista/{id} 
+    pattern: produccionIntelectual/bibliografia/vista/{id} 
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Bibliografiavista }
     
 #
@@ -164,25 +164,36 @@ gs_proyectos_mensajes_enviar:
     pattern: usuario/mensajes/enviar
     defaults: { _controller: GSProyectosBundle:Mensajes:Enviar }
 
+#Se pasa el idmensajerecibido correspondiente al modelo MensajeRecibido
 gs_proyectos_mensajes_leer:
-    pattern: usuario/mensajes/leer
+    pattern: usuario/mensajes/leer/{id}
     defaults: { _controller: GSProyectosBundle:Mensajes:Leer }
+    requirements:
+        id:  \d+ 
 
 gs_proyectos_mensajes_eliminar:
-    pattern: usuario/mensajes/eliminar�
+    pattern: usuario/mensajes/eliminar/{id}
     defaults: { _controller: GSProyectosBundle:Mensajes:Eliminar }
+    requirements:
+        id:  \d+ 
 
 gs_proyectos_mensajes_buscar:
-    pattern: usuario/mensajes/
-    defaults: { _controller: GSProyectosBundle:Mensajes:Buscar }
+    pattern: usuario/mensajes/{limite}
+    defaults: { _controller: GSProyectosBundle:Mensajes:Buscar, limite: 30 }
+    requirements:
+        limite:  \d+ 
 
 gs_proyectos_mensajes_buscarenviado:
-    pattern: usuario/mensajes/enviado
-    defaults: { _controller: GSProyectosBundle:Mensajes:Buscarenviado }
+    pattern: usuario/mensajes/enviado/{limite}
+    defaults: { _controller: GSProyectosBundle:Mensajes:Buscarenviado, limite: 30 }
+    requirements:
+        limite:  \d+ 
 
 gs_proyectos_mensajes_buscareliminado:
-    pattern: usuario/mensajes/eliminado
-    defaults: { _controller: GSProyectosBundle:Mensajes:Buscareliminado }
+    pattern: usuario/mensajes/eliminado/{limite}
+    defaults: { _controller: GSProyectosBundle:Mensajes:Buscareliminado, limite: 30 }
+    requirements:
+        limite:  \d+ 
 
 gs_proyectos_mensajes_restaurar:
     pattern: usuario/mensajes/restaurar

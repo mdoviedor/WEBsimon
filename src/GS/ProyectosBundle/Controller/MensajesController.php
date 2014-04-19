@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use GS\ProyectosBundle\Entity\Mensajeenviado;
 use GS\ProyectosBundle\Entity\Mensajerecibido;
+use GS\ProyectosBundle\Entity\Mensajeborrado;
 use GS\ProyectosBundle\Entity\Usuario;
 use GS\ProyectosBundle\Entity\User;
 use GS\ProyectosBundle\Form\MensajeenviadoType;
@@ -94,24 +95,115 @@ class MensajesController extends Controller {
         return $this->render('GSProyectosBundle:Mensajes:Enviar.html.twig', array('formMensajeEnviado' => $formMensajeEnviado->createView(), 'usuarios' => $usuarios));
     }
 
-    public function LeerAction() {
-        
+    public function LeerAction($id) {
+        /*
+         * Obtener username de la sesion
+         */
+        $userManager = $this->get('security.context')->getToken()->getUser();
+        $user = $userManager->getUsername();
+        /*
+         * 
+         */
+        $mensajeRecibido = new Mensajerecibido();
+        $em = $this->getDoctrine()->getManager();
+        $mensajeRecibido = $em->getRepository('GSProyectosBundle:MensajeRecibido')->find($id);
+        if ($user == $mensajeRecibido->getPara()->getNumerodocumentoidentidad()) {
+
+            $mensajeRecibido->setRevisado(true);
+            $em->persist($mensajeRecibido);
+            $em->flush($mensajeRecibido);
+
+
+            $mensaje = html_entity_decode($mensajeRecibido->getMensaje()); //Decodificar caracteres especiales utiliciados para almacenar el mensaje
+
+            return $this->render('GSProyectosBundle:Mensajes:Leer.html.twig', array('mensajeRecibido' => $mensajeRecibido, 'mensaje' => $mensaje));
+        } else {
+            return $this->redirect($this->generateUrl('gs_proyectos_mensajes_buscar'));
+        }
     }
 
-    public function EliminarAction() {
-        
+    public function EliminarAction($id) {
+        /*
+         * Obtener username de la sesion
+         */
+        $userManager = $this->get('security.context')->getToken()->getUser();
+        $user = $userManager->getUsername();
+        /*
+         * 
+         */
+        $identificadorFecha = new IdentificadorFecha(); //Objeto de la clase identificador fecha
+        $mensajeRecibido = new Mensajerecibido();
+        $mensajeBorrado = new Mensajeborrado();
+        $em = $this->getDoctrine()->getManager();
+        $mensajeRecibido = $em->getRepository('GSProyectosBundle:MensajeRecibido')->find($id);
+        if ($user == $mensajeRecibido->getPara()->getNumerodocumentoidentidad()) {
+            $fechaRegistro = new \DateTime("now");
+            $ultimoRegistro = $em->getRepository('GSProyectosBundle:Mensajeborrado')->buscarUltimoMensajeBorrado();
+            $mensajeBorrado->setIdmensajeborrado($identificadorFecha->generarIdMensajeBorrado($ultimoRegistro));
+            $mensajeBorrado->setAsunto($mensajeRecibido->getAsunto());
+            $mensajeBorrado->setMensaje($mensajeRecibido->getMensaje());
+            $para = $em->getRepository('GSProyectosBundle:Usuario')->find($mensajeRecibido->getPara()->getNumerodocumentoidentidad());
+            $de = $em->getRepository('GSProyectosBundle:Usuario')->find($mensajeRecibido->getDe()->getNumerodocumentoidentidad());
+            $mensajeBorrado->setPara($para);
+            $mensajeBorrado->setDe($de);
+            $mensajeBorrado->setRevisado($mensajeRecibido->getRevisado());
+            $mensajeBorrado->setFecha($fechaRegistro);
+
+            $em->persist($mensajeBorrado);
+            $em->flush($mensajeBorrado);
+
+            $em->remove($mensajeRecibido);
+            $em->flush($mensajeRecibido);
+
+            return $this->redirect($this->generateUrl('gs_proyectos_mensajes_buscar'));
+        } else {
+            return $this->redirect($this->generateUrl('gs_proyectos_mensajes_buscar'));
+        }
     }
 
-    public function BuscarAction() {
-        return $this->render('GSProyectosBundle:Mensajes:Buscar.html.twig');
+    public function BuscarAction($limite) {
+        /*
+         * Obtener username de la sesion
+         */
+        $userManager = $this->get('security.context')->getToken()->getUser();
+        $user = $userManager->getUsername();
+        /*
+         * 
+         */
+        $mensajeRecibido = new Mensajerecibido();
+        $em = $this->getDoctrine()->getManager();
+        $mensajeRecibido = $em->getRepository('GSProyectosBundle:MensajeRecibido')->findBy(array('para' => $user), array('fecha' => 'DESC'), $limite);
+        return $this->render('GSProyectosBundle:Mensajes:Buscar.html.twig', array('recibidos' => $mensajeRecibido, 'limite' => $limite));
     }
 
-    public function BuscarenviadoAction() {
-        
+    public function BuscarenviadoAction($limite) {
+        /*
+         * Obtener username de la sesion
+         */
+        $userManager = $this->get('security.context')->getToken()->getUser();
+        $user = $userManager->getUsername();
+        /*
+         * 
+         */
+        $mensajeEnviado = new Mensajeenviado();
+        $em = $this->getDoctrine()->getManager();
+        $mensajeEnviado = $em->getRepository('GSProyectosBundle:Mensajeenviado')->findBy(array('de' => $user), array('fecha' => 'DESC'), $limite);
+        return $this->render('GSProyectosBundle:Mensajes:Buscarenviado.html.twig', array('enviados' => $mensajeEnviado, 'limite' => $limite));
     }
 
-    public function BuscareliminadoAction() {
-        
+    public function BuscareliminadoAction($limite) {
+        /*
+         * Obtener username de la sesion
+         */
+        $userManager = $this->get('security.context')->getToken()->getUser();
+        $user = $userManager->getUsername();
+        /*
+         * 
+         */
+        $mensajeBorrado = new Mensajeborrado();
+        $em = $this->getDoctrine()->getManager();
+        $mensajeBorrado = $em->getRepository('GSProyectosBundle:Mensajeborrado')->findBy(array('para' => $user), array('fecha' => 'DESC'), $limite);
+        return $this->render('GSProyectosBundle:Mensajes:Buscareliminado.html.twig', array('eliminados' => $mensajeBorrado, 'limite' => $limite));
     }
 
     public function RestaurarAction() {
@@ -130,7 +222,7 @@ class MensajesController extends Controller {
         $recibido = new Mensajerecibido();
         $em = $this->getDoctrine()->getManager();
         $recibido = $em->getRepository('GSProyectosBundle:Mensajerecibido')->contarMensajesNoLeidos($user);
-        
+
 
         return $this->render('GSProyectosBundle:Mensajes:Numeromensajes.html.twig', array('recibido' => $recibido[0]));
     }

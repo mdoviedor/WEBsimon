@@ -1,7 +1,178 @@
-{% extends "::base.html.twig" %}
+{% extends "::usuario.html.twig" %}
+{% block title %}Grupo Simon: Usuario{% endblock %}
 
-{% block title %}GSProyectosBundle:Mensajes:Buscar{% endblock %}
+{% block titulo %}  
+<h1>Mensajería</h1>
+{% endblock %}
+{% block submenuderecho %} 
+<a type="submit" class="btn btn-default btn-xs" id="botonComponer" href="{{ path('gs_proyectos_mensajes_enviar') }}">
+    <span class="glyphicon glyphicon-pencil"></span> Componer
+</a>
+<a type="submit" class="btn btn-danger btn-xs" id="botonEliminarMenu">
+    <span class="glyphicon glyphicon-trash"></span> Eliminar
+</a>
 
-{% block body %}
-<h1>Welcome to the Mensajes:Buscar page</h1>
+{% endblock %}
+{% block submenuizquierdo %} 
+
+{% endblock %}
+
+
+{% block contenido %}
+<ul class="nav nav-tabs">
+  <li class="active"><a href="{{ path('gs_proyectos_mensajes_buscar') }}">Mensajes Recibidos</a></li>
+  <li><a href="{{ path('gs_proyectos_mensajes_buscarenviado')}}">Mensajes Enviados</a></li>
+  <li><a href="{{ path('gs_proyectos_mensajes_buscareliminado')}}">Mensajes Borrados</a></li>
+</ul>
+<table class="table table-condensed table-hover">
+    <thead>
+        <tr>
+            <th>
+
+            </th>
+            <th>
+                Asunto
+            </th>
+            <th>
+                De
+            </th>
+            <th>
+                Fecha
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {%for recibido in recibidos%}
+
+        <tr {%if recibido.revisado%}{%else%} class="info" {% endif %}>
+            <td>
+                <input type="radio" id="radioMensaje" name="radioMensaje" value="{{recibido.idmensajerecibido}}">
+            </td>
+            <td>
+                {{ recibido.asunto }}
+            </td>
+            <td>
+                {{ recibido.de }}
+            </td>
+            <td>
+                {{ recibido.fecha | date }}
+            </td>
+            <td>
+                <a href="{{ path('gs_proyectos_mensajes_leer',{'id': recibido.idmensajerecibido})}}">
+                    <span class="glyphicon glyphicon-eye-open"></span> Abrir
+                </a>             
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<select class="center-block" id="listaTamano" name="listaTamano">
+    <option>
+        {{limite}}
+    </option>    
+    {% for i in range(low=0, high=100, step=10) %}
+    <option>
+        {{i}}
+    </option>
+{% endfor %}
+
+</select>
+
+{% endblock %}
+{% block javascripts %}
+{{ parent()}}
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Alerta</h4>
+            </div>
+            <div class="modal-body">
+                Realmente desea eliminar este contenido. 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+                <button type="button" class="btn btn-danger" id="botonEliminar" name="botonEliminar"  href="#">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade " id="radioVacio" tabindex="-1" role="dialog" aria-labelledby="radioVacioLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Alerta</h4>
+            </div>
+            <div class="modal-body">
+                Usted no ha seleccionado ningun elemento. Intentelo de nuevo. 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var x;
+    x = $(document);
+    x.ready(inicializarEventos);
+    function inicializarEventos() {
+
+        var btnEliminar;
+        btnEliminar = $('#botonEliminar');
+        btnEliminar.click(eliminarElemento);
+
+        var btnEliminarMenu;
+        btnEliminarMenu = $('#botonEliminarMenu');
+        btnEliminarMenu.click(eliminarElementoMenu);
+
+        var sltTamano;
+        sltTamano = $('#listaTamano');
+        sltTamano.change(buscarTamano);
+    }
+
+    function eliminarElementoMenu() {
+
+        var rdMensaje;
+        rdMensaje = $('#radioMensaje:checked').val()
+        if (rdMensaje == "" || rdMensaje == null) {
+            $('#radioVacio').modal('show');
+        } else {
+            $('#myModal').modal('show');
+        }
+
+    }
+    function eliminarElemento() {
+        var rdMensaje;
+        rdMensaje = $('#radioMensaje:checked').val()
+        alert(rdMensaje);
+        var url;
+        url = "{{ path('gs_proyectos_mensajes_eliminar', {'id': 'text'}) }}";
+        url = url.replace("text", rdMensaje);
+        window.open(url, '_self');
+    }
+
+    function buscarTamano() {
+
+        var tamano;
+        tamano = $('#listaTamano').val()
+        var url;
+        url = "{{ path('gs_proyectos_mensajes_buscar', {'limite': 'text'}) }}";
+        url = url.replace("text", tamano);
+        window.open(url, '_self');
+        inicializarEventos();
+    }
+
+</script>
 {% endblock %}
