@@ -171,9 +171,35 @@ gs_proyectos_mensajes_leer:
     requirements:
         id:  \d+ 
 
+#Se pasa el idmensajeenviado correspondiente al modelo Mensajeenviado
+gs_proyectos_mensajes_leerenviado:
+    pattern: usuario/mensajes/leerenviado/{id}
+    defaults: { _controller: GSProyectosBundle:Mensajes:Leerenviado }
+    requirements:
+        id:  \d+ 
+
+#Se pasa el idmensajeeliminado correspondiente al modelo Mensajeeliminado
+gs_proyectos_mensajes_leereliminado:
+    pattern: usuario/mensajes/leereliminado/{id}
+    defaults: { _controller: GSProyectosBundle:Mensajes:Leereliminado }
+    requirements:
+        id:  \d+ 
+
+
 gs_proyectos_mensajes_eliminar:
     pattern: usuario/mensajes/eliminar/{id}
     defaults: { _controller: GSProyectosBundle:Mensajes:Eliminar }
+    requirements:
+        id:  \d+ 
+gs_proyectos_mensajes_eliminarenviado:
+    pattern: usuario/mensajes/eliminarenviado/{id}
+    defaults: { _controller: GSProyectosBundle:Mensajes:Eliminarenviado }
+    requirements:
+        id:  \d+ 
+        
+gs_proyectos_mensajes_eliminarborrado:
+    pattern: usuario/mensajes/eliminarborrado/{id}
+    defaults: { _controller: GSProyectosBundle:Mensajes:Eliminarborrado }
     requirements:
         id:  \d+ 
 
@@ -196,5 +222,7 @@ gs_proyectos_mensajes_buscareliminado:
         limite:  \d+ 
 
 gs_proyectos_mensajes_restaurar:
-    pattern: usuario/mensajes/restaurar
+    pattern: usuario/mensajes/restaurar/{id}
     defaults: { _controller: GSProyectosBundle:Mensajes:Restaurar }
+    requirements:
+        id:  \d+ 

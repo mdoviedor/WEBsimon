@@ -61,7 +61,7 @@
                 {{ enviado.fecha | date }}
             </td>
             <td>
-                <a href="{{ path('gs_proyectos_mensajes_leer',{'id': enviado.idmensajeenviado})}}">
+                <a href="{{ path('gs_proyectos_mensajes_leerenviado',{'id': enviado.idmensajeenviado})}}">
                     <span class="glyphicon glyphicon-eye-open"></span> Abrir
                 </a>             
             </td>
@@ -156,9 +156,9 @@
     function eliminarElemento() {
         var rdMensaje;
         rdMensaje = $('#radioMensaje:checked').val()
-        alert(rdMensaje);
+   
         var url;
-        url = "{{ path('gs_proyectos_mensajes_eliminar', {'id': 'text'}) }}";
+        url = "{{ path('gs_proyectos_mensajes_eliminarenviado', {'id': 'text'}) }}";
         url = url.replace("text", rdMensaje);
         window.open(url, '_self');
     }

@@ -156,7 +156,7 @@
     function eliminarElemento() {
         var rdMensaje;
         rdMensaje = $('#radioMensaje:checked').val()
-        alert(rdMensaje);
+        
         var url;
         url = "{{ path('gs_proyectos_mensajes_eliminar', {'id': 'text'}) }}";
         url = url.replace("text", rdMensaje);

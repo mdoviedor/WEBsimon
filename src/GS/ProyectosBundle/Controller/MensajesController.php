@@ -122,6 +122,84 @@ class MensajesController extends Controller {
         }
     }
 
+    public function LeerenviadoAction($id) {
+        /*
+         * Obtener username de la sesion
+         */
+        $userManager = $this->get('security.context')->getToken()->getUser();
+        $user = $userManager->getUsername();
+        /*
+         * 
+         */
+        $mensajeEnviado = new Mensajeenviado();
+        $em = $this->getDoctrine()->getManager();
+        $mensajeEnviado = $em->getRepository('GSProyectosBundle:Mensajeenviado')->find($id);
+        if ($user == $mensajeEnviado->getDe()->getNumerodocumentoidentidad()) {
+            $mensaje = html_entity_decode($mensajeEnviado->getMensaje()); //Decodificar caracteres especiales utiliciados para almacenar el mensaje
+            return $this->render('GSProyectosBundle:Mensajes:Leer.html.twig', array('mensajeRecibido' => $mensajeEnviado, 'mensaje' => $mensaje));
+        } else {
+            return $this->redirect($this->generateUrl('gs_proyectos_mensajes_buscar'));
+        }
+    }
+
+    public function LeereliminadoAction($id) {
+        /*
+         * Obtener username de la sesion
+         */
+        $userManager = $this->get('security.context')->getToken()->getUser();
+        $user = $userManager->getUsername();
+        /*
+         * 
+         */
+        $mensajeBorrado = new Mensajeborrado();
+        $em = $this->getDoctrine()->getManager();
+        $mensajeBorrado = $em->getRepository('GSProyectosBundle:Mensajeborrado')->find($id);
+        if ($user == $mensajeBorrado->getPara()->getNumerodocumentoidentidad()) {
+            $mensaje = html_entity_decode($mensajeBorrado->getMensaje()); //Decodificar caracteres especiales utiliciados para almacenar el mensaje
+            return $this->render('GSProyectosBundle:Mensajes:Leer.html.twig', array('mensajeRecibido' => $mensajeBorrado, 'mensaje' => $mensaje));
+        } else {
+            return $this->redirect($this->generateUrl('gs_proyectos_mensajes_buscar'));
+        }
+    }
+
+    public function EliminarborradoAction($id) {
+        /*
+         * Obtener username de la sesion
+         */
+        $userManager = $this->get('security.context')->getToken()->getUser();
+        $user = $userManager->getUsername();
+        /*
+         * 
+         */
+        $mensajeborrado = new Mensajeborrado();
+        $em = $this->getDoctrine()->getManager();
+        $mensajeborrado = $em->getRepository('GSProyectosBundle:Mensajeborrado')->find($id);
+        if ($user == $mensajeborrado->getPara()->getNumerodocumentoidentidad()) {
+            $em->remove($mensajeborrado);
+            $em->flush($mensajeborrado);
+            return $this->redirect($this->generateUrl('gs_proyectos_mensajes_buscareliminado'));
+        }
+    }
+
+    public function EliminarenviadoAction($id) {
+        /*
+         * Obtener username de la sesion
+         */
+        $userManager = $this->get('security.context')->getToken()->getUser();
+        $user = $userManager->getUsername();
+        /*
+         * 
+         */
+        $mensajeenviado = new Mensajeenviado();
+        $em = $this->getDoctrine()->getManager();
+        $mensajeenviado = $em->getRepository('GSProyectosBundle:Mensajeenviado')->find($id);
+        if ($user == $mensajeenviado->getDe()->getNumerodocumentoidentidad()) {
+            $em->remove($mensajeenviado);
+            $em->flush($mensajeenviado);
+            return $this->redirect($this->generateUrl('gs_proyectos_mensajes_buscarenviado'));
+        }
+    }
+
     public function EliminarAction($id) {
         /*
          * Obtener username de la sesion
@@ -135,7 +213,7 @@ class MensajesController extends Controller {
         $mensajeRecibido = new Mensajerecibido();
         $mensajeBorrado = new Mensajeborrado();
         $em = $this->getDoctrine()->getManager();
-        $mensajeRecibido = $em->getRepository('GSProyectosBundle:MensajeRecibido')->find($id);
+        $mensajeRecibido = $em->getRepository('GSProyectosBundle:Mensajerecibido')->find($id);
         if ($user == $mensajeRecibido->getPara()->getNumerodocumentoidentidad()) {
             $fechaRegistro = new \DateTime("now");
             $ultimoRegistro = $em->getRepository('GSProyectosBundle:Mensajeborrado')->buscarUltimoMensajeBorrado();
@@ -206,8 +284,43 @@ class MensajesController extends Controller {
         return $this->render('GSProyectosBundle:Mensajes:Buscareliminado.html.twig', array('eliminados' => $mensajeBorrado, 'limite' => $limite));
     }
 
-    public function RestaurarAction() {
-        
+    public function RestaurarAction($id) {
+        /*
+         * Obtener username de la sesion
+         */
+        $userManager = $this->get('security.context')->getToken()->getUser();
+        $user = $userManager->getUsername();
+        /*
+         * 
+         */
+        $identificadorFecha = new IdentificadorFecha(); //Objeto de la clase identificador fecha
+        $mensajeRecibido = new Mensajerecibido();
+        $mensajeBorrado = new Mensajeborrado();
+        $em = $this->getDoctrine()->getManager();
+        $mensajeBorrado = $em->getRepository('GSProyectosBundle:Mensajeborrado')->find($id);
+        if ($user == $mensajeBorrado->getPara()->getNumerodocumentoidentidad()) {
+            $fechaRegistro = new \DateTime("now");
+            $ultimoRegistro = $em->getRepository('GSProyectosBundle:Mensajerecibido')->buscarUltimoMensajeRecibido();
+            $mensajeRecibido->setIdmensajerecibido($identificadorFecha->generarIdMensajeRecibido($ultimoRegistro));
+            $mensajeRecibido->setAsunto($mensajeBorrado->getAsunto());
+            $mensajeRecibido->setMensaje($mensajeBorrado->getMensaje());
+            $para = $em->getRepository('GSProyectosBundle:Usuario')->find($mensajeBorrado->getPara()->getNumerodocumentoidentidad());
+            $de = $em->getRepository('GSProyectosBundle:Usuario')->find($mensajeBorrado->getDe()->getNumerodocumentoidentidad());
+            $mensajeRecibido->setPara($para);
+            $mensajeRecibido->setDe($de);
+            $mensajeRecibido->setRevisado($mensajeBorrado->getRevisado());
+            $mensajeRecibido->setFecha($fechaRegistro);
+
+            $em->persist($mensajeRecibido);
+            $em->flush($mensajeRecibido);
+
+            $em->remove($mensajeBorrado);
+            $em->flush($mensajeBorrado);
+
+            return $this->redirect($this->generateUrl('gs_proyectos_mensajes_buscar'));
+        } else {
+            return $this->redirect($this->generateUrl('gs_proyectos_mensajes_buscar'));
+        }
     }
 
     public function NumeromensajesAction() {
