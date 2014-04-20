@@ -22,6 +22,9 @@ use GS\ProyectosBundle\Form\LecturaconpropositoType;
 use GS\ProyectosBundle\Funciones\IdentificadorFecha;
 use GS\ProyectosBundle\Funciones\RedimencionarImagen;
 use GS\ProyectosBundle\Form\UsuarioType;
+use GS\ProyectosBundle\Entity\Mensajeenviado;
+use GS\ProyectosBundle\Entity\Mensajerecibido;
+use GS\ProyectosBundle\Entity\Mensajeborrado;
 
 class DesarrollarproduccionintelectualController extends Controller {
     /*
@@ -33,6 +36,7 @@ class DesarrollarproduccionintelectualController extends Controller {
      * sea en calidad de Autor, Codirector o Director.  
      * 
      */
+
     public function BuscarAction() {
         /*
          * Obtener username de la sesion
@@ -48,7 +52,7 @@ class DesarrollarproduccionintelectualController extends Controller {
 
         return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:buscar.html.twig', array('temaUsuario' => $temaUsuario));
     }
-    
+
     /*
      * Buscar los miembros que hacen parte del desarrollo. Sea cual sea la función. 
      * Un metodo alternativo llamado desde algunas plantillas para mostrar a los 
@@ -245,6 +249,9 @@ class DesarrollarproduccionintelectualController extends Controller {
 
     /*
      * Recibe el idtema correspondiente al modelo Tema.
+     * Acción para agregar una actividad al cronograma del proyecto en desarrollo.
+     * Se verifica si el usuario que intenta agregar la actividad es autor y es 
+     * participante del proyecto.
      */
 
     public function AgregaractividadcronogramaAction(Request $request, $id) {
@@ -305,6 +312,9 @@ class DesarrollarproduccionintelectualController extends Controller {
 
     /*
      * Recibe el idtema correspondiente al modelo Tema.
+     * Acción que permite generar una vista global del proyecto en 
+     * desarrollo. Si el usuario es participante del proyecto podra ver el 
+     * entorno de trabajo
      */
 
     public function VistaAction($id) {
@@ -339,11 +349,18 @@ class DesarrollarproduccionintelectualController extends Controller {
         foreach ($temaUsuario as $value) {
             if ($value->getUsuario()->getNumerodocumentoidentidad() == $user) {
                 $descripcionTema = html_entity_decode($tema->getDescripcion()); // Decodificar caracteres especiales almacenados en la descripcion del Tema
-                return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:vista.html.twig', array('temaUsuario' => $temaUsuario, 'tema' => $tema, 'temaBibliografia' => $temaBibliografia, 'espacioTrabajo' => $espacioTrabajo, 'descripcionTema' => $descripcionTema, 'cronograma' => $cronograma, 'user'=>$user));
+                return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:vista.html.twig', array('temaUsuario' => $temaUsuario, 'tema' => $tema, 'temaBibliografia' => $temaBibliografia, 'espacioTrabajo' => $espacioTrabajo, 'descripcionTema' => $descripcionTema, 'cronograma' => $cronograma, 'user' => $user));
             }
         }
         return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_buscar')); // Ruta tomada si el usuario que intenta acceder no tiene privilegios.
     }
+
+    /*
+     * Recibe el id correspondiente a idbibliografia. 
+     * Esta acción permite verificar si la bibliografía tiene asignada 
+     * una lectura con proposito.
+     * 
+     */
 
     public function ExistelecturaconpropositoAction($id) {
         $lecturaConProposito = new Lecturaconproposito();
@@ -353,12 +370,22 @@ class DesarrollarproduccionintelectualController extends Controller {
         return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Existelecturaconproposito.html.twig', array('lectura' => $lecturaConProposito));
     }
 
+    /*
+     * Esta acción permite visualizar la producción intelectual 
+     */
+
     public function CatalogobibliograficoAction() {
         $em = $this->getDoctrine()->getManager();
         $produccionIntelectual = new Produccionintelectual();
         $produccionIntelectual = $em->getRepository('GSProyectosBundle:Produccionintelectual')->findBy(array(), array('fecharegistro' => 'DESC'), 30);
         return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Catalogobibliografico.html.twig', array('produccionIntelectual' => $produccionIntelectual));
     }
+
+    /*
+     * Recibe el id correspondiente a idproduccionintelectual.
+     * Permite tener una vista global sobre el contenido de la 
+     * producción intelectual seleccionada.
+     */
 
     public function CatalogobibliograficovistaAction($id) {
         $em = $this->getDoctrine()->getManager();
@@ -379,6 +406,10 @@ class DesarrollarproduccionintelectualController extends Controller {
         $lecturaConProposito = $em->getRepository('GSProyectosBundle:Lecturaconproposito')->findBy(array('bibliografia' => $id));
         return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Bibliografiavista.html.twig', array('bibliografia' => $bibliografia, 'lecturaConProposito' => $lecturaConProposito));
     }
+
+    /*
+     * Permite al usuario modificar los datos basicos de su perfíl
+     */
 
     public function PerfilAction(Request $request) {
         /*
@@ -418,7 +449,7 @@ class DesarrollarproduccionintelectualController extends Controller {
                 if ($archivo) {
                     $dir = 'images/fotos/';
                     $nombreArchivo = $usuario->getUser()->getEmail();
-                   // $file = $formUsuario['archivo']->getData();
+                    // $file = $formUsuario['archivo']->getData();
                     $extension = $archivo->guessExtension(); //Obtener la extensión del archivo cargado                     
                     if ($extension && ($extension == "JPG" || $extension == "JPeG" || $extension == "jpeg" || $extension == "jpg")) {
                         $usuario->setFoto($dir . $nombreArchivo . '.' . "jpg"); //Instancia del modelo Produccionintelectual, nombre 
@@ -433,6 +464,111 @@ class DesarrollarproduccionintelectualController extends Controller {
         }
 
         return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Perfil.html.twig', array('usuario' => $usuario, 'formUsuario' => $formUsuario->createView()));
+    }
+
+    /*
+     * Recibe el id correspondiente al idtema, y un espacio, correspondiente al 
+     * idespacio de trabajo.
+     * Esta accion permite solicitar a los miembros la revisión del contenido
+     * correspondiente en desarrollo. 
+     * La solicitud es enviada a traves de correo electronico y el sistema 
+     * de mensajería interno. 
+     */
+
+    public function SolicitudrevisionAction($id, $espacio) {
+        /*
+         * Obtener username de la sesion
+         */
+        $userManager = $this->get('security.context')->getToken()->getUser();
+        $user = $userManager->getUsername();
+        /*
+         * 
+         */
+        $em = $this->getDoctrine()->getManager(); //Instancia del manejador de doctrine
+        $existe = $em->getRepository('GSProyectosBundle:TemaUsuario')->findBy(array('tema' => $id, 'usuario' => $user));
+        if ($existe) {
+            $identificadorFecha = new IdentificadorFecha(); //Objeto de la clase identificador fecha
+            $mensajeEnviado = new Mensajeenviado(); //Objeto del modelo Mensajeenviado
+            $usuario = new Usuario(); //Objeto del modelo Usuario. Se intanciara con los datos del usuario de la sesion
+            $usuarios = new Usuario(); //Objeto del modelo Usuario. Se asignan todos los usuarios disponibles. 
+            $destinatario = new Usuario(); //Objeto del modelo Usuario. 
+            $users = new User(); //Objeto del modelo User.     
+            $espacioTrabajo = new Espaciotrabajo(); // Objeto del modelo Espaciotrbajo 
+            $temaUsuario = new TemaUsuario(); // Objeto del modelo Temausuario
+            $tema = new Tema(); // Objeto del modelo 
+            $usuario = $em->getRepository('GSProyectosBundle:Usuario')->find($user);
+            $temaUsuario = $em->getRepository('GSProyectosBundle:TemaUsuario')->findBy(array('tema' => $id));
+            $espacioTrabajo = $em->getRepository('GSProyectosBundle:Espaciotrabajo')->find($espacio);
+            $tema = $em->getRepository('GSProyectosBundle:Tema')->find($id);
+
+            $mensaje = '<h3>Solicitud de Revisión</h3>' . // Mensaje que sera enviado a nivel interno - Mensajería del sistema
+                    '<p><strong>Tema: </strong>' . $tema->getTitulo() . '</p>' .
+                    '<p><strong>Descripción: </strong>' . $tema->getDescripcion() .
+                    '<p>De click en el siguiente enlace para ir al documento.</p>' .
+                    '<p>' . $espacioTrabajo->getNombre() . ': <a href="' . $espacioTrabajo->getUrl() . '">' . $espacioTrabajo->getUrl() . '</a></p>' .
+                    '<p>De click en el siguiente enlace para ir al espacio de trabajo.</p>' .
+                    '<p><a href="http://localhost/simon/web/usuario/produccionIntelectual/vista/' . $id . '"> Espacio de trabajo</a></p>'
+            ;
+
+            $fechaRegistro = new \DateTime("now");
+            $asunto = 'Solicitud Revisión' . ' ' . $espacioTrabajo->getNombre();
+
+            foreach ($temaUsuario as $value) { //El registro se crea para cada destinatario
+                $enviado = new Mensajeenviado(); //Objeto del modelo Mensajeenviado
+                $recibido = new Mensajerecibido(); //Objeto del modelo Mensajerecibido
+                $em = $this->getDoctrine()->getManager();
+                $destinatario = $em->getRepository('GSProyectosBundle:Usuario')->find($value->getUsuario()->getNumerodocumentoidentidad());
+                /*
+                 * Se toma la fecha del momento en el servidor. 
+                 */
+                $enviado->setFecha($fechaRegistro);
+                $recibido->setFecha($fechaRegistro);
+                /*
+                 * Se instancia el id del mensaje enviado con la nueva llave primari
+                 */
+                $ultimoRegistro = $em->getRepository('GSProyectosBundle:Mensajerecibido')->buscarUltimoMensajeRecibido();
+                $recibido->setIdmensajerecibido($identificadorFecha->generarIdMensajeRecibido($ultimoRegistro));
+
+                $ultimoRegistro = $em->getRepository('GSProyectosBundle:Mensajeenviado')->buscarUltimoMensajeEnviado();
+                $enviado->setIdmensajeenviado($identificadorFecha->generarIdMensajeEnviado($ultimoRegistro));
+
+                $recibido->setMensaje($mensaje);
+                $recibido->setDe($usuario);
+                $recibido->setPara($destinatario);
+                $recibido->setAsunto($asunto);
+                //
+                $enviado->setMensaje($mensaje);
+                $enviado->setDe($usuario);
+                $enviado->setPara($destinatario);
+                $enviado->setAsunto($asunto);
+                //
+                $em->persist($enviado);
+                $em->flush($enviado);
+                //
+                $em->persist($recibido);
+                $em->flush($recibido);
+
+                $descripcionTema = html_entity_decode($tema->getDescripcion()); // Decodificar caracteres especiales almacenados en la descripcion del Tema
+
+                $message = \Swift_Message::newInstance() //Enviar mensaje via correo electrónico
+                        ->setSubject($asunto)
+                        ->setFrom($usuario->getUser()->getEmail())
+                        ->setTo($destinatario->getUser()->getEmail())
+                        ->setBody(
+                        $this->renderView(
+                                'GSProyectosBundle:Desarrollarproduccionintelectual:emailsolicitudrevision.html.twig', array('descripcionTema' => $descripcionTema, 'tema' => $tema, 'espacioTrabajo' => $espacioTrabajo)
+                        ), 'text/html'
+                );
+                $this->get('mailer')->send($message);
+            }
+            return $this->redirect($this->generateUrl('gs_proyectos_mensajes_buscar'));
+        }else{
+            return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_buscar'));
+        }
+    }
+
+    public function CompartirconmiembrosAction() {
+        
     }
 
 }

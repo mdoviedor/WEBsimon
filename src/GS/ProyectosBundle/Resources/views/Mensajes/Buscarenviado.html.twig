@@ -20,55 +20,57 @@
 
 {% block contenido %}
 <ul class="nav nav-tabs">
-  <li ><a href="{{ path('gs_proyectos_mensajes_buscar') }}">Mensajes Recibidos</a></li>
-  <li class="active"><a href="{{ path('gs_proyectos_mensajes_buscarenviado')}}">Mensajes Enviados</a></li>
-  <li><a href="{{ path('gs_proyectos_mensajes_buscareliminado')}}">Mensajes Borrados</a></li>
+    <li ><a href="{{ path('gs_proyectos_mensajes_buscar') }}">Mensajes Recibidos</a></li>
+    <li class="active"><a href="{{ path('gs_proyectos_mensajes_buscarenviado')}}">Mensajes Enviados</a></li>
+    <li><a href="{{ path('gs_proyectos_mensajes_buscareliminado')}}">Mensajes Borrados</a></li>
 </ul>
-<table class="table table-condensed table-striped table-hover">
-    <thead>
-        <tr>
-            <th>
+<form id="formulario"  action="{{ path('gs_proyectos_mensajes_eliminarenviado') }}" enctype="multipart/form-data" method="post" >
+    <table class="table table-condensed table-striped table-hover">
+        <thead>
+            <tr>
+                <th>
 
-            </th>
-            <th>
-                Asunto
-            </th>
-            <th>
-                Para
-            </th>
-            <th>
-                Fecha
-            </th>
-            <th>
+                </th>
+                <th>
+                    Asunto
+                </th>
+                <th>
+                    Para
+                </th>
+                <th>
+                    Fecha
+                </th>
+                <th>
 
-            </th>
-        </tr>
-    </thead>
-    <tbody>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
         {%for enviado in enviados%}
 
-        <tr>
-            <td>
-                <input type="radio" id="radioMensaje" name="radioMensaje" value="{{enviado.idmensajeenviado}}">
-            </td>
-            <td>
+            <tr>
+                <td>
+                    <input type="checkbox" id="radioMensaje" name="radioMensaje[]" value="{{enviado.idmensajeenviado}}">
+                </td>
+                <td>
                 {{ enviado.asunto }}
-            </td>
-            <td>
+                </td>
+                <td>
                 {{ enviado.para}}
-            </td>
-            <td>
+                </td>
+                <td>
                 {{ enviado.fecha | date }}
-            </td>
-            <td>
-                <a href="{{ path('gs_proyectos_mensajes_leerenviado',{'id': enviado.idmensajeenviado})}}">
-                    <span class="glyphicon glyphicon-eye-open"></span> Abrir
-                </a>             
-            </td>
-        </tr>
+                </td>
+                <td>
+                    <a href="{{ path('gs_proyectos_mensajes_leerenviado',{'id': enviado.idmensajeenviado})}}">
+                        <span class="glyphicon glyphicon-eye-open"></span> Abrir
+                    </a>             
+                </td>
+            </tr>
         {% endfor %}
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</form>
 <select class="center-block" id="listaTamano" name="listaTamano">
     <option>
         {{limite}}
@@ -77,8 +79,9 @@
     <option>
         {{i}}
     </option>
-{% endfor %}
 
+{% endfor %}
+    <option value="1000000">Todos</option>
 </select>
 
 {% endblock %}
@@ -154,13 +157,21 @@
 
     }
     function eliminarElemento() {
-        var rdMensaje;
-        rdMensaje = $('#radioMensaje:checked').val()
-   
-        var url;
-        url = "{{ path('gs_proyectos_mensajes_eliminarenviado', {'id': 'text'}) }}";
-        url = url.replace("text", rdMensaje);
-        window.open(url, '_self');
+        /* var rdMensaje;
+         var myArray = new Array();
+         rdMensaje = $('input:checkbox:checked').each(function() {
+         myArray.push($(this).val());
+         });
+         alert(myArray);
+         var url;
+         url = "";
+         url = url.replace("text", myArray);
+         window.open(url, '_self');
+         */
+       
+        var frm;
+        frm = $('#formulario');
+        frm.submit();
     }
 
     function buscarTamano() {
@@ -168,7 +179,7 @@
         var tamano;
         tamano = $('#listaTamano').val()
         var url;
-        url = "{{ path('gs_proyectos_mensajes_buscar', {'limite': 'text'}) }}";
+        url = "{{ path('gs_proyectos_mensajes_buscarenviado', {'limite': 'text'}) }}";
         url = url.replace("text", tamano);
         window.open(url, '_self');
         inicializarEventos();

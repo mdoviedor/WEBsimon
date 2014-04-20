@@ -1,6 +1,6 @@
-#
-#ADMINISTRAR PRODUCCION TEMA
-#
+#############################
+#ADMINISTRAR PRODUCCION TEMA#
+#############################
 gs_proyectos_tema_crear:
     pattern: administrador/administrarTema/crear
     defaults: { _controller: GSProyectosBundle:Administrartema:Crear }
@@ -38,9 +38,9 @@ gs_proyectos_tema_asignarespaciotrabajo:
 gs_proyectos_tema_eliminarespaciotrabajo:
     pattern: administrador/administrarTema/eliminarEspacioTrabajo/{id}
     defaults: { _controller: GSProyectosBundle:Administrartema:Eliminarespaciotrabajo }
-#
-#ADMINISTRAR PRODUCCION INTELECTUAL
-#
+####################################
+#ADMINISTRAR PRODUCCION INTELECTUAL#
+####################################
 gs_proyectos_produccionintelectual_crear:
     pattern: administrador/administrarProduccionIntelectual/crear
     defaults: { _controller: GSProyectosBundle:Administrarproduccionintelectual:Crear }
@@ -68,9 +68,9 @@ gs_proyectos_produccionintelectual_habilitartema:
     pattern: administrador/administrarProduccionIntelectual/habilitarTema/{id}
     defaults: { _controller: GSProyectosBundle:Administrarproduccionintelectual:Habilitartema }
 
-#
-#DESARROLLAR PRODUCCION INTELECTUAL
-#
+####################################
+#DESARROLLAR PRODUCCION INTELECTUAL#
+####################################
 gs_proyectos_desarrollarproduccionintelectual_buscar:
     pattern: usuario/produccionIntelectual/
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Buscar }
@@ -104,9 +104,9 @@ gs_proyectos_desarrollarproduccionintelectual_elementobibliografia_vista:
     pattern: produccionIntelectual/bibliografia/vista/{id} 
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Bibliografiavista }
     
-#
-#DESARROLLAR PRODUCCION INTELECTUAL - Bibliografia
-#
+###################################################
+#DESARROLLAR PRODUCCION INTELECTUAL - Bibliografia#
+###################################################
 
 #Se pasa el idtema correspondiente al modelo Tema
 gs_proyectos_desarrollarproduccionintelectual_agregarbibliografia:
@@ -129,6 +129,12 @@ gs_proyectos_desarrollarproduccionintelectual_modificarbibliografia:
 gs_proyectos_desarrollarproduccionintelectual_buscarbibliografia:
     pattern: usuario/produccionIntelectual/bibliografia/buscar
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Buscarbibliografia }
+    
+gs_proyectos_desarrollarproduccionintelectual_solicitarrevision:
+    pattern: usuario/produccionIntelectual/solicitarRevision/{id}.{espacio}
+    defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Solicitudrevision }
+    requirements:
+        id:  \d+ 
 
 #Buscar miembros del equipo de trabajo y visualizarlos en la pagina de inicio del Desarrollo de la Producción Intelectual
 #Se pasa el idtema correspondiente al modelo Tema
@@ -136,9 +142,9 @@ gs_proyectos_desarrollarproduccionintelectual_buscarmiembros:
     pattern: usuario/produccionIntelectual/buscarmiembro/{tema}.{funcion}
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro }
 
-#
-#DESARROLLAR PRODUCCION INTELECTUAL - Cronograma
-#
+#################################################
+#DESARROLLAR PRODUCCION INTELECTUAL - Cronograma#
+#################################################
 
 #Se pasa el idtema correspondiente al modelo Tema
 gs_proyectos_desarrollarproduccionintelectual_agregaractividadcronograma:
@@ -153,9 +159,9 @@ gs_proyectos_desarrollarproduccionintelectual_modificaractividadcronograma:
     pattern: usuario/produccionIntelectual/cronograma/modificarActividad
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Modificaractividadcronograma }
 
-#
-#MENSAJERIA
-#
+############
+#MENSAJERIA#
+############
 gs_proyectos_mensajes_numeromensajes:
     pattern: usuario/mensajes/numeromensajes
     defaults: { _controller: GSProyectosBundle:Mensajes:Numeromensajes }
@@ -192,10 +198,8 @@ gs_proyectos_mensajes_eliminar:
     requirements:
         id:  \d+ 
 gs_proyectos_mensajes_eliminarenviado:
-    pattern: usuario/mensajes/eliminarenviado/{id}
+    pattern: usuario/mensajes/eliminarenviado/
     defaults: { _controller: GSProyectosBundle:Mensajes:Eliminarenviado }
-    requirements:
-        id:  \d+ 
         
 gs_proyectos_mensajes_eliminarborrado:
     pattern: usuario/mensajes/eliminarborrado/{id}

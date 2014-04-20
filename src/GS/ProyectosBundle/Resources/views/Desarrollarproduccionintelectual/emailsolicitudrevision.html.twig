@@ -1,0 +1,19 @@
+{% extends "::contenidos.html.twig" %}
+{% block title %}Grupo Simon: Email{% endblock %}
+
+
+{% block submenuderecho %}    
+
+{% endblock %}
+
+
+{% block contenido %}
+<h3>Grupo SIMON de Investigación</h3>
+<p><strong>Tema: </strong>{{ tema.titulo }}</p>
+<p><strong>Descripción: </strong>{{ descripcionTema | raw}}</p>
+<p>De click en el siguiente enlace para ir al documento.</p>
+<p><strong>{{ espacioTrabajo.nombre }}: </strong><a href="{{ espacioTrabajo.url }}">{{ espacioTrabajo.url }}</a></p>
+<p>De click en el siguiente enlace para ir al espacio de trabajo.</p>
+<p><a href="http://localhost{{path('gs_proyectos_desarrollarproduccionintelectual_vista',{'id': tema.idtema})}}"> Espacio de trabajo</a></p>
+{% endblock %}
+

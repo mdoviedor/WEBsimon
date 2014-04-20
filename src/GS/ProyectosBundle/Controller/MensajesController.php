@@ -86,8 +86,8 @@ class MensajesController extends Controller {
                     //
                     $em->persist($recibido);
                     $em->flush($recibido);
-                    return $this->redirect($this->generateUrl('gs_proyectos_mensajes_buscar'));
                 }
+                return $this->redirect($this->generateUrl('gs_proyectos_mensajes_buscar'));
             }
         }
         $usuarios = $em->getRepository('GSProyectosBundle:Usuario')->findBy(array(), array('primernombre' => 'ASC'));
@@ -181,7 +181,7 @@ class MensajesController extends Controller {
         }
     }
 
-    public function EliminarenviadoAction($id) {
+    public function EliminarenviadoAction(Request $request) {
         /*
          * Obtener username de la sesion
          */
@@ -190,14 +190,18 @@ class MensajesController extends Controller {
         /*
          * 
          */
-        $mensajeenviado = new Mensajeenviado();
+        $id = $request->request->get('radioMensaje');
+
         $em = $this->getDoctrine()->getManager();
-        $mensajeenviado = $em->getRepository('GSProyectosBundle:Mensajeenviado')->find($id);
-        if ($user == $mensajeenviado->getDe()->getNumerodocumentoidentidad()) {
-            $em->remove($mensajeenviado);
-            $em->flush($mensajeenviado);
-            return $this->redirect($this->generateUrl('gs_proyectos_mensajes_buscarenviado'));
+        foreach ($id as $value) {
+            $mensajeenviado = new Mensajeenviado();
+            $mensajeenviado = $em->getRepository('GSProyectosBundle:Mensajeenviado')->find($value);
+            if ($user == $mensajeenviado->getDe()->getNumerodocumentoidentidad()) {
+                $em->remove($mensajeenviado);
+                $em->flush($mensajeenviado);
+            }
         }
+        return $this->redirect($this->generateUrl('gs_proyectos_mensajes_buscarenviado'));
     }
 
     public function EliminarAction($id) {

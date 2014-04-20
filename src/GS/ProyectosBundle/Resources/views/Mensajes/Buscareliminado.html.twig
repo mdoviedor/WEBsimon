@@ -80,8 +80,9 @@
     <option>
         {{i}}
     </option>
-{% endfor %}
 
+{% endfor %}
+    <option value="1000000">Todos</option>
 </select>
 
 {% endblock %}
@@ -190,7 +191,7 @@
         var tamano;
         tamano = $('#listaTamano').val()
         var url;
-        url = "{{ path('gs_proyectos_mensajes_buscar', {'limite': 'text'}) }}";
+        url = "{{ path('gs_proyectos_mensajes_buscareliminado', {'limite': 'text'}) }}";
         url = url.replace("text", tamano);
         window.open(url, '_self');
         inicializarEventos();

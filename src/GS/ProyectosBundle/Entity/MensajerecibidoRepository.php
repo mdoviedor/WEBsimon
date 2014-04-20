@@ -23,7 +23,7 @@ class MensajerecibidoRepository extends EntityRepository {
         return $this->getEntityManager()
                         ->createQuery('SELECT COUNT(mr.idmensajerecibido) FROM GSProyectosBundle:Mensajerecibido mr WHERE mr.para = :usuario AND mr.revisado = false')
                         ->setParameter('usuario', $usuario)
-                        ->getSingleScalarResult();
+                        ->getResult();
     }
 
 }
