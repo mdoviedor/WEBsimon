@@ -74,8 +74,8 @@ swiftmailer:
     encryption: ssl
     auth_mode:  login
     host:       smtp.gmail.com
-    username:   mercadeofundeuis@gmail.com
-    password:   Fundeuis_Uis_2014
+    username:   
+    password:   
 
 # app/config/config.yml
 fos_user:
