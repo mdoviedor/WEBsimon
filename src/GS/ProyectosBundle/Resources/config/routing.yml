@@ -99,6 +99,11 @@ gs_proyectos_desarrollarproduccionintelectual_vista:
     pattern: usuario/produccionIntelectual/vista/{id} 
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Vista }
 
+#Se pasa el espaciotrabajo correspondiente al modelo Espaciotrabajo
+gs_proyectos_desarrollarproduccionintelectual_compartirconmiembros: 
+    pattern: usuario/produccionIntelectual/vista/compartirConMiembros/{id} 
+    defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Compartirconmiembros }
+
     #Se pasa el idbibliografia correspondiente al modelo Bibliografia
 gs_proyectos_desarrollarproduccionintelectual_elementobibliografia_vista: 
     pattern: produccionIntelectual/bibliografia/vista/{id} 
@@ -123,7 +128,7 @@ gs_proyectos_desarrollarproduccionintelectual_eliminarbibliografia:
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Eliminarbibliografia }
 
 gs_proyectos_desarrollarproduccionintelectual_modificarbibliografia:
-    pattern: usuario/produccionIntelectual/bibliografia/modificar
+    pattern: usuario/produccionIntelectual/bibliografia/modificar/{id}.{idbibliografia}
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Modificarbibliografia }
 
 gs_proyectos_desarrollarproduccionintelectual_buscarbibliografia:
@@ -191,7 +196,7 @@ gs_proyectos_mensajes_leereliminado:
     requirements:
         id:  \d+ 
 
-
+#Se pasa el idmensajerecibido correspondiente al modelo Mensajerecibido
 gs_proyectos_mensajes_eliminar:
     pattern: usuario/mensajes/eliminar/{id}
     defaults: { _controller: GSProyectosBundle:Mensajes:Eliminar }
@@ -200,31 +205,32 @@ gs_proyectos_mensajes_eliminar:
 gs_proyectos_mensajes_eliminarenviado:
     pattern: usuario/mensajes/eliminarenviado/
     defaults: { _controller: GSProyectosBundle:Mensajes:Eliminarenviado }
-        
+
+#Se pasa el idmensajeborrado correspondiente al modelo Mensajeborrado
 gs_proyectos_mensajes_eliminarborrado:
     pattern: usuario/mensajes/eliminarborrado/{id}
     defaults: { _controller: GSProyectosBundle:Mensajes:Eliminarborrado }
     requirements:
         id:  \d+ 
-
+#Se pasa el limite o el tamaño de la cantidad de resultados mostrados
 gs_proyectos_mensajes_buscar:
     pattern: usuario/mensajes/{limite}
     defaults: { _controller: GSProyectosBundle:Mensajes:Buscar, limite: 30 }
     requirements:
         limite:  \d+ 
-
+#Se pasa el limite o el tamaño de la cantidad de resultados mostrados
 gs_proyectos_mensajes_buscarenviado:
     pattern: usuario/mensajes/enviado/{limite}
     defaults: { _controller: GSProyectosBundle:Mensajes:Buscarenviado, limite: 30 }
     requirements:
         limite:  \d+ 
-
+#Se pasa el limite o el tamaño de la cantidad de resultados mostrados
 gs_proyectos_mensajes_buscareliminado:
     pattern: usuario/mensajes/eliminado/{limite}
     defaults: { _controller: GSProyectosBundle:Mensajes:Buscareliminado, limite: 30 }
     requirements:
         limite:  \d+ 
-
+#Se pasa el idmensajeborrado correspondiente al modelo Mensajeborrado
 gs_proyectos_mensajes_restaurar:
     pattern: usuario/mensajes/restaurar/{id}
     defaults: { _controller: GSProyectosBundle:Mensajes:Restaurar }

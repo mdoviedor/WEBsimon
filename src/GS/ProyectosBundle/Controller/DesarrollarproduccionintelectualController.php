@@ -25,6 +25,8 @@ use GS\ProyectosBundle\Form\UsuarioType;
 use GS\ProyectosBundle\Entity\Mensajeenviado;
 use GS\ProyectosBundle\Entity\Mensajerecibido;
 use GS\ProyectosBundle\Entity\Mensajeborrado;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
 
 class DesarrollarproduccionintelectualController extends Controller {
     /*
@@ -235,12 +237,107 @@ class DesarrollarproduccionintelectualController extends Controller {
         }
     }
 
-    public function EliminarbibliografiaAction() {
-        
+    public function EliminarbibliografiaAction($id, $idbibliografia) {
+        /*
+         * Obtener username de la sesion
+         */
+        $userManager = $this->get('security.context')->getToken()->getUser();
+        $user = $userManager->getUsername();
+        /*
+         * 
+         */
+        $em = $this->getDoctrine()->getManager();
+        $temaUsuario = new TemaUsuario(); // Objeto del modelo TemaUsuario
+        $tema = new Tema(); // Objeto del modelo Tema
+        $bibliografia = new Bibliografia(); // Objeto del modelo Bibliografia
+        $temaBibliografia = new TemaBibliografia(); // Objeto del modelo TemaBibliografia
+        $bibliografia = $em->getRepository('GSProyectosBundle:Bibliografia')->find($idbibliografia);
     }
 
-    public function ModificarbibliografiaAction() {
-        
+    public function ModificarbibliografiaAction(Request $request, $id, $idbibliografia) {
+
+        /*
+         * Obtener username de la sesion
+         */
+        $userManager = $this->get('security.context')->getToken()->getUser();
+        $user = $userManager->getUsername();
+        /*
+         * 
+         */
+        $em = $this->getDoctrine()->getManager();
+        $temaUsuario = new TemaUsuario(); // Objeto del modelo TemaUsuario
+        $tema = new Tema(); // Objeto del modelo Tema
+        $bibliografia = new Bibliografia(); // Objeto del modelo Bibliografia
+        $temaBibliografia = new TemaBibliografia(); // Objeto del modelo TemaBibliografia
+        $identificadorFecha = new IdentificadorFecha(); // Objeto de la clase IdentificaorFehca
+        $bibliografia = $em->getRepository('GSProyectosBundle:Bibliografia')->find($idbibliografia);
+        $formBibliografia = $this->createForm(new BibliografiaType(), $bibliografia); // Formulario del modelo Bibliografia 
+        $temaUsuario = $em->getRepository('GSProyectosBundle:TemaUsuario')->findBy(array('tema' => $id, 'usuario' => $user)); // Consulta 
+        $temaBibliografia = $em->getRepository('GSProyectosBundle:TemaBibliografia')->findBy(array('tema' => $id, 'bibliografia' => $idbibliografia));
+        /*
+         * Si el usuario es participante del proyecto podra ver el entorno de 
+         * trabajo para desarrollar la produccion intelectual 
+         */
+
+        if ($temaUsuario && $temaBibliografia) { //Si el usuario es propietario del tema que intenta modificar
+            if ($request->getMethod() == 'POST') {
+                $formBibliografia->handleRequest($request);
+                if ($formBibliografia->isValid()) { // Si el formulario es validao
+                    $em = $this->getDoctrine()->getManager();
+
+                    $fechaRegistro = new \DateTime("now");
+                    $bibliografia->setFecharegistro($fechaRegistro);
+
+                    /*
+                     * MANEJO DEL ARCHIVO
+                     */
+
+                    //Generación del nombre y direccion del archivo    
+                    if ($formBibliografia->get('archivo')->getData()) {
+                        if ($bibliografia->getNombrearchivo()) {
+                            $fs = new Filesystem();
+                            $fs->remove($bibliografia->getArchivo(), $bibliografia->getNombrearchivo());
+                        }
+                        $dir = 'bibliografia/';
+                        $nombreArchivo = $id . rand(10000, 99999);
+                        $bibliografia->setNombrearchivo($nombreArchivo); //Instancia del modelo Produccionintelectual, nombre
+                        $file = $formBibliografia['archivo']->getData();
+                        $extension = $file->guessExtension(); //Obtener la extensión del archivo cargado
+                        if ($extension && $extension == "zip") {
+                            $file->move($dir, $nombreArchivo . '.' . $extension); //Mover el archivo al directorio
+                            $bibliografia->setArchivo($dir); //Instancia del modelo Produccionintelectual, arcivo
+                            $em->persist($bibliografia);
+                            $em->flush();
+
+                            return $this->redirect($this->generateUrl('gs_proyectos_produccionintelectual_buscar', array('limite' => '30')));
+                        }
+                    } else {
+
+                        $em->persist($bibliografia);
+                        $em->flush();
+
+                        /*
+                         * Guardar Registro. TemaBibliografia
+                         */
+
+//                        $em = $this->getDoctrine()->getManager();
+//                        $ultimoRegistro = $em->getRepository('GSProyectosBundle:TemaBibliografia')->buscarUltimoTemaBibliografia();
+//                        $temaBibliografia->setIdtemaBibliografia($identificadorFecha->generarIdTemaBibliografia($ultimoRegistro));
+//                        $tema = $em->getRepository('GSProyectosBundle:Tema')->find($id);
+//
+//                        $temaBibliografia->setTema($tema);
+//                        $temaBibliografia->setBibliografia($bibliografia);
+//
+//                        $em->persist($temaBibliografia);
+//                        $em->flush();
+
+                        return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_vista', array('id' => $id)));
+                    }
+                    //return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_vista', array('id' => $id)));
+                }
+            }
+            return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Modificarbibliografia.html.twig', array('formBibliografia' => $formBibliografia->createView(), 'idTema' => $id, 'idBibliografia' => $idbibliografia));
+        }
     }
 
     public function BuscarbibliografiaAction() {
@@ -562,13 +659,37 @@ class DesarrollarproduccionintelectualController extends Controller {
                 $this->get('mailer')->send($message);
             }
             return $this->redirect($this->generateUrl('gs_proyectos_mensajes_buscar'));
-        }else{
+        } else {
             return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_buscar'));
         }
     }
 
-    public function CompartirconmiembrosAction() {
-        
+    public function CompartirconmiembrosAction($id) {
+        /*
+         * Obtener username de la sesion
+         */
+        $userManager = $this->get('security.context')->getToken()->getUser();
+        $user = $userManager->getUsername();
+        /*
+         * 
+         */
+        $em = $this->getDoctrine()->getManager();
+        $espacioTrabajo = new Espaciotrabajo();
+        $temaUsuario = new TemaUsuario();
+
+        $espacioTrabajo = $em->getRepository('GSProyectosBundle:Espaciotrabajo')->find($id);
+        $temaUsuario = $em->getRepository('GSProyectosBundle:TemaUsuario')->findBy(array('tema' => $espacioTrabajo->getTema()->getIdtema(), 'usuario' => $user));
+        if ($temaUsuario) {
+            if ($espacioTrabajo->getCompartirmiembros()) {
+                $espacioTrabajo->setCompartirmiembros(false);
+            } else {
+                $espacioTrabajo->setCompartirmiembros(true);
+            }
+
+            $em->persist($espacioTrabajo);
+            $em->flush($espacioTrabajo);
+            return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_vista', array('id' => $espacioTrabajo->getTema()->getIdtema())));
+        }
     }
 
 }

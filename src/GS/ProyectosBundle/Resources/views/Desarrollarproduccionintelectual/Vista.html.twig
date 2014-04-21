@@ -72,14 +72,18 @@
             <td>
                 <a href="{{ espacio.url }}"> {{ espacio.nombre }}</a>
             </td>
-            <td>
-                <a  rel="enlaceSolicitud" id="enlaceSolicitud" href="{{ path('gs_proyectos_desarrollarproduccionintelectual_solicitarrevision',{'id': espacio.tema.idtema, 'espacio': espacio.idespaciotrabajo}) }}">
+            <td id="enlaceSolicitud">
+                <a  name="enlaceSolicitud[]" href="{{ path('gs_proyectos_desarrollarproduccionintelectual_solicitarrevision',{'id': espacio.tema.idtema, 'espacio': espacio.idespaciotrabajo}) }}">
                     <span class="glyphicon glyphicon-exclamation-sign"></span> Solicitar Revisón
                 </a>
             </td>
-            <td>
-                <a href="">
+            <td id="enlaceCompartir">
+                <a href="{{ path('gs_proyectos_desarrollarproduccionintelectual_compartirconmiembros',{'id':espacio.idespaciotrabajo}) }}" data-toggle="modal" data-target="#modalCompartirMiembros">
+                    {%if espacio.compartirmiembros  %}
+                    <span class="glyphicon glyphicon-share"></span>Dejar de compartir con miembros del grupo                  
+                    {%else%}
                     <span class="glyphicon glyphicon-share"></span> Compartir con miembros del grupo
+                    {%endif%}
                 </a>
             </td>
         </tr>
@@ -191,7 +195,7 @@
 {% block javascripts %}
 {{ parent()}}
 
-<!-- Modal -->
+<!-- Modal Solicitud Revisión -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -209,29 +213,68 @@
         </div>
     </div>
 </div>
+
+<!-- Modal compartir con miembros del grupo -->
+<div class="modal fade" id="modalCompartirMiembros" tabindex="-1" role="dialog" aria-labelledby="modalCompartirMiembrosLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Alerta</h4>
+            </div>
+            <div class="modal-body">
+                Realmente desea ejecutar esta acción. 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+                <button type="button" class="btn btn-primary" id="botonCompartir" name="botonCompartir"  href="#">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
     var x;
     x = $(document);
     x.ready(inicializarEventos);
     var urlGlobal;
+    var urlGlobalCompartir;
     function inicializarEventos() {
         var btnEnviar;
         btnEnviar = $('#botonEnviar');
         btnEnviar.click(enviar);
+        
+        var btnCompartir;
+        btnCompartir = $('#botonCompartir');
+        btnCompartir.click(compartir);
 
         var enlace;
-        enlace = $("#tablaProduccion a");
+        enlace = $("#enlaceSolicitud a");
         enlace.click(abrirModal);
+
+        var enlaceCompartir;
+        enlaceCompartir = $("#enlaceCompartir a");
+        enlaceCompartir.click(abrirModalCompartir);
 
     }
 
-    function enviar() {
+    function compartir() {
+        window.open(urlGlobalCompartir, '_self');
+    }
+    
+     function enviar() {
         window.open(urlGlobal, '_self');
-    }    
+    }
 
     function abrirModal() {
-        urlGlobal = $(this).attr("href");      
+        urlGlobal = $(this).attr("href");
         $('#myModal').modal('show');
+        return  false;
+        inicializarEventos();
+    }
+
+    function abrirModalCompartir() {
+        urlGlobalCompartir = $(this).attr("href");
+        $('#modalCompartirMiembros').modal('show');
         return  false;
         inicializarEventos();
     }
