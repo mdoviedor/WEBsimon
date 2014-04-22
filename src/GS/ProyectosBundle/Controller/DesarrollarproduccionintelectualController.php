@@ -252,6 +252,20 @@ class DesarrollarproduccionintelectualController extends Controller {
         $bibliografia = new Bibliografia(); // Objeto del modelo Bibliografia
         $temaBibliografia = new TemaBibliografia(); // Objeto del modelo TemaBibliografia
         $bibliografia = $em->getRepository('GSProyectosBundle:Bibliografia')->find($idbibliografia);
+        $temaUsuario = $em->getRepository('GSProyectosBundle:TemaUsuario')->findBy(array('tema' => $id, 'usuario' => $user)); // Consulta 
+        $temaBibliografia = $em->getRepository('GSProyectosBundle:TemaBibliografia')->findBy(array('tema' => $id, 'bibliografia' => $idbibliografia));
+
+        if ($temaUsuario && $temaBibliografia) { //Si el usuario es propietario del tema que intenta modificar
+            if ($bibliografia->getNombrearchivo()) {
+                $fs = new Filesystem();
+                $fs->remove($bibliografia->getArchivo(), $bibliografia->getNombrearchivo());
+            }
+            $em->remove($bibliografia);
+            $em->flush($bibliografia);
+            return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_vista', array('id' => $id)));
+        } else {
+            return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_buscar'));
+        }
     }
 
     public function ModificarbibliografiaAction(Request $request, $id, $idbibliografia) {
@@ -309,7 +323,7 @@ class DesarrollarproduccionintelectualController extends Controller {
                             $em->persist($bibliografia);
                             $em->flush();
 
-                            return $this->redirect($this->generateUrl('gs_proyectos_produccionintelectual_buscar', array('limite' => '30')));
+                            return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_vista', array('id' => $id)));
                         }
                     } else {
 

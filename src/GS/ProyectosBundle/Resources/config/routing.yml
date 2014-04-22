@@ -119,14 +119,16 @@ gs_proyectos_desarrollarproduccionintelectual_agregarbibliografia:
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Agregarbibliografia }
     
 #Se pasa el idbibliografia correspondiente al modelo Bibliografia
-gs_proyectos_desarrollarproduccionintelectual_agregarbibliografia:
+gs_proyectos_desarrollarproduccionintelectual_agregarlecturaproposito:
     pattern: usuario/produccionIntelectual/lectuaraConProposito/agregar/{id}
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Agregarlecturaproposito }
-
+    
+#Se pasa el idbibliografia correspondiente al modelo Bibliografia y un id correspondiente al idtema del modelo Tema
 gs_proyectos_desarrollarproduccionintelectual_eliminarbibliografia:
-    pattern: usuario/produccionIntelectual/bibliografia/eliminar
+    pattern: usuario/produccionIntelectual/bibliografia/eliminar/{id}.{idbibliografia}
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Eliminarbibliografia }
 
+#Se pasa el idbibliografia correspondiente al modelo Bibliografia y un id correspondiente al idtema del modelo Tema
 gs_proyectos_desarrollarproduccionintelectual_modificarbibliografia:
     pattern: usuario/produccionIntelectual/bibliografia/modificar/{id}.{idbibliografia}
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Modificarbibliografia }

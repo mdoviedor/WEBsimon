@@ -146,20 +146,23 @@
     <div class="col-xs-6 col-md-4" style="border-color: #000;">
     </div>
     <div class="col-xs-12 col-sm-6 col-md-8" style="text-align: right;">
-        <button type="button" class="btn btn-success btn-xs">
+        <a type="button"  class="btn btn-success btn-xs" id="botonNuevaBibliografia" href="{{path('gs_proyectos_desarrollarproduccionintelectual_agregarbibliografia',{'id': tema.idtema})}}">
             <span class="glyphicon glyphicon-plus"></span> Nuevo
+        </a>
+        <button type="button" class="btn btn-primary btn-xs" id="botonAgregarLectura">
+            <span class="glyphicon glyphicon-plus"></span> Agregar lectura con proposito
         </button>
-        <button type="button" class="btn btn-default btn-xs">
+        <button type="button" class="btn btn-default btn-xs" id="botonModificarBibliografia">
             <span class="glyphicon glyphicon-refresh"></span> Modificar
         </button>
-        <button type="button" class="btn btn-danger btn-xs">
+        <button type="button" class="btn btn-danger btn-xs" id="botonEliminarBibliografia">
             <span class="glyphicon glyphicon-trash"></span> Eliminar
         </button>
     </div>
 </div>
 {% endif %}
 {% endfor %}
-<table class="table table-hover " align="center">
+<table class="table table-hover table-striped table-condensed" align="center">
     <thead>
         <tr>
             <th></th>
@@ -232,6 +235,82 @@
         </div>
     </div>
 </div>
+
+<!-- Modal agregar lectura con proposito-->
+<div class="modal fade" id="modalAgregarLectura" tabindex="-1" role="dialog" aria-labelledby="modalCompartirMiembrosLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Alerta</h4>
+            </div>
+            <div class="modal-body">
+                Realmente desea ejecutar esta acción. 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+                <button type="button" class="btn btn-success" id="botonModalAgregarLectura" name="botonModalAgregarLectura"  href="#">Ir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal eliminar bibliografia-->
+<div class="modal fade" id="modalEliminarBibliografia" tabindex="-1" role="dialog" aria-labelledby="modalEliminarBibliografiaLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Alerta</h4>
+            </div>
+            <div class="modal-body">
+                Realmente desea ejecutar esta acción. Si elimina este elemento bibliográfico, con el se eliminara la lectura(s) con proposito segun correspondientes. 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+                <button type="button" class="btn btn-danger" id="botonModalEliminarBibliografia" name="botonModalEliminarBibliografia"  href="#">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal modificar bibliografia-->
+<div class="modal fade" id="modalModificarBibliografia" tabindex="-1" role="dialog" aria-labelledby="modalModificarBibliografiaLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Alerta</h4>
+            </div>
+            <div class="modal-body">
+                Realmente desea ejecutar esta acción. 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+                <button type="button" class="btn btn-success" id="botonModalModificarBibliografia" name="botonModalModificarBibliografia"  href="#">Ir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade " id="radioVacio" tabindex="-1" role="dialog" aria-labelledby="radioVacioLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Alerta</h4>
+            </div>
+            <div class="modal-body">
+                Usted no ha seleccionado ningun elemento. Intentelo de nuevo. 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
     var x;
     x = $(document);
@@ -242,7 +321,53 @@
         var btnEnviar;
         btnEnviar = $('#botonEnviar');
         btnEnviar.click(enviar);
-        
+
+        /*
+         * **********************
+         * Lectura con proposito*
+         * **********************
+         */
+        var btnAgregarLectura;
+        btnAgregarLectura = $('#botonAgregarLectura');
+        btnAgregarLectura.click(agregarLectura);
+
+        var btnModalAgregarLectura;
+        btnModalAgregarLectura = $('#botonModalAgregarLectura');
+        btnModalAgregarLectura.click(modalAgregarLectura);
+
+        /************************/
+
+        /*
+         * **********************
+         * Modificar Bibliografia*
+         * **********************
+         */
+        var btnModificarBibliografia;
+        btnModificarBibliografia = $('#botonModificarBibliografia');
+        btnModificarBibliografia.click(modificarBibliografia);
+
+        var btnModalModificarBibliografia;
+        btnModalModificarBibliografia = $('#modalModificarBibliografia');
+        btnModalModificarBibliografia.click(modalModificarBibliografia);
+
+        /************************/
+
+        /*
+         * **********************
+         * Eliminar bibliografia*
+         * **********************
+         */
+
+        var btnEliminarBibliografia;
+        btnEliminarBibliografia = $('#botonEliminarBibliografia');
+        btnEliminarBibliografia.click(eliminarBibliografia);
+
+        var btnModalEliminarBibliografia;
+        btnModalEliminarBibliografia = $('#botonModalEliminarBibliografia');
+        btnModalEliminarBibliografia.click(modalEliminarBibliografia);
+
+        /************************/
+
         var btnCompartir;
         btnCompartir = $('#botonCompartir');
         btnCompartir.click(compartir);
@@ -256,12 +381,78 @@
         enlaceCompartir.click(abrirModalCompartir);
 
     }
+      function  modalModificarBibliografia() {
+
+        var rtBibliografia;
+        rtBibliografia = $('#radioBibliografia:checked').val();
+        var url;
+        url = "{{ path('gs_proyectos_desarrollarproduccionintelectual_modificarbibliografia', {'id':tema.idtema,'idbibliografia': 'text'}) }}";
+        url = url.replace("text", rtBibliografia);
+        window.open(url, '_self');
+
+    }
+
+    function modificarBibliografia() {
+
+        var rtBibliografia;
+        rtBibliografia = $('#radioBibliografia:checked').val();
+
+        if (rtBibliografia == "" || rtBibliografia == null) {
+            $('#radioVacio').modal('show');
+        } else {
+            $('#modalModificarBibliografia').modal('show');
+        }
+    }
+
+    function  modalEliminarBibliografia() {
+
+        var rtBibliografia;
+        rtBibliografia = $('#radioBibliografia:checked').val();
+        var url;
+        url = "{{ path('gs_proyectos_desarrollarproduccionintelectual_eliminarbibliografia', {'id':tema.idtema,'idbibliografia': 'text'}) }}";
+        url = url.replace("text", rtBibliografia);
+        window.open(url, '_self');
+
+    }
+    function eliminarBibliografia() {
+
+        var rtBibliografia;
+        rtBibliografia = $('#radioBibliografia:checked').val();
+
+        if (rtBibliografia == "" || rtBibliografia == null) {
+            $('#radioVacio').modal('show');
+        } else {
+            $('#modalEliminarBibliografia').modal('show');
+        }
+    }
+
+    function  modalAgregarLectura() {
+
+        var rtBibliografia;
+        rtBibliografia = $('#radioBibliografia:checked').val();
+        var url;
+        url = "{{ path('gs_proyectos_desarrollarproduccionintelectual_agregarlecturaproposito', {'id': 'text'}) }}";
+        url = url.replace("text", rtBibliografia);
+        window.open(url, '_self');
+
+    }
+    function agregarLectura() {
+
+        var rtBibliografia;
+        rtBibliografia = $('#radioBibliografia:checked').val();
+
+        if (rtBibliografia == "" || rtBibliografia == null) {
+            $('#radioVacio').modal('show');
+        } else {
+            $('#modalAgregarLectura').modal('show');
+        }
+    }
 
     function compartir() {
         window.open(urlGlobalCompartir, '_self');
     }
-    
-     function enviar() {
+
+    function enviar() {
         window.open(urlGlobal, '_self');
     }
 
