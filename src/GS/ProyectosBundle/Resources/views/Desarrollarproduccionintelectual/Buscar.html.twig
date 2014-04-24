@@ -27,84 +27,85 @@
 <br>
 <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-8">  
+        <div id="produccion">
+            <table class="table table-condensed table-striped table-hover">
+                <thead>
+                    <tr>
 
+                        <th>
+                            Tema
+                        </th>
+                        <th>
+                            Autor(es)
+                        </th>
+                        <th>
+                            Director(es)
+                        </th>
+                        <th>
+                            Coodirector(es)
+                        </th>
+                        <th>
+                            Estado
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+            {%for informacion in temaUsuario %}
+                    <tr>
+
+                        <td>
+                    {{ informacion.tema.titulo }}
+                        </td>
+                        <td>
+                   {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': informacion.tema.idtema , 'funcion': '1' })) }}
+                        </td>
+                        <td>
+                    {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': informacion.tema.idtema , 'funcion': '3' })) }}
+                        </td>
+                        <td>                         
+                     {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': informacion.tema.idtema , 'funcion': '2' })) }}
+                        </td>
+                        <td>
+                       {%if informacion.tema.estado %}
+                            En desarrollo
+                         {% else %}
+                            Terminado
+                      {% endif %}
+                        </td>
+                        <td>
+
+                            <a href="{{ path('gs_proyectos_desarrollarproduccionintelectual_vista',{'id':informacion.tema.idtema}) }}">
+                                <span class="glyphicon glyphicon-eye-open"></span> Abrir
+                            </a>
+                        </td>
+                    </tr>
+            {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr align="center">
+                        <td colspan="6">
+                            <select >
+                                <option>30</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tfoot>
+
+            </table>
+
+        </div>
 
     </div>
     <div class="col-xs-6 col-md-4">
-
-
+         {%for informacion in temaUsuario %}
+        {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Vercronogramas', { 'id': informacion.tema.idtema })) }}
+        {% endfor %}
     </div>
 </div>
-<div id="produccion">
-    <table class="table table-condensed table-striped table-hover">
-        <thead>
-            <tr>
-              
-                <th>
-                    Tema
-                </th>
-                <th>
-                    Autor(es)
-                </th>
-                <th>
-                    Director(es)
-                </th>
-                <th>
-                    Coodirector(es)
-                </th>
-                <th>
-                    Estado
-                </th>
-                  <th>
 
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            {%for informacion in temaUsuario %}
-            <tr>
-               
-                <td>
-                    {{ informacion.tema.titulo }}
-                </td>
-                <td>
-                   {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': informacion.tema.idtema , 'funcion': '1' })) }}
-                </td>
-                <td>
-                    {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': informacion.tema.idtema , 'funcion': '3' })) }}
-                </td>
-                <td>                         
-                     {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': informacion.tema.idtema , 'funcion': '2' })) }}
-                </td>
-                <td>
-                       {%if informacion.tema.estado %}
-                    En desarrollo
-                         {% else %}
-                    Terminado
-                      {% endif %}
-                </td>
-                 <td>
-                    
-                    <a href="{{ path('gs_proyectos_desarrollarproduccionintelectual_vista',{'id':informacion.tema.idtema}) }}">
-                        <span class="glyphicon glyphicon-eye-open"></span> Abrir
-                    </a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-        <tfoot>
-            <tr align="center">
-                <td colspan="6">
-                    <select >
-                        <option>30</option>
-                    </select>
-                </td>
-            </tr>
-        </tfoot>
-
-    </table>
-
-</div>
 
 {% endblock %}
 

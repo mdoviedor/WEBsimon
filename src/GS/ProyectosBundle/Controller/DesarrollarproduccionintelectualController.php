@@ -21,6 +21,7 @@ use GS\ProyectosBundle\Form\BibliografiaType;
 use GS\ProyectosBundle\Form\LecturaconpropositoType;
 use GS\ProyectosBundle\Funciones\IdentificadorFecha;
 use GS\ProyectosBundle\Funciones\RedimencionarImagen;
+use GS\ProyectosBundle\Funciones\ComparacionFechas;
 use GS\ProyectosBundle\Form\UsuarioType;
 use GS\ProyectosBundle\Entity\Mensajeenviado;
 use GS\ProyectosBundle\Entity\Mensajerecibido;
@@ -49,10 +50,39 @@ class DesarrollarproduccionintelectualController extends Controller {
          * 
          */
         $em = $this->getDoctrine()->getManager();
-        $temaUsuario = new TemaUsuario();
-        $temaUsuario = $em->getRepository('GSProyectosBundle:TemaUsuario')->findBy(array('usuario' => $user));
 
+        $temaUsuario = new TemaUsuario();
+        $cronograma = new Cronograma();
+        $temaUsuario = $em->getRepository('GSProyectosBundle:TemaUsuario')->findBy(array('usuario' => $user));
         return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:buscar.html.twig', array('temaUsuario' => $temaUsuario));
+    }
+
+    public function VercronogramasAction($id) {
+        $comparacionFecha = new ComparacionFechas();
+        $cronograma = new Cronograma();
+        $tema = new Tema();
+        $em = $this->getDoctrine()->getManager();
+        $cronograma = $em->getRepository('GSProyectosBundle:Cronograma')->findBy(array('tema' => $id));
+        $tema = $em->getRepository('GSProyectosBundle:Tema')->find($id);
+        $array = array();
+
+        foreach ($cronograma as $value) {
+            $array1 = array("hito" => $value->getHito(),
+                "fecha" => $value->getFecha(),
+                "descripcion" => $value->getDescripcion(),
+                "diferencia" => $comparacionFecha->interval_date2($value->getFecha()),
+                "porcentaje" => $comparacionFecha->porcentaje($comparacionFecha->interval_date2($value->getFecha()))
+            );
+
+            $var = $value->getIdcronograma();
+
+            $tempArray = array($var => $array1);
+            $array = array_merge($array, $tempArray);
+
+            //$array->$comparacionFecha->interval_date2($value->getFecha());
+        }
+
+        return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Vercronogramas.html.twig', array('cronogramas' => $array, 'tema' => $tema));
     }
 
     /*

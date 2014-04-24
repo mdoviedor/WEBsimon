@@ -65,7 +65,7 @@
     </pre>
     {%if bibliografia.archivo %}
     De click en el siguiente enlace para descargar el archivo adjunto.
-    <h2><a href="{{ render(url(bibliografia.archivo)) }}">Descargar Archivo Adjunto</a></h2>
+    <h2><a href="{{ asset(bibliografia.archivo~bibliografia.nombrearchivo~'.zip')  }}">Descargar Archivo Adjunto</a></h2>
     {% endif %}
     <div class="page-header">
         <h1>Ficha Bibliográfica:<small> Lectura con proposito</small></h1>
