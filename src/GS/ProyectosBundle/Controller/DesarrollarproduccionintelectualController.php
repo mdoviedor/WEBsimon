@@ -100,7 +100,7 @@ class DesarrollarproduccionintelectualController extends Controller {
         $lectura = $em->getRepository('GSProyectosBundle:Lecturaconproposito')->findBy(array('bibliografia' => $id)); //Consulta para comprobar la existencia de una lectura con proposito correspondiente a la bibliografia
 
         if ($lectura) { //Si existe una lectura con proposito correspondiente a la bibliografia
-            $lecturaConProposito = $em->getRepository('GSProyectosBundle:Lecturaconproposito')->find($lectura[0]->getBibliografia()->getIdbibliografia());
+            $lecturaConProposito = $em->getRepository('GSProyectosBundle:Lecturaconproposito')->find($lectura[0]->getIdlecturaconproposito());
             $formLecturaConProposito = $this->createForm(new LecturaconpropositoType(), $lecturaConProposito); // Se crea el formulario con los datos del modelo Lectura con proposito, puesto corresponde a una modificación
         } else {
             $formLecturaConProposito = $this->createForm(new LecturaconpropositoType(), $lecturaConProposito); //Se crea el formulario vacion, para una nueva lectura con proposito
@@ -124,7 +124,7 @@ class DesarrollarproduccionintelectualController extends Controller {
                     $em->flush($lecturaConProposito);
                 }
             }
-            return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Agregarlecturaproposito.html.twig', array('formLecturaConProposito' => $formLecturaConProposito->createView(), 'idBibliografia' => $id));
+            return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Agregarlecturaproposito.html.twig', array('formLecturaConProposito' => $formLecturaConProposito->createView(), 'idBibliografia' => $id, 'idTema' => $temaBibliografia[0]->getTema()->getIdtema()));
         } else {
             return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_buscar'));
         }
@@ -413,12 +413,92 @@ class DesarrollarproduccionintelectualController extends Controller {
         return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_buscar')); // Ruta tomada si el usuario que intenta acceder no tiene privilegios.
     }
 
-    public function EliminaractividadcronogramaAction() {
-        
+    /*
+     * Recibe el idcronograma correspondiente al modelo Cronograma.
+     * Acción para eliminar una actividad al cronograma del proyecto en desarrollo.
+     * Se verifica si el usuario que intenta agregar la actividad es autor y es 
+     * participante del proyecto.
+     */
+
+    public function EliminaractividadcronogramaAction($id) {
+        /*
+         * Obtener username de la sesion
+         */
+        $userManager = $this->get('security.context')->getToken()->getUser();
+        $user = $userManager->getUsername();
+        /*
+         * 
+         */
+        $em = $this->getDoctrine()->getManager();
+        $temaUsuario = new TemaUsuario(); // Objeto del modelo TemaUsuario
+        $cronograma = new Cronograma();
+
+        $cronograma = $em->getRepository('GSProyectosBundle:Cronograma')->find($id);
+        $temaUsuario = $em->getRepository('GSProyectosBundle:TemaUsuario')->findBy(array('tema' => $cronograma->getTema()->getIdtema(), 'usuario' => $user)); // Consulta 
+
+        /*
+         * Si el usuario es participante del proyecto podra ver el entorno de 
+         * trabajo para desarrollar la produccion intelectual 
+         */
+
+        if ($temaUsuario) {
+            $em->remove($cronograma);
+            $em->flush();
+            return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_vista', array('id' => $cronograma->getTema()->getIdtema())));
+        }
+
+        return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_buscar')); // Ruta tomada si el usuario que intenta acceder no tiene privilegios.
     }
 
-    public function ModificaractividadcronogramaAction() {
-        
+    /*
+     * Recibe el idcronograma correspondiente al modelo Cronograma.
+     * Acción para modificar una actividad al cronograma del proyecto en desarrollo.
+     * Se verifica si el usuario que intenta agregar la actividad es autor y es 
+     * participante del proyecto.
+     */
+
+    public function ModificaractividadcronogramaAction(Request $request, $id) {
+        /*
+         * Obtener username de la sesion
+         */
+        $userManager = $this->get('security.context')->getToken()->getUser();
+        $user = $userManager->getUsername();
+        /*
+         * 
+         */
+        $em = $this->getDoctrine()->getManager();
+        $temaUsuario = new TemaUsuario(); // Objeto del modelo TemaUsuario
+        $cronograma = new Cronograma();
+        $tema = new Tema();
+        $identificadorFecha = new IdentificadorFecha();
+
+        $cronograma = $em->getRepository('GSProyectosBundle:Cronograma')->find($id);
+
+        $temaUsuario = $em->getRepository('GSProyectosBundle:TemaUsuario')->findBy(array('tema' => $cronograma->getTema()->getIdtema(), 'usuario' => $user)); // Consulta 
+        // $tema = $em->getRepository('GSProyectosBundle:Tema')->find($id); // Consulta 
+
+
+        $formCronograma = $this->createForm(new CronogramaType(), $cronograma);
+
+        /*
+         * Si el usuario es participante del proyecto podra ver el entorno de 
+         * trabajo para desarrollar la produccion intelectual 
+         */
+
+        if ($temaUsuario) {
+            if ($request->getMethod() == 'POST') {
+                $formCronograma->handleRequest($request);
+                if ($formCronograma->isValid()) {
+
+                    $em->persist($cronograma);
+                    $em->flush();
+                    return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_vista', array('id' => $cronograma->getTema()->getIdtema())));
+                }
+            }
+            return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Modificaractividadcronograma.html.twig', array('formCronograma' => $formCronograma->createView(), 'idCronograma' => $id, 'idTema' => $cronograma->getTema()->getIdtema()));
+        }
+
+        return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_buscar')); // Ruta tomada si el usuario que intenta acceder no tiene privilegios.
     }
 
     /*

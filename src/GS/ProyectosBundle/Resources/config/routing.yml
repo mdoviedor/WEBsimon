@@ -158,12 +158,14 @@ gs_proyectos_desarrollarproduccionintelectual_agregaractividadcronograma:
     pattern: usuario/produccionIntelectual/cronograma/agregarActividad/{id}
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Agregaractividadcronograma }
 
+#Se pasa el idcronograma correspondiente al modelo Cronograma
 gs_proyectos_desarrollarproduccionintelectual_eliminaractividadcronograma:
-    pattern: usuario/produccionIntelectual/cronograma/eliminarActividad
+    pattern: usuario/produccionIntelectual/cronograma/eliminarActividad/{id}
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Eliminaractividadcronograma }
 
+#Se pasa el idcronograma correspondiente al modelo Cronograma
 gs_proyectos_desarrollarproduccionintelectual_modificaractividadcronograma:
-    pattern: usuario/produccionIntelectual/cronograma/modificarActividad
+    pattern: usuario/produccionIntelectual/cronograma/modificarActividad/{id}
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Modificaractividadcronograma }
 
 ############

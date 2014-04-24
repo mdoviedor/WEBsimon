@@ -8,88 +8,126 @@
         <h1>Ficha Bibliográfica:</h1>
     </div>
     <pre>
- <h3>Tipo elemento bibliográfico:</h3>
-    {{ bibliografia.tipoelementobibliografico.nombre  }}        
-<h3>Categoría:</h3>
+<h5><strong>Tipo elemento bibliográfico:</strong></h5>
+    {{ bibliografia.tipoelementobibliografico.nombre  }}    
+    </pre>
+    <pre>
+<h5><strong>Categoría:</strong></h5>
     {{ bibliografia.categoria.nombre  }}
-<h3>Nombre:</h3>
+    </pre>
+    <pre>
+<h5><strong>Nombre:</strong></h5>
     {{ bibliografia.nombre  }}
-<h3>Autores:</h3>
+    </pre>
+    <pre>
+<h5><strong>Autores:</strong></h5>
     {{ bibliografia.autores  }}
-<h3>Traducción</h3>
+    </pre>
+    <pre>
+<h5><strong>Traducción</strong></h5>
 {%if bibliografia.traduccion %}
     SI
 {% else %}
     NO
 {% endif %}
-<h3>Fecha de edición:</h3>
+    </pre>
+    <pre>
+    <h5><strong>Fecha de edición:</strong></h5>
     {{ bibliografia.fechaedicion | date('D-M-Y')  }}
-<h3>Editorial:</h3>
+    </pre>
+    <pre>
+    <h5><strong>Editorial:</strong></h5>
     {{ bibliografia.editorial }}
-<h3>Resumen:</h3>
+    </pre>
+    <pre>
+    <h5><strong>Resumen:</strong></h5>
     {{ bibliografia.resumen  }}
-<h3>Recomendaciones de uso:</h3>
+    </pre>
+    <pre>
+    <h5><strong>Recomendaciones de uso:</strong></h5>
     {{ bibliografia.recomendacionesuso  }}
-<h3>Tabla de contenido:</h3>
+    </pre>
+    <pre>
+    <h5><strong>Tabla de contenido:</strong></h5>
     {{ bibliografia.tablacontenido  }}
-<h3>Palabras clave:</h3>
+    </pre>
+    <pre>
+    <h5><strong>Palabras clave:</strong></h5>
     {{ bibliografia.palabrasclave  }}
-<h3>Area de investigación:</h3>
+    </pre>
+    <pre>
+    <h5><strong>Area de investigación:</strong></h5>
     {{ bibliografia.areainvestigacion.nombre }}
-<h3>Ubicación:</h3>
+    </pre>
+    <pre>
+    <h5><strong>Ubicación:</strong></h5>
     {{ bibliografia.ubicacion }}
     </pre>
+    {%if bibliografia.archivo %}
+    De click en el siguiente enlace para descargar el archivo adjunto.
+    <h2><a href="{{ render(url(bibliografia.archivo)) }}">Descargar Archivo Adjunto</a></h2>
+    {% endif %}
     <div class="page-header">
         <h1>Ficha Bibliográfica:<small> Lectura con proposito</small></h1>
     </div>
 {%for lectura in lecturaConProposito%}
     <pre>
-<h3>Poropósito general de la lectura</h3>
+<h5><strong>Poropósito general de la lectura</strong></h5>
     {{ lectura.propositogeneral }}
-<h2>Inspección previa del contenido de la lectura: </h2>
-    <h3>1. Ttítulos de los subcapítulos </h3>
+    </pre>
+    <pre>
+    <h4><strong>Inspección previa del contenido de la lectura: </strong></h4>
+    <h5><strong>1. Ttítulos de los subcapítulos</strong> </h5>
         {{ lectura.titulosubcapitulos }}
-    <h3>2. Existe un resumen al principio o al final de los capítulos ?</h3>
+    <h5><strong>2. Existe un resumen al principio o al final de los capítulos ?</strong></h5>
 {%if lectura.resumen %}
         SI
 {% else %}
         NO
 {% endif %}
-    <h3>3. Existe preguntas al final de los capítulos ?</h3>
+    <h5><strong>3. Existe preguntas al final de los capítulos ?</strong></h5>
 {%if lectura.preguntasfinalcapitulo %}
         SI
 {% else %}
         NO
 {% endif %}
-    <h3>4. Existe un glosario o una lista de vocabulario al final del texto ?</h3>
+    <h5><strong>4. Existe un glosario o una lista de vocabulario al final del texto ?</strong></h5>
 {%if lectura.glosario %}
         SI
 {% else %}
         NO
 {% endif %}
-    <h3>5. Secciones que componen el texto</h3>
+    <h5><strong>5. Secciones que componen el texto</strong></h5>
         {{ lectura.secciones }}
-    <h3>6. Descripción de las ilustraciones, graficas, esquemas, tablas o cuadros del texto</h3>
+    <h5><strong>6. Descripción de las ilustraciones, graficas, esquemas, tablas o cuadros del texto</strong></h5>
         {{ lectura.descripcionilustraciones }}
-    <h3>7. Resumen de la lectura</h3>
+    <h5><strong>7. Resumen de la lectura</strong></h5>
         {{ lectura.resumenlectura }}
-<h2>Preguntar y predecir: </h2>
-    <h3>Inquietudes, problemas o intereses con relación al proyecto que se podrían satisfacer con el contenido de esta lectura</h3>
+    </pre>
+    <pre>
+<h4><strong>Preguntar y predecir: </strong></h4>
+    <h5><strong>Inquietudes, problemas o intereses con relación al proyecto que se podrían satisfacer con el contenido de esta lectura</strong></h5>
         {{ lectura.preguntas }}
-<h2>Leer con proposito: </h2>
-    <h3>Posibles respuestas a 
-        las preguntas que formulo anteriormente </h3>
+    </pre>
+    <pre>
+<h4><strong>Leer con proposito: </strong></h4>
+    <h5><strong>Posibles respuestas a las preguntas que formulo anteriormente</strong> </h5>
         {{ lectura.lecturaproposito }}
-<h2>Resumir: </h2>
-    <h3>Breve resumen de cada capitulo o parte de acuerdo con los subtítulos y secciones, a su vez una lista de las palabras clave que se descubre en cada una</h3>
+    </pre>
+    <pre>
+<h4><strong>Resumir: </strong></h4>
+    <h5><strong>Breve resumen de cada capitulo o parte de acuerdo con los subtítulos y secciones, a su vez una lista de las palabras clave que se descubre en cada una</strong></h5>
         {{ lectura.resumenseccion }}
-<h2>Aplicar y transferir: </h2>
-    <h3>Recomendación sobre la posible utilidad de esta lectura para el trabajo de investigación </h3>
+    </pre>
+    <pre>
+<h4><strong>Aplicar y transferir:</strong> </h4>
+    <h5><strong>Recomendación sobre la posible utilidad de esta lectura para el trabajo de investigación</strong> </h5>
         {{ lectura.recomendaciones }}
+    </pre>
 {% endfor  %}
 </pre>
-    <br>
-    <br>
+<br>
+<br>
 </div>
 
 {% endblock %}  

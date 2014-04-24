@@ -102,13 +102,13 @@
     </div>
     <div class="col-xs-12 col-sm-6 col-md-8" style="text-align: right;">
 
-        <button type="button" class="btn btn-success btn-xs">
+        <a type="button" class="btn btn-success btn-xs" href="{{ path('gs_proyectos_desarrollarproduccionintelectual_agregaractividadcronograma',{'id': usuario.tema.idtema})}}">
             <span class="glyphicon glyphicon-plus"></span> Nuevo
-        </button>
-        <button type="button" class="btn btn-default btn-xs">
+        </a>
+        <button type="button" class="btn btn-default btn-xs" id="botonModificarCronograma">
             <span class="glyphicon glyphicon-refresh"></span> Modificar
         </button>
-        <button type="button" class="btn btn-danger btn-xs">
+        <button type="button" class="btn btn-danger btn-xs" id="botonEliminarCronograma">
             <span class="glyphicon glyphicon-trash"></span> Eliminar
         </button>
 
@@ -132,8 +132,8 @@
         <tr>
             <td><input type="radio" id="radioCronograma" name="radioCronograma" value="{{actividad.idcronograma}}"></td>
             <td>{{actividad.hito}}</td>
-            <td>{{actividad.fecharegistro | date ('d/m/Y')}}</td>
-            <td>{{actividad.fecha| date ('d/m/Y')}}</td>
+            <td>{{actividad.fecharegistro | date ('d-m-Y')}}</td>
+            <td>{{actividad.fecha| date ('d-m-Y')}}</td>
             <td>{{actividad.descripcion}}</td>
         </tr>
         {%endfor%}
@@ -150,7 +150,7 @@
             <span class="glyphicon glyphicon-plus"></span> Nuevo
         </a>
         <button type="button" class="btn btn-primary btn-xs" id="botonAgregarLectura">
-            <span class="glyphicon glyphicon-plus"></span> Agregar lectura con proposito
+            <span class="glyphicon glyphicon-ok"></span> Lectura con proposito
         </button>
         <button type="button" class="btn btn-default btn-xs" id="botonModificarBibliografia">
             <span class="glyphicon glyphicon-refresh"></span> Modificar
@@ -293,6 +293,45 @@
     </div>
 </div>
 
+<!-- Modal modificar bibliografia-->
+<div class="modal fade" id="modalModificarCronograma" tabindex="-1" role="dialog" aria-labelledby="modalModificarCronogramaLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Alerta</h4>
+            </div>
+            <div class="modal-body">
+                Realmente desea ejecutar esta acción. 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+                <button type="button" class="btn btn-success" id="botonModalModificarCronograma" name="botonModalModificarCronograma"  href="#">Ir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal eliminar bibliografia-->
+<div class="modal fade" id="modalEliminarCronograma" tabindex="-1" role="dialog" aria-labelledby="modalEliminarCronogramaLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Alerta</h4>
+            </div>
+            <div class="modal-body">
+                Realmente desea ejecutar esta acción.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+                <button type="button" class="btn btn-danger" id="botonModalEliminarCronograma" name="botonModalEliminarCronograma"  href="#">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <!-- Modal -->
 <div class="modal fade " id="radioVacio" tabindex="-1" role="dialog" aria-labelledby="radioVacioLabel" aria-hidden="true">
@@ -321,6 +360,37 @@
         var btnEnviar;
         btnEnviar = $('#botonEnviar');
         btnEnviar.click(enviar);
+
+        /*
+         * **********************
+         * Eliminar cronograma*
+         * **********************
+         */
+
+        var btnEliminarCronograma;
+        btnEliminarCronograma = $('#botonEliminarCronograma');
+        btnEliminarCronograma.click(eliminarCronograma);
+
+        var btnModalEliminarCronograma;
+        btnModalEliminarCronograma = $('#modalEliminarCronograma');
+        btnModalEliminarCronograma.click(modalEliminarCronograma);
+
+        /************************/
+
+        /*
+         * **********************
+         * Modificar Cronograma*
+         * **********************
+         */
+        var btnModificarCronograma;
+        btnModificarCronograma = $('#botonModificarCronograma');
+        btnModificarCronograma.click(modificarCronograma);
+
+        var btnModalModificarCronograma;
+        btnModalModificarCronograma = $('#modalModificarCronograma');
+        btnModalModificarCronograma.click(modalModificarCronograma);
+
+        /************************/
 
         /*
          * **********************
@@ -381,7 +451,52 @@
         enlaceCompartir.click(abrirModalCompartir);
 
     }
-      function  modalModificarBibliografia() {
+    
+       function  modalEliminarCronograma() {
+
+        var rtCronograma;
+        rtCronograma = $('#radioCronograma:checked').val();
+        var url;
+        url = "{{ path('gs_proyectos_desarrollarproduccionintelectual_eliminaractividadcronograma', {'id':'text'}) }}";
+        url = url.replace("text", rtCronograma);
+        window.open(url, '_self');
+
+    }
+
+    function eliminarCronograma() {
+
+        var rtCronograma;
+        rtCronograma = $('#radioCronograma:checked').val();
+
+        if (rtCronograma == "" || rtCronograma == null) {
+            $('#radioVacio').modal('show');
+        } else {
+            $('#modalEliminarCronograma').modal('show');
+        }
+    }
+
+    function  modalModificarCronograma() {
+
+        var rtCronograma;
+        rtCronograma = $('#radioCronograma:checked').val();
+        var url;
+        url = "{{ path('gs_proyectos_desarrollarproduccionintelectual_modificaractividadcronograma', {'id': 'text'}) }}";
+        url = url.replace("text", rtCronograma);
+        window.open(url, '_self');
+
+    }
+    function modificarCronograma() {
+
+        var rtCronograma;
+        rtCronograma = $('#radioCronograma:checked').val();
+
+        if (rtCronograma == "" || rtCronograma == null) {
+            $('#radioVacio').modal('show');
+        } else {
+            $('#modalModificarCronograma').modal('show');
+        }
+    }
+    function  modalModificarBibliografia() {
 
         var rtBibliografia;
         rtBibliografia = $('#radioBibliografia:checked').val();

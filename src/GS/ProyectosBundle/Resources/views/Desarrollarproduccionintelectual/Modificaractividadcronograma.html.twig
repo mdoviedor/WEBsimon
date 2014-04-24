@@ -1,7 +1,49 @@
-{% extends "::base.html.twig" %}
+{% extends "::usuario.html.twig" %}
 
 {% block title %}GSProyectosBundle:Desarrollarproduccionintelectual:Modificaractividadcronograma{% endblock %}
 
-{% block body %}
-<h1>Welcome to the Desarrollarproduccionintelectual:Modificaractividadcronograma page</h1>
+{% block titulo %}  
+<h1>Actividad del Cronograma: <small>Modificar.</small></h1>
 {% endblock %}
+
+{% block submenuderecho %} 
+<form  action="{{ path('gs_proyectos_desarrollarproduccionintelectual_modificaractividadcronograma',{'id':idCronograma}) }}" method="post" {{ form_enctype(formCronograma) }}>
+<button type="submit"  class="btn btn-success btn-xs" id="botonGuardar">
+    <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
+</button>
+<a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_desarrollarproduccionintelectual_vista',{'id':idTema}) }}">
+    <span class="glyphicon glyphicon-log-out"></span> Salir
+</a>
+{% endblock %}
+
+{% block contenido %}
+
+   {{ form_errors(formCronograma) }}
+    <div class="row">
+        <div class="col-md-6">
+             {{ form_label(formCronograma.fecharegistro) }}
+             {{ form_errors(formCronograma.fecharegistro) }}
+             {{ form_widget(formCronograma.fecharegistro) }}
+        </div>
+        <div class="col-md-6">
+              {{ form_label(formCronograma.fecha) }}
+              {{ form_errors(formCronograma.fecha) }}
+              {{ form_widget(formCronograma.fecha) }}
+        </div>
+    </div>     
+      {{ form_label(formCronograma.hito) }}
+     {{ form_errors(formCronograma.hito) }}
+     {{ form_widget(formCronograma.hito) }}
+      {{ form_label(formCronograma.descripcion) }}
+     {{ form_errors(formCronograma.descripcion) }}
+     {{ form_widget(formCronograma.descripcion) }}
+{{ form_rest(formCronograma) }}
+
+</form> 
+
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}
+
