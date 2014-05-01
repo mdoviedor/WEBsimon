@@ -1,0 +1,59 @@
+{% extends "::usuario.html.twig" %}
+
+{% block title %}Grupo Simon: Produccion en Desarrollo{% endblock %}
+
+{% block titulo %}  
+<h1>Producción en Desarrollo</h1>
+{% endblock %}
+{% block contenido %}
+{% if espacioTrabajo %}
+<table class="table table-condensed table-striped table-hover">
+{%for informacion in espacioTrabajo%} 
+    <thead>
+        <tr>
+            <th><h4>Tema:</h4> 
+            </th>
+            <th>
+                    {{informacion.tema.titulo}}
+            </th>
+        </tr>
+
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Autor(es):</strong></td>
+            <td>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': informacion.tema.idtema , 'funcion': '1' })) }}</td>
+        </tr>
+        <tr>
+            <td><strong>Director(es):</strong></td>
+            <td>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': informacion.tema.idtema , 'funcion': '3' })) }}</td>
+        </tr>
+        <tr>
+            <td><strong>Codirector(es):</strong></td>
+            <td>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': informacion.tema.idtema , 'funcion': '2' })) }}</td>
+        </tr>
+        <tr>
+            <td><strong>Enlace:</strong></td>
+            <td>                    <strong>{{informacion.nombre}}</strong> <br>
+                <a href="{{informacion.url}}">{{informacion.url}}</a>
+            </td>
+        </tr>        
+    </tbody>
+
+{%endfor%}
+</table>
+
+
+
+{%else%}
+<div class="jumbotron">
+    <div class="container">
+        <h1>¡Atención!</h1>
+        <p>En este momento ninguno de los miembros comparte su producción en desarrollo</p>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
+{% block javascripts %}
+{% endblock %}

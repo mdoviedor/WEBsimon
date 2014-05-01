@@ -7,7 +7,10 @@ gs_proyectos_tema_crear:
 #Se pasa el idtema correspondiente al modelo Tema y mensaje que informa del estado de la accion
 gs_proyectos_tema_modificar:
     pattern: administrador/administrarTema/modificar/{id}.{mensaje}
-    defaults: { _controller: GSProyectosBundle:Administrartema:Modificar }
+    defaults: { _controller: GSProyectosBundle:Administrartema:Modificar, mensaje: 0 }
+    requirements:
+        id:  \d+ 
+        mensaje: \d+
 
 gs_proyectos_tema_eliminar:
     pattern: administrador/administrarTema/eliminar
@@ -75,6 +78,10 @@ gs_proyectos_desarrollarproduccionintelectual_buscar:
     pattern: usuario/produccionIntelectual/
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Buscar }
     
+gs_proyectos_desarrollarproduccionintelectual_produccionendesarrollo:
+    pattern: usuario/produccionIntelectual/produccionEnDesarrollo/
+    defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Produccionendesarrollo }
+    
 gs_proyectos_desarrollarproduccionintelectual_perfil:
     pattern: usuario/produccionIntelectual/perfil/
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Perfil }
@@ -104,10 +111,18 @@ gs_proyectos_desarrollarproduccionintelectual_compartirconmiembros:
     pattern: usuario/produccionIntelectual/vista/compartirConMiembros/{id} 
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Compartirconmiembros }
 
-    #Se pasa el idbibliografia correspondiente al modelo Bibliografia
+#Se pasa el idbibliografia correspondiente al modelo Bibliografia
 gs_proyectos_desarrollarproduccionintelectual_elementobibliografia_vista: 
-    pattern: produccionIntelectual/bibliografia/vista/{id} 
+    pattern: usuario/produccionIntelectual/bibliografia/vista/{id} 
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Bibliografiavista }
+    
+#Se pasa el id correspondiente al modelo User y un limite correspondiente a la 
+#cantidad de resultados que pretende ver el usuario
+gs_proyectos_desarrollarproduccionintelectual_vistaperfilusuario:
+    pattern: usuario/produccionIntelectual/perfilUsuario/vista/{id}.{limite}
+    defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Vistaperfil, limite: 5 }
+    requirements:
+        limite:  \d+ 
     
 ###################################################
 #DESARROLLAR PRODUCCION INTELECTUAL - Bibliografia#
@@ -240,3 +255,6 @@ gs_proyectos_mensajes_restaurar:
     defaults: { _controller: GSProyectosBundle:Mensajes:Restaurar }
     requirements:
         id:  \d+ 
+_vistaherramientas:
+    pattern: administrador/
+    defaults: { _controller: GSProyectosBundle:Administrador:Vistaherramientas }

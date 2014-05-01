@@ -29,3 +29,11 @@ gs_consultas_produccionintelectual_busquedaavanzadaadministrador:
 gs_consultas_produccionintelectual_busquedaavanzadacomunidad:
     pattern: consultas/produccionintelectual/busquedaAvanzada/{titulo}.{tipoproduccion}.{numeroresultados}.{primernombre}.{primerapellido}
     defaults: { _controller: GSConsultasBundle:ConsultasProduccionintelectual:Busquedaavanzadacomunidad }
+
+#Se pasa el id correspondiente al modelo User y un limite correspondiente a la 
+#cantidad de resultados que pretende ver el usuario
+gs_consultas_proyectos_desarrollarproduccionintelectual_vistaperfilusuario:
+    pattern: usuario/consultas/produccionIntelectual/perfilUsuario/vista/{id}.{limite}
+    defaults: { _controller: GSConsultasBundle:ConsultasProduccionintelectual:Vistaperfil, limite: 5 }
+    requirements:
+        limite:  \d+ 

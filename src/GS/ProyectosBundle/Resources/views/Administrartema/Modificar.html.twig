@@ -1,7 +1,139 @@
-{% extends "::base.html.twig" %}
+{% extends "::administrar.html.twig" %}
 
 {% block title %}GSProyectosBundle:Administrartema:Modificar{% endblock %}
 
-{% block body %}
-<h1>Welcome to the Administrartema:Modificar page</h1>
+{% block titulo %}  
+<h1>Administrar Tema:<small>Modificar</small></h1>
 {% endblock %}
+{% block submenuderecho %} 
+{% endblock %}
+{% block contenido %}
+<form id="formulario" name="formulario"  action="{{ path('gs_proyectos_tema_modificar',{'id': tema.idtema}) }}" method="post" {{ form_enctype(formTema) }}>
+
+    <div class="row">
+        <div class="col-xs-6 col-md-4" style="border-color: #000;">
+
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-8" style="text-align: right;">
+            <button type="submit" class="btn btn-success btn-xs" id="botonGuardar">
+                <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
+            </button>
+            <a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_tema_buscar') }}">
+                <span class="glyphicon glyphicon-log-out"></span> Salir
+            </a>  
+        </div>
+    </div>
+    <br>
+{% if mensaje == '1'%}
+    <br>
+    <div class="alert alert-info">
+        <p><b>Mensaje.</b> Usuario guardado exitosamente</p>
+    </div>
+    <br>
+{% endif %}
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-8">  
+
+        {{ form_errors(formTema) }}
+        {{ form_label(formTema.titulo) }}     <br>
+        {{ form_errors(formTema.titulo) }}
+        {{ form_widget(formTema.titulo) }} 
+            <br>
+         {{ form_label(formTema.tiempoestimado) }}     <br>
+        {{ form_errors(formTema.tiempoestimado) }}
+        {{ form_widget(formTema.tiempoestimado) }} <label> Meses.</label><br>
+            <label>* Estado:</label>
+            <select class="form-control" id="estado" name="estado">
+                <option value="{{ tema.estado }}">{%if tema.estado %}Disponible{%else%}No Disponible{%endif%}</option>
+                <option value="1">Disponible</option>
+                <option value="0">No Disponible</option>
+            </select>
+            <br>
+            <label>* Descripción:</label><br>
+
+            <textarea id="editor" name="editor" rows="10" cols="30" style="width:100%;height:400px" required="true">
+             {{descripcion}}
+            </textarea>
+
+        </div>
+        <div class="col-xs-6 col-md-4">
+            <br>
+        {{ form_label(formTema.fechainiciopublicacion) }} <br>
+        {{ form_errors(formTema.fechainiciopublicacion) }}
+        {{ form_widget(formTema.fechainiciopublicacion) }}
+            <br>
+        {{ form_label(formTema.fechafinpublicacion) }}   <br>
+        {{ form_errors(formTema.fechafinpublicacion) }}
+        {{ form_widget(formTema.fechafinpublicacion) }}
+            <br>
+
+        </div>
+    </div>
+       {{ form_rest(formTema) }}
+</form> 
+<br>
+{% endblock %}
+
+
+
+    {% block javascripts %}
+{{ parent()}}
+
+<script type="text/javascript">
+    /*
+     var x;
+     x = $(document);
+     x.ready(inicializarEventos);
+     
+     function inicializarEventos() {
+     
+     var btn;
+     btn = $('#botonGuardar');
+     btn.click(enviarFormulario)
+     }
+     function enviarFormulario() {
+     var frm;
+     
+     frm = $('#formulario');
+     frm.submit();
+     }
+     */
+
+    $("#editor").kendoEditor({
+        tools: [
+            "bold",
+            "italic",
+            "underline",
+            "strikethrough",
+            "justifyLeft",
+            "justifyCenter",
+            "justifyRight",
+            "justifyFull",
+            "insertUnorderedList",
+            "insertOrderedList",
+            "indent",
+            "outdent",
+            "createLink",
+            "unlink",
+            "insertImage",
+            "subscript",
+            "superscript",
+            "createTable",
+            "addRowAbove",
+            "addRowBelow",
+            "addColumnLeft",
+            "addColumnRight",
+            "deleteRow",
+            "deleteColumn",
+            "viewHtml",
+            "formatting",
+            "fontName",
+            "fontSize",
+            "foreColor",
+            "backColor"
+        ]
+    });
+</script>
+
+    {% endblock %}

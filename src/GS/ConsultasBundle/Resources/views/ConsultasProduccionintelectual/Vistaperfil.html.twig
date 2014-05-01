@@ -1,0 +1,44 @@
+<table class="table table-condensed table-striped table-hover">
+    <thead>
+        <tr>
+
+            <th>
+                Titulo
+            </th>
+            <th>
+                Tipo
+            </th>
+            <th>
+                Fecha
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+            {%for informacion in produccionIntelectual %}
+        <tr>
+
+            <td>
+                <p>
+                {{ informacion.titulo }}. <strong>Tema: </strong> {{ informacion.tema.titulo }}
+                    <strong>Autor(es):</strong>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': informacion.tema.idtema , 'funcion': '1' })) }}
+                    <strong>Director(es):</strong>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': informacion.tema.idtema , 'funcion': '3' })) }}
+                    <strong> Codirector(es):</strong>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': informacion.tema.idtema , 'funcion': '2' })) }}            </td>
+            </p>
+            <td>
+                 {{ informacion.tipoproduccion.nombre }}
+            </td>
+            <td>
+                {{ informacion.fecharegistro | date('m-y')}}
+            </td>
+            <td>
+                <a href="{{ path('gs_proyectos_desarrollarproduccionintelectual_catalogobibliografico_vista',{'id': informacion.idproduccionintelectual})}}">
+                    <span class="glyphicon glyphicon-eye-open"></span> Abrir
+                </a>
+            </td>
+        </tr>
+            {% endfor %}
+    </tbody>
+</table>
+

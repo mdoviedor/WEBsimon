@@ -1,0 +1,76 @@
+{% extends "::administrar.html.twig" %}
+
+{% block title %}GSProyectosBundle:Administrador:Vistaherramientas{% endblock %}
+
+{% block titulo %}  
+<h1>Panel de Herramientas</h1>
+{% endblock %}
+
+
+{% block contenido %}
+<div class="row ">
+    <div class="col-md-4 ">
+        <a type="button" class="btn btn-primary btn-lg btn-block center-block" href="{{ path('gs_proyectos_tema_buscar') }}">
+            <span class="glyphicon glyphicon-file"></span><br>
+            <span>Administrar Tema</span>
+        </a>
+    </div>
+    <div class="col-md-4">
+         <button type="button" class="btn btn-default btn-lg btn-block center-block">
+            <span class="glyphicon glyphicon-user"></span><br>
+            <span>Administrar Usuarios</span>
+        </button>
+    </div>
+    <div class="col-md-4">
+         <button type="button" class="btn btn-primary btn-lg btn-block center-block">
+            <span class="glyphicon glyphicon-book"></span><br>
+            <span>Administrar Producción</span>
+        </button>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-4">
+        <button type="button" class="btn btn-default btn-lg btn-block center-block">
+            <span class="glyphicon glyphicon-leaf"></span><br>
+            <span>Administrar Recursos</span>
+        </button>
+    </div>
+    <div class="col-md-4">
+         <button type="button" class="btn btn-primary btn-lg btn-block center-block">
+            <span class="glyphicon glyphicon-folder-open"></span><br>
+            <span>Administrar Seminarios</span>
+        </button>
+    </div>
+    <div class="col-md-4">
+         <button type="button" class="btn btn-default btn-lg btn-block center-block">
+            <span class="glyphicon glyphicon-globe"></span><br>
+            <span>Administrar Semilleros</span>
+        </button>
+    </div>    
+</div>
+<br>
+<div class="row">
+    <div class="col-md-4">
+        
+    </div>
+    <div class="col-md-4">
+         <button type="button" class="btn btn-default btn-lg btn-block center-block">
+            <span class="glyphicon glyphicon-list-alt"></span><br>
+            <span>Administrar Inventario</span>
+        </button>
+    </div>
+    <div class="col-md-4">
+           <button type="button" class="btn btn-primary btn-lg btn-block center-block">
+            <span class="glyphicon glyphicon-bullhorn"></span><br>
+            <span>Administrar Contenidos</span>
+        </button>
+    </div>
+    </div>    
+</div>
+{% endblock %}
+
+
+{% block javascripts %}
+
+{% endblock %}

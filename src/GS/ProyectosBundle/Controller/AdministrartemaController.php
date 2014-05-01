@@ -51,14 +51,50 @@ class AdministrartemaController extends Controller {
                 $em->flush();
 
                 return $this->redirect($this->generateUrl('gs_proyectos_tema_buscar'));
-               
             }
         }
         return $this->render('GSProyectosBundle:Administrartema:crear.html.twig', array('formTema' => $formTema->createView()));
     }
 
-    public function ModificarAction() {
-        
+    /*
+     * Recibe el idcronograma correspondiente al modelo Tema.
+     * Acción para modificar un tema.
+     */
+
+    public function ModificarAction(Request $request, $id, $mensaje) {
+        $em = $this->getDoctrine()->getManager();
+
+        $tema = new Tema();
+        $tema = $em->getRepository('GSProyectosBundle:Tema')->find($id);
+        $formTema = $this->createForm(new TemaType(), $tema);
+
+        if ($request->getMethod() == 'POST') {
+            $formTema->handleRequest($request);
+            if ($formTema->isValid()) {
+                $descripcion = $request->request->get('editor','No entra nada');
+                $tema->setDescripcion($descripcion);
+                $fechaRegistro = new \DateTime("now");
+
+                $fechaInicioPublicacion = $formTema->get('fechainiciopublicacion')->getData();
+                if ($fechaInicioPublicacion) {
+                    $tema->setFechainiciopublicacion($fechaInicioPublicacion);
+                } else {
+                    $tema->setFechainiciopublicacion($fechaRegistro);
+                }
+                $fechaFinPublicacion = $formTema->get('fechafinpublicacion')->getData();
+                if ($fechaFinPublicacion) {
+                    $tema->setFechafinpublicacion($fechaFinPublicacion);
+                }
+                $tema->setFechamodificacion($fechaRegistro);
+                $tema->setEstado($request->request->get('estado'));
+                $em->persist($tema);
+                $em->flush();
+                $mensaje = "1";
+                return $this->redirect($this->generateUrl('gs_proyectos_tema_modificar', array('id' => $id, 'mensaje' => $mensaje)));
+            }
+        }
+        $descripcionTema = html_entity_decode($tema->getDescripcion());
+        return $this->render('GSProyectosBundle:Administrartema:Modificar.html.twig', array('formTema' => $formTema->createView(), 'tema' => $tema, 'descripcion' => $descripcionTema, 'mensaje' => $mensaje));
     }
 
     public function EliminarAction() {
@@ -133,7 +169,7 @@ class AdministrartemaController extends Controller {
 
         if ($request->getMethod() == 'POST') {
             $formEspacioTrabajo->handleRequest($request);
-     
+
             if ($formEspacioTrabajo->isValid()) {
                 $em = $this->getDoctrine()->getManager();
                 $ultimoEspacioTrabajo = $em->getRepository('GSProyectosBundle:Espaciotrabajo')->buscarUltimoEspacioTrabajo();
@@ -152,8 +188,8 @@ class AdministrartemaController extends Controller {
         $espaciosAsignados = $em->getRepository('GSProyectosBundle:Espaciotrabajo')->findBy(array('tema' => $idTema));
         return $this->render('GSProyectosBundle:Administrartema:asignarespaciotrabajo.html.twig', array('formEspacioTrabajo' => $formEspacioTrabajo->createView(), 'tema' => $tema, 'espaciosAsignados' => $espaciosAsignados));
     }
-    
-        public function EliminarespaciotrabajoAction(Request $request, $id) {
+
+    public function EliminarespaciotrabajoAction(Request $request, $id) {
         $espacioTrabajo = new Espaciotrabajo();
         $em = $this->getDoctrine()->getManager();
         $espacioTrabajo = $em->getRepository("GSProyectosBundle:Espaciotrabajo")->find($id);

@@ -816,4 +816,22 @@ class DesarrollarproduccionintelectualController extends Controller {
         }
     }
 
+    public function ProduccionendesarrolloAction() {
+        $em = $this->getDoctrine()->getManager();
+        $espacioTrabajo = new Espaciotrabajo();
+        $espacioTrabajo = $em->getRepository('GSProyectosBundle:Espaciotrabajo')->findBy(array('compartirmiembros' => true));
+        return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Produccionendesarrollo.html.twig', array('espacioTrabajo' => $espacioTrabajo));
+    }
+
+    public function VistaperfilAction($id, $limite) {
+        $em = $this->getDoctrine()->getManager();
+        $temaUsuario = new TemaUsuario();
+        $produccionIntelectual = new Produccionintelectual();
+        $usuario = new Usuario();
+        $usuario = $em->getRepository('GSProyectosBundle:Usuario')->findBy(array('user' => $id));
+
+        $produccionIntelectual = $em->getRepository('GSProyectosBundle:Produccionintelectual')->buscarProduccionUsuario($usuario[0]->getNumerodocumentoidentidad(), $limite);
+        return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Vistaperfil.html.twig', array('id' => $id, 'usuario' => $usuario, 'produccionIntelectual' => $produccionIntelectual));
+    }
+
 }

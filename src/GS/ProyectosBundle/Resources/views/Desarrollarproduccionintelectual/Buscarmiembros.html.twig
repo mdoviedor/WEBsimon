@@ -1,4 +1,4 @@
 
 {%for usuario in temaUsuario %}
-<a href="#">{{ usuario.usuario.primernombre }} {{ usuario.usuario.primerapellido }}</a><br>
+<a href="{{ path('gs_proyectos_desarrollarproduccionintelectual_vistaperfilusuario',{'id':usuario.usuario.user.id})}}">{{ usuario.usuario.primernombre }} {{ usuario.usuario.primerapellido }}</a> &nbsp; 
 {% endfor %}
