@@ -255,6 +255,33 @@ gs_proyectos_mensajes_restaurar:
     defaults: { _controller: GSProyectosBundle:Mensajes:Restaurar }
     requirements:
         id:  \d+ 
-_vistaherramientas:
+        
+#########################################
+#PANEL DE HERRAMIENTAS DEL ADMINISTRADOR#
+#########################################
+
+gs_proyectos_vistaherramientas:
     pattern: administrador/
     defaults: { _controller: GSProyectosBundle:Administrador:Vistaherramientas }
+
+######################
+#ADMINISTRAR RECURSOS#
+######################
+
+gs_proyectos_recursos_crear:
+    pattern: administrador/administrarRecurso/crear
+    defaults: { _controller: GSProyectosBundle:Administrarrecurso:Crear }
+
+#Se pasa el idrecurso correspondiente al modelo Recurso
+gs_proyectos_recursos_modificar:
+    pattern: administrador/administrarRecurso/modificar/{id}
+    defaults: { _controller: GSProyectosBundle:Administrarrecurso:Modificar }
+
+gs_proyectos_recursos_eliminar:
+    pattern: administrador/administrarRecurso/eliminar
+    defaults: { _controller: GSProyectosBundle:Administrarrecurso:Eliminar }
+
+gs_proyectos_recursos_buscar:
+    pattern: administrador/administrarRecurso/
+    defaults: { _controller: GSProyectosBundle:Administrarrecurso:Buscar }
+

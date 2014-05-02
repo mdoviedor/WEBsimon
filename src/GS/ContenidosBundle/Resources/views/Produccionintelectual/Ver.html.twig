@@ -62,7 +62,11 @@
         <p>{{produccionIntelectual.palabrasclave}}</p>
     </div>
     <div class="col-md-4">
-        <h3><a href="{{asset(produccionIntelectual.archivo~produccionIntelectual.nombre~'.zip'}}">Descargar Archivo</a></h3>
+        {%if produccionIntelectual.acceso %}
+        <h3><a href="{{asset(produccionIntelectual.archivo~produccionIntelectual.nombre~'.zip')}}">Descargar Archivo</a></h3>
+         {%else%}
+        <div class="alert alert-info"><strong>Atención.</strong> El documento no se encuentra disponible. Para más información agradecemos que se cominique con nosotros.</div>
+        {%endif%}
     </div>
 </div>
 

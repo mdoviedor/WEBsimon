@@ -1,4 +1,10 @@
 
 {%for usuario in temaUsuario %}
-<a href="{{ path('gs_proyectos_desarrollarproduccionintelectual_vistaperfilusuario',{'id':usuario.usuario.user.id})}}">{{ usuario.usuario.primernombre }} {{ usuario.usuario.primerapellido }}</a> &nbsp; 
+<a href="
+   {% if is_granted('ROLE_USUARIO') %}
+{{ path('gs_proyectos_desarrollarproduccionintelectual_vistaperfilusuario',{'id':usuario.usuario.user.id})}}
+{% else %} 
+{{ path('gs_contenidos_produccionintelectual_vistaperfilusuario',{'id':usuario.usuario.user.id})}}
+ {% endif %}
+   ">{{ usuario.usuario.primernombre }} {{ usuario.usuario.primerapellido }}</a> &nbsp; 
 {% endfor %}

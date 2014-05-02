@@ -29,7 +29,7 @@
                             <td align="center">
                                 <h4>{{ usuario.primernombre }} {{ usuario.segundonombre }} {{ usuario.primerapellido }} {{ usuario.segundoapellido }}</h4>
                                 <p>{{ usuario.user.email }}</p>
-                                <p><a href="#" class="btn btn-primary" role="button">Ver trabajo en el grupo</a></p>
+                                <p><a href="{{ path('gs_contenidos_produccionintelectual_vistaperfilusuario',{'id':usuario.user.id})}}" class="btn btn-primary" role="button">Ver trabajo en el grupo</a></p>
                             </td>
                         </tr>
                     </table>                
@@ -93,7 +93,7 @@
                             <td align="center">
                                 <h4>{{ usuario.primernombre }} {{ usuario.segundonombre }} {{ usuario.primerapellido }} {{ usuario.segundoapellido }}</h4>
                                 <p>{{ usuario.user.email }}</p>
-                                <p><a href="#" class="btn btn-primary" role="button">Ver trabajo en el grupo</a></p>
+                                <p><a href="{{ path('gs_contenidos_produccionintelectual_vistaperfilusuario',{'id':usuario.user.id})}}" class="btn btn-primary" role="button">Ver trabajo en el grupo</a></p>
                             </td>
                         </tr>
                     </table>                
@@ -124,7 +124,7 @@
                             <td align="center">
                                 <h4>{{ usuario.primernombre }} {{ usuario.segundonombre }} {{ usuario.primerapellido }} {{ usuario.segundoapellido }}</h4>
                                 <p>{{ usuario.user.email }}</p>
-                                <p><a href="#" class="btn btn-primary" role="button">Ver trabajo en el grupo</a></p>
+                                <p><a href="{{ path('gs_contenidos_produccionintelectual_vistaperfilusuario',{'id':usuario.user.id})}}" class="btn btn-primary" role="button">Ver trabajo en el grupo</a></p>
                             </td>
                         </tr>
                     </table>                
@@ -156,7 +156,7 @@
                                 <h4>{{ usuario.primernombre }} {{ usuario.segundonombre }} {{ usuario.primerapellido }} {{ usuario.segundoapellido }}</h4>
                                 <p>{{ usuario.user.email }}</p>
                                 <p>{{ usuario.tipousuario.nombre }}</p>
-                                <p><a href="#" class="btn btn-primary" role="button">Ver trabajo en el grupo</a></p>
+                                <p><a href="{{ path('gs_contenidos_produccionintelectual_vistaperfilusuario',{'id':usuario.user.id})}}" class="btn btn-primary" role="button">Ver trabajo en el grupo</a></p>
                             </td>
                         </tr>
                     </table>                

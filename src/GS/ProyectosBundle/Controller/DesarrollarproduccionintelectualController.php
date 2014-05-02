@@ -823,6 +823,11 @@ class DesarrollarproduccionintelectualController extends Controller {
         return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Produccionendesarrollo.html.twig', array('espacioTrabajo' => $espacioTrabajo));
     }
 
+    /*
+     * Recibe un id correspondiente al id del modelo User y un limite, correspondiente
+     * al numero total de respuestas solicitadas. 
+     * Esta accion permite visualizar el perfil del usuario. 
+     */
     public function VistaperfilAction($id, $limite) {
         $em = $this->getDoctrine()->getManager();
         $temaUsuario = new TemaUsuario();

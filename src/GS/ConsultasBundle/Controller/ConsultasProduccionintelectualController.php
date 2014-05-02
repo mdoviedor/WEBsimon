@@ -46,5 +46,15 @@ class ConsultasProduccionintelectualController extends Controller {
         $produccionIntelectual = $em->getRepository('GSProyectosBundle:Produccionintelectual')->buscarProduccionUsuario($usuario[0]->getNumerodocumentoidentidad(), $limite);
         return $this->render('GSConsultasBundle:ConsultasProduccionintelectual:Vistaperfil.html.twig', array('id' => $id, 'usuario' => $usuario, 'produccionIntelectual' => $produccionIntelectual));
     }
+    
+       public function VistaperfilcomunidadAction($id, $limite) {
+        $em = $this->getDoctrine()->getManager();
+        $temaUsuario = new TemaUsuario();
+        $produccionIntelectual = new Produccionintelectual();
+        $usuario = new Usuario();
+        $usuario = $em->getRepository('GSContenidosBundle:Usuario')->findBy(array('user' => $id));
+        $produccionIntelectual = $em->getRepository('GSContenidosBundle:Produccionintelectual')->buscarProduccionUsuario($usuario[0]->getNumerodocumentoidentidad(), $limite);
+        return $this->render('GSConsultasBundle:ConsultasProduccionintelectual:Vistaperfil.html.twig', array('id' => $id, 'usuario' => $usuario, 'produccionIntelectual' => $produccionIntelectual));
+    }
 
 }

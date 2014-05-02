@@ -20,5 +20,19 @@ class ProduccionintelectualRepository extends EntityRepository {
                         ->setMaxResults($tamano)
                         ->getResult();
     }
+    
+     /*
+     * Buscar la produccion intelectual del usuario a nivel del grupo.
+     * Se recibe el numeroDocumentoIdentidad correspondiente al modelo Usuario
+     * y el limite o tamaño del numero de resultados que devolvera la consulta.
+     */
+
+    public function buscarProduccionUsuario($usuario, $limite) {
+        return $this->getEntityManager()
+                        ->createQuery('SELECT p FROM GSContenidosBundle:Produccionintelectual p JOIN GSContenidosBundle:TemaUsuario tu WITH tu.usuario = :numeroDocumentoIdentidad AND tu.tema = p.tema ORDER BY p.fecharegistro DESC')
+                        ->setParameter('numeroDocumentoIdentidad', $usuario )                
+                        ->setMaxResults($limite)
+                        ->getResult();
+    }
 
 }

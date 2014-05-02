@@ -37,3 +37,11 @@ gs_consultas_proyectos_desarrollarproduccionintelectual_vistaperfilusuario:
     defaults: { _controller: GSConsultasBundle:ConsultasProduccionintelectual:Vistaperfil, limite: 5 }
     requirements:
         limite:  \d+ 
+        
+#Se pasa el id correspondiente al modelo User y un limite correspondiente a la 
+#cantidad de resultados que pretende ver el usuario
+gs_consultas_proyectos_desarrollarproduccionintelectual_vistaperfilusuariocomunidad:
+    pattern: consultas/produccionIntelectual/perfilUsuario/vista/{id}.{limite}
+    defaults: { _controller: GSConsultasBundle:ConsultasProduccionintelectual:Vistaperfilcomunidad, limite: 5 }
+    requirements:
+        limite:  \d+ 

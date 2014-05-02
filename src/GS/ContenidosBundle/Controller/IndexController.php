@@ -10,7 +10,8 @@ class IndexController extends Controller
   * Al cliente, hacer la peticion de acceso al index, se redirecciona a la ruta /login.
   */
     function indexAction() {
-         if ($this->get('security.context')->isGranted('ROLE_ADMINISTRADOR')) {//Existe una sesion con el usuario Rol User
+         if ($this->get('security.context')->isGranted('ROLE_ADMINISTRADOR')) {//Existe una sesion con el usuario Rol ADMINISTRADOR
+         return $this->redirect($this->generateUrl('gs_proyectos_vistaherramientas'));
 //            return $this->redirect($this->generateUrl('fundeuis_administrador_inicio'));
         } elseif ($this->get('security.context')->isGranted('ROLE_USUARIO')) {
 //            $userManager = $this->get('security.context')->getToken()->getUser(); // se contie la sesion del usuario

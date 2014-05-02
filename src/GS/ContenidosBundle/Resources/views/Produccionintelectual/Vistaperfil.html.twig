@@ -1,0 +1,113 @@
+{% extends "::contenidos.html.twig" %}
+{% block title %}Grupo Simon: Usuario{% endblock %}
+
+{% block titulo %}  
+<h1>Perfíl</h1>
+{% endblock %}
+
+{% block contenido %}
+
+{%for usuario in usuario%}
+
+<div class="row">
+
+    <div class="col-md-4"><img src="{{ asset(usuario.foto)}}" class="img-thumbnail center-block"></div>
+    <div class="col-md-8">  
+        <br>
+        <dl class="dl-horizontal">
+            <dt>Nombre:</dt>
+            <dd>{{usuario.primernombre}} {{usuario.segundonombre}} {{usuario.primerapellido}} {{usuario.segundoapellido}} </dd>
+            <dt>Rol:</dt>
+            <dd>{{usuario.tipousuario.nombre}} </dd>
+            <dt>Correo Electrónico:</dt>
+            <dd><a href="mailto:{{usuario.user.email}}" target="_top">{{usuario.user.email}} </a></dd>
+            <dt>Vinculación:</dt>
+            <dd>{{usuario.fecharegistro | date('d-m-y')}}</dd>       
+        </dl>
+    </div>
+</div>
+
+{%endfor%}
+<h2>Producción</h2>
+<div id="produccionUsuario">
+    <table class="table table-condensed table-striped table-hover">
+        <thead>
+            <tr>
+
+                <th>
+                    Titulo
+                </th>
+                <th>
+                    Tipo
+                </th>
+                <th>
+                    Fecha
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for informacion in produccionIntelectual %}
+            <tr>
+
+                <td>
+                    <p>
+                {{ informacion.titulo }}. <strong>Tema: </strong> {{ informacion.tema.titulo }}
+                        <strong>Autor(es):</strong>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': informacion.tema.idtema , 'funcion': '1' })) }}
+                        <strong>Director(es):</strong>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': informacion.tema.idtema , 'funcion': '3' })) }}
+                        <strong> Codirector(es):</strong>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': informacion.tema.idtema , 'funcion': '2' })) }}            </td>
+                </p>
+                <td>
+                 {{ informacion.tipoproduccion.nombre }}
+                </td>
+                <td>
+                {{ informacion.fecharegistro | date('m-y')}}
+                </td>
+                <td>
+                    <a href="{{ path('gs_contenidos_produccionintelectual_ver',{'id': informacion.idproduccionintelectual})}}">
+                        <span class="glyphicon glyphicon-eye-open"></span> Abrir
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<select class="center-block" id="listaTamano" name="listaTamano">  
+    <option>Seleccionar</option>
+    <option value="5">5</option>
+    <option value="10">10</option>
+    <option value="20">20</option>
+    <option value="30">30</option>
+    <option value="60">60</option>
+    <option value="90">90</option>
+    <option value="120">120</option>
+    <option value="100000">Todos</option>                        
+</select>
+{% endblock %}
+{% block javascripts %}
+{{ parent()}}
+<script type="text/javascript">
+    var x;
+    x = $(document);
+    x.ready(inicializarEventos);
+    function inicializarEventos() {
+        var sltTamano;
+        sltTamano = $('#listaTamano');
+        sltTamano.change(buscarFiltroTamano);
+    }
+
+    function buscarFiltroTamano() {
+        var tamano;
+        tamano = $('#listaTamano').val()
+
+        var url;
+        url = "{{ path('gs_consultas_proyectos_desarrollarproduccionintelectual_vistaperfilusuariocomunidad', {'id': id, 'limite': 'text3'}) }}";
+        url = url.replace("text3", tamano);
+        $('#produccionUsuario').load(url);
+        inicializarEventos();
+    }
+
+</script>
+{% endblock %}

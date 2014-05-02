@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use GS\ContenidosBundle\Entity\Produccionintelectual;
 use GS\ContenidosBundle\Entity\Tipoproduccion;
 use GS\ContenidosBundle\Entity\TemaUsuario;
+use GS\ContenidosBundle\Entity\Usuario;
 use GS\ContenidosBundle\Entity\TemaBibliografia;
 
 class ProduccionintelectualController extends Controller {
@@ -28,6 +29,16 @@ class ProduccionintelectualController extends Controller {
         $temaUsuario = $em->getRepository('GSProyectosBundle:TemaUsuario')->findBy(array('tema' => $produccionIntelectual->getTema()->getIdtema()));
         $temaBibliografia = $em->getRepository('GSProyectosBundle:TemaBibliografia')->findBy(array('tema' => $produccionIntelectual->getTema()->getIdtema()));
         return $this->render('GSContenidosBundle:Produccionintelectual:Ver.html.twig', array('produccionIntelectual' => $produccionIntelectual, 'temaUsuario' => $temaUsuario, 'temaBibliografia' => $temaBibliografia));
+    }
+
+    public function VistaperfilAction($id, $limite) {
+        $em = $this->getDoctrine()->getManager();
+        $temaUsuario = new TemaUsuario();
+        $produccionIntelectual = new Produccionintelectual();
+        $usuario = new Usuario();
+        $usuario = $em->getRepository('GSContenidosBundle:Usuario')->findBy(array('user' => $id));
+        $produccionIntelectual = $em->getRepository('GSContenidosBundle:Produccionintelectual')->buscarProduccionUsuario($usuario[0]->getNumerodocumentoidentidad(), $limite);
+        return $this->render('GSContenidosBundle:Produccionintelectual:Vistaperfil.html.twig', array('id' => $id, 'usuario' => $usuario, 'produccionIntelectual' => $produccionIntelectual));
     }
 
 }

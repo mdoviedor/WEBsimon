@@ -14,3 +14,11 @@ gs_contenidos_produccionintelectual_buscar:
 gs_contenidos_produccionintelectual_ver:
     pattern: contenidos/produccionIntelectual/ver/{id}
     defaults: { _controller: GSContenidosBundle:Produccionintelectual:Ver }
+    
+#Se pasa el id correspondiente al modelo User y un limite correspondiente a la 
+#cantidad de resultados que pretende ver el usuario
+gs_contenidos_produccionintelectual_vistaperfilusuario:
+    pattern: contenidos/produccionIntelectual/perfilUsuario/vista/{id}.{limite}
+    defaults: { _controller: GSContenidosBundle:Produccionintelectual:Vistaperfil, limite: 5 }
+    requirements:
+        limite:  \d+ 

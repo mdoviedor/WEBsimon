@@ -4,9 +4,7 @@
     <thead>
         <tr>
             <th>Titulo</th>
-            <th>Autor(es)</th>
-            <th>Director(es)</th>
-            <th>Codirector(es)</th>
+            <th>Tipo</th>         
             <th>Fecha</th>
             <th></th>
         </tr>
@@ -18,15 +16,15 @@
         <tr>
             <td>
                     {{ produccion.titulo | upper}}. <b>Tema:</b> {{ produccion.tema.titulo }}
+
+                   <strong>Autor(es):</strong> {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '1' })) }}
+
+                   <strong>Director(es):</strong>  {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '3' })) }}
+
+                     <strong>Codirector(es):</strong> {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '2' })) }}
             </td>
-            <td>
-                   {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '1' })) }}
-            </td>
-            <td>
-                    {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '3' })) }}
-            </td>
-            <td>                         
-                     {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '2' })) }}
+             <td>
+                    {{ produccion.tipoproduccion.nombre }}
             </td>
             <td>
                     {{ produccion.fecharegistro | date('m-Y') }}
@@ -43,7 +41,7 @@
     <tfoot>
         <tr align="center">
             <td colspan="6">
-               
+
             </td>
         </tr>
     </tfoot>

@@ -1,0 +1,126 @@
+{% extends "::administrar.html.twig" %}
+
+{% block title %}Grupo Simon: Administrar Recursos{% endblock %}
+
+{% block titulo %}  
+<h1>Administrar Recursos</h1>
+{% endblock %}
+{% block submenuderecho %}    
+<a type="submit" class="btn btn-success btn-xs" id="botonNuevoTema" href="{{ path('gs_proyectos_tema_crear') }}">
+    <span class="glyphicon glyphicon-plus"></span> Nuevo
+</a>
+<a type="submit" class="btn btn-default btn-xs" id="botonModificarTema" href="{{ path('gs_proyectos_tema_crear') }}">
+    <span class="glyphicon glyphicon-refresh"></span> Modificar
+</a>
+<button type="submit" class="btn btn-danger btn-xs" id="botonEliminarTema" data-toggle="modal" data-target="#myModal">
+    <span class="glyphicon glyphicon-trash"></span> Eliminar
+</button>
+<a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_vistaherramientas') }}">
+    <span class="glyphicon glyphicon-log-out"></span> Salir
+</a>
+{% endblock %}
+
+{% block submenuizquierdo %}  
+<div class="form-inline">
+    <div class="form-group">
+        <input type="search" class="form-control">
+    </div>
+    <div class="form-group">
+        <button type="button" class="btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-search"> Buscar</span> 
+        </button>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block contenido %}
+<br>
+<br>
+
+<table class="table table-hover table-condensed table-striped">
+    <thead>
+        <tr>
+            <th>
+
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Tipo Recurso
+            </th>    
+            <th>
+                Creado Por
+            </th>
+            <th>
+                Fecha de Registro
+            </th>  
+            <th>
+                Id
+            </th>   
+        </tr>
+
+    </thead>
+    <tbody>
+    <tbody>
+        {%for recurso in recursos %}
+        <tr>
+            <td>
+                <input type="radio" id="radioRecurso" name="radioRecurso">
+            </td>
+            <td>
+                {{ recurso.nombre }}
+            </td>
+            <td>
+                {{ recurso.tiporecurso.nombre }} 
+            </td>
+            <td>
+                {{ recurso.usuario.primernombre }}  {{ recurso.usuario.primerapellido }}          
+            </td>
+            <td>
+                {{ recurso.fecharegistro | date ('d-m-Y') }}
+            </td>
+            <td>
+                 {{ recurso.idrecursos }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</tbody>
+
+</table>
+
+<select class="center-block" id="listaTamano" name="listaTamano">  
+    <option>Seleccionar</option>
+    <option value="5">5</option>
+    <option value="10">10</option>
+    <option value="20">20</option>
+    <option value="30">30</option>
+    <option value="60">60</option>
+    <option value="90">90</option>
+    <option value="120">120</option>
+    <option value="100000">Todos</option>                        
+</select>
+{% endblock %}
+
+{% block javascripts %}
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Alerta</h4>
+            </div>
+            <div class="modal-body">
+                Realmente desea eliminar este contenido.  
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+                <button type="button" class="btn btn-danger" href="{{ path('gs_proyectos_tema_buscar') }}">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
