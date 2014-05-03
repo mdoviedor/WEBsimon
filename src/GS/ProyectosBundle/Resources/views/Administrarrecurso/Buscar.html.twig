@@ -6,13 +6,13 @@
 <h1>Administrar Recursos</h1>
 {% endblock %}
 {% block submenuderecho %}    
-<a type="submit" class="btn btn-success btn-xs" id="botonNuevoTema" href="{{ path('gs_proyectos_tema_crear') }}">
+<a type="submit" class="btn btn-success btn-xs" id="botonNuevoRecurso" href="{{ path('gs_proyectos_recursos_crear') }}">
     <span class="glyphicon glyphicon-plus"></span> Nuevo
 </a>
-<a type="submit" class="btn btn-default btn-xs" id="botonModificarTema" href="{{ path('gs_proyectos_tema_crear') }}">
+<a type="submit" class="btn btn-default btn-xs" id="botonModificarRecurso" href="#">
     <span class="glyphicon glyphicon-refresh"></span> Modificar
 </a>
-<button type="submit" class="btn btn-danger btn-xs" id="botonEliminarTema" data-toggle="modal" data-target="#myModal">
+<button type="submit" class="btn btn-danger btn-xs" id="botonEliminarRecurso" >
     <span class="glyphicon glyphicon-trash"></span> Eliminar
 </button>
 <a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_vistaherramientas') }}">
@@ -62,12 +62,12 @@
         </tr>
 
     </thead>
-    <tbody>
+
     <tbody>
         {%for recurso in recursos %}
         <tr>
             <td>
-                <input type="radio" id="radioRecurso" name="radioRecurso">
+                <input type="radio" id="radioRecurso" name="radioRecurso" value="{{recurso.idrecursos}}">
             </td>
             <td>
                 {{ recurso.nombre }}
@@ -87,8 +87,6 @@
         </tr>
         {% endfor %}
     </tbody>
-</tbody>
-
 </table>
 
 <select class="center-block" id="listaTamano" name="listaTamano">  
@@ -105,8 +103,9 @@
 {% endblock %}
 
 {% block javascripts %}
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+<!-- Modal Eliminar Recurso -->
+<div class="modal fade" id="modalEliminarRecurso" tabindex="-1" role="dialog" aria-labelledby="modalEliminarRecursoLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -114,13 +113,107 @@
                 <h4 class="modal-title" id="myModalLabel">Alerta</h4>
             </div>
             <div class="modal-body">
-                Realmente desea eliminar este contenido.  
+                Realmente desea ejecutar esta acción.  
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
-                <button type="button" class="btn btn-danger" href="{{ path('gs_proyectos_tema_buscar') }}">Eliminar</button>
+                <button type="button" class="btn btn-danger" id="botonModalEliminarRecurso"  href="#">Eliminar</button>
             </div>
         </div>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade " id="radioVacio" tabindex="-1" role="dialog" aria-labelledby="radioVacioLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Alerta</h4>
+            </div>
+            <div class="modal-body">
+                Usted no ha seleccionado ningun elemento. Intentelo de nuevo. 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var x;
+    x = $(document);
+    x.ready(inicializarEventos);
+    function inicializarEventos() {
+        /*
+         * ***************
+         * Modificar Recurso*
+         * ***************
+         */
+        var btnModificarRecurso;
+        btnModificarRecurso = $('#botonModificarRecurso');
+        btnModificarRecurso.click(modificarRecurso);
+        /*
+         var btnModalModificarTema;
+         btnModalModificarTema = $('#botonModalModificarTema');
+         btnModalModificarTema.click(modalModificarTema);
+         
+         /*
+         * *****************
+         * Eliminar Recurso*
+         * *****************
+         */
+
+        var btnEliminarRecurso;
+        btnEliminarRecurso = $('#botonEliminarRecurso');
+        btnEliminarRecurso.click(eliminarRecurso);
+
+        var btnModalEliminarRecurso;
+        btnModalEliminarRecurso = $('#botonModalEliminarRecurso');
+        btnModalEliminarRecurso.click(modalEliminarRecurso);
+
+
+
+    }
+
+    function  modalEliminarRecurso() {
+
+        var rtRecurso;
+        rtRecurso = $('#radioRecurso:checked').val();
+        var url;
+        url = "{{ path('gs_proyectos_recursos_eliminar', {'id': 'text'}) }}";
+        url = url.replace("text", rtRecurso);
+        window.open(url, '_self');
+
+    }
+
+    function eliminarRecurso() {
+        var rtRecurso;
+        rtRecurso = $('#radioRecurso:checked').val();
+
+        if (rtRecurso == "" || rtRecurso == null) {
+            $('#radioVacio').modal('show');
+        } else {
+            $('#modalEliminarRecurso').modal('show');
+        }
+    }
+
+
+    function modificarRecurso() {
+        var rtRecurso;
+        rtRecurso = $('#radioRecurso:checked').val();
+
+        if (rtRecurso == "" || rtRecurso == null) {
+            $('#radioVacio').modal('show');
+        } else {
+            var url;
+            url = "{{ path('gs_proyectos_recursos_modificar', {'id': 'text'}) }}";
+            url = url.replace("text", rtRecurso);
+            window.open(url, '_self');
+        }
+    }
+
+   
+
+</script>
 {% endblock %}

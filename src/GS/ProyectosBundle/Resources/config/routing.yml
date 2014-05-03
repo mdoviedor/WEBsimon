@@ -8,12 +8,12 @@ gs_proyectos_tema_crear:
 gs_proyectos_tema_modificar:
     pattern: administrador/administrarTema/modificar/{id}.{mensaje}
     defaults: { _controller: GSProyectosBundle:Administrartema:Modificar, mensaje: 0 }
-    requirements:
-        id:  \d+ 
+    requirements:        
         mensaje: \d+
 
+#Se pasa el idtema correspondiente al modelo Tema
 gs_proyectos_tema_eliminar:
-    pattern: administrador/administrarTema/eliminar
+    pattern: administrador/administrarTema/eliminar/{id}
     defaults: { _controller: GSProyectosBundle:Administrartema:Eliminar }
 
 gs_proyectos_tema_buscar:
@@ -278,10 +278,16 @@ gs_proyectos_recursos_modificar:
     defaults: { _controller: GSProyectosBundle:Administrarrecurso:Modificar }
 
 gs_proyectos_recursos_eliminar:
-    pattern: administrador/administrarRecurso/eliminar
+    pattern: administrador/administrarRecurso/eliminar/{id}
     defaults: { _controller: GSProyectosBundle:Administrarrecurso:Eliminar }
 
 gs_proyectos_recursos_buscar:
     pattern: administrador/administrarRecurso/
     defaults: { _controller: GSProyectosBundle:Administrarrecurso:Buscar }
 
+##########
+#Reportes#
+##########
+gs_proyectos_reportes_informacioncolciencias:
+    pattern: administrador/informacionColciencias
+    defaults: { _controller: GSProyectosBundle:Reportes:Informacioncolciencias }

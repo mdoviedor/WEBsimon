@@ -17,7 +17,7 @@
 <button type="submit" class="btn btn-danger btn-xs" id="botonEliminarTema" data-toggle="modal" data-target="#myModal">
     <span class="glyphicon glyphicon-trash"></span> Eliminar
 </button>
-<a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_tema_buscar') }}">
+<a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_vistaherramientas') }}">
     <span class="glyphicon glyphicon-log-out"></span> Salir
 </a>
 
@@ -51,85 +51,87 @@
     </div>
 </div>
 <div id="produccion">
-<table class="table table-hover">
-    <thead>
-        <tr align="center">
-            <th>
+    <table class="table table-hover">
+        <thead>
+            <tr align="center">
+                <th>
 
-            </th>
-            <th>
-                Tema
-            </th>
-            <th>
-                Autor(es)
-            </th>
-            <th>
-                Codirector(es)
-            </th>
-            <th>
-                Director(es)
-            </th>
-            <th>
-                Tipo de Producción
-            </th>
-            <th>
-                Estado Tema
-            </th>
-            <td>
-                Descargar
-            </td>
-        </tr>
+                </th>
+                <th>
+                    Tema
+                </th>
+                <th>
+                    Autor(es)
+                </th>
+                <th>
+                    Codirector(es)
+                </th>
+                <th>
+                    Director(es)
+                </th>
+                <th>
+                    Tipo de Producción
+                </th>
+                <th>
+                    Estado Tema
+                </th>
+                <td>
+                    Descargar
+                </td>
+            </tr>
 
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
     {%for produccion in produccionIntelectual%}
-        <tr align="center">
-            <td>
-                <input type="radio" value="{{ produccion.idproduccionintelectual }}">
-            </td>
-            <td>
+            <tr>
+                <td>
+                    <input type="radio" value="{{ produccion.idproduccionintelectual }}">
+                </td>
+                <td>
                 {{ produccion.tema.titulo  }}
-            </td>
-            <td>
+                </td>
+                <td>
                 {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '1' })) }}
-            </td>
-            <td>
+                </td>
+                <td>
                {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '2' })) }}
-            </td>
-            <td>
+                </td>
+                <td>
                  {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '3' })) }}
-            </td>
-            <td>
+                </td>
+                <td>
                 {{ produccion.tipoproduccion.nombre }}
-            </td>
-            <td >
+                </td>
+                <td >
                  {%if produccion.tema.estado%}
-                <a type="submit"  href="{{path('gs_proyectos_produccionintelectual_habilitartema',{'id': produccion.idproduccionintelectual}) }}">
-                    <span class="glyphicon glyphicon-ok-circle" ></span></a>
+                    <a type="submit"  href="{{path('gs_proyectos_produccionintelectual_habilitartema',{'id': produccion.idproduccionintelectual}) }}">
+                        <span class="glyphicon glyphicon-ok-circle" ></span></a>
                 {%else%}
-                <a type="submit"  href="{{path('gs_proyectos_produccionintelectual_habilitartema',{'id': produccion.idproduccionintelectual}) }}">
-                    <span class="glyphicon glyphicon-remove-circle"></span></a>
+                    <a type="submit"  href="{{path('gs_proyectos_produccionintelectual_habilitartema',{'id': produccion.idproduccionintelectual}) }}">
+                        <span class="glyphicon glyphicon-remove-circle"></span></a>
                 {%endif%}
 
-            </td>
-            <td>
-                <a href="../../{{ produccion.archivo }}{{ produccion.nombre }}.zip">Ver</a>
-            </td>
-        </tr>
+                </td>
+                <td>
+                    <a href="{{ asset(produccion.archivo~produccion.nombre~'.zip')}}">Ver</a>
+                </td>
+            </tr>
         {% endfor %}
 
-    </tbody>
-    <tfoot>
-        <tr align="center">
-            <td colspan="8">
-                <select>
-                    <option>30</option>
-                </select>
-            </td>
-        </tr>
-    </tfoot>
-</table>
+        </tbody>
+    </table>
 </div>
+<select class="center-block" id="listaTamano" name="listaTamano">  
+    <option>Seleccionar</option>
+    <option value="5">5</option>
+    <option value="10">10</option>
+    <option value="20">20</option>
+    <option value="30">30</option>
+    <option value="60">60</option>
+    <option value="90">90</option>
+    <option value="120">120</option>
+    <option value="100000">Todos</option>                        
+</select>
 
 {% endblock %}
 

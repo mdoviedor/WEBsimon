@@ -13,26 +13,38 @@
     <span class="glyphicon glyphicon-plus"></span> Nuevo
 </a>
 
-<a type="submit" class="btn btn-primary btn-xs" id="botonAsignarUsuario" href="{{ path('gs_proyectos_tema_buscar') }}">
+<a type="submit" class="btn btn-primary btn-xs" id="botonAsignarUsuario" href="#">
     <span class="glyphicon glyphicon-plus-sign"></span> Asignar Usuario
 </a>
-<a type="submit" class="btn btn-primary btn-xs" id="botonAsignarEspacioTrabajo" href="{{ path('gs_proyectos_tema_buscar') }}">
+<a type="submit" class="btn btn-primary btn-xs" id="botonAsignarEspacioTrabajo" href="#">
     <span class="glyphicon glyphicon-plus-sign"></span> Asignar Espacio Trabajo
 </a>
 
-<a type="submit" class="btn btn-default btn-xs" id="botonModificarTema" href="{{ path('gs_proyectos_tema_crear') }}">
+<a type="submit" class="btn btn-default btn-xs" id="botonModificarTema" href="#">
     <span class="glyphicon glyphicon-refresh"></span> Modificar
 </a>
-<button type="submit" class="btn btn-danger btn-xs" id="botonEliminarTema" data-toggle="modal" data-target="#myModal">
+<button type="submit" class="btn btn-danger btn-xs" id="botonEliminarTema">
     <span class="glyphicon glyphicon-trash"></span> Eliminar
 </button>
 
 
-<a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_tema_buscar') }}">
+<a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_vistaherramientas') }}">
     <span class="glyphicon glyphicon-log-out"></span> Salir
 </a>
 {% endblock %}
 
+{% block submenuizquierdo %}  
+<div class="form-inline">
+    <div class="form-group">
+        <input type="search" class="form-control">
+    </div>
+    <div class="form-group">
+        <button type="button" class="btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-search"> Buscar</span> 
+        </button>
+    </div>
+</div>
+{% endblock %}
 
 
 
@@ -48,26 +60,270 @@
 
     </div>
 </div>
+<div id="temas">
+    <table class="table table-hover table-condensed table-striped">
+        <thead>
+            <tr>
+                <th>
+
+                </th>
+                <th>
+                    Titulo
+                </th>
+                <th>
+                    Estado
+                </th>
+                <th>
+                    Fecha Registro
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        {%for tema in tema%}
+            <tr>
+                <td>
+                    <input type="radio" name="radioTema" id="radioTema" value="{{ tema.idtema }}">
+
+                </td>
+                <td>
+                {{ tema.titulo }}
+                </td>
+                <td>
+
+                {%if tema.estado %}
+                    Disponible
+                 {%else%}
+                    No Disponible
+                 {%endif%}
+                </td>
+                <td>
+                {{ tema.fecharegistro | date('M-Y')}}
+                </td>
+            </tr>
+        {%endfor%}
+        </tbody>
+
+    </table>
+</div>
+
+<select class="center-block" id="listaTamano" name="listaTamano">  
+    <option>Seleccionar</option>
+    <option value="5">5</option>
+    <option value="10">10</option>
+    <option value="20">20</option>
+    <option value="30">30</option>
+    <option value="60">60</option>
+    <option value="90">90</option>
+    <option value="120">120</option>
+    <option value="100000">Todos</option>                        
+</select>
+
 
 {% endblock %}
 
 {% block javascripts %}
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Alerta</h4>
-      </div>
-      <div class="modal-body">
-        Realmente desea eliminar este contenido.  
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
-        <button type="button" class="btn btn-danger" href="{{ path('gs_proyectos_tema_buscar') }}">Eliminar</button>
-      </div>
+{{ parent() }}
+
+<!-- Modal Modificar Tema -->
+<div class="modal fade" id="modalModificarTema" tabindex="-1" role="dialog" aria-labelledby="modalModificarTemaLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Alerta</h4>
+            </div>
+            <div class="modal-body">
+                Realmente desea ejecutar esta acción.  
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+                <button type="button" class="btn btn-success" id="botonModalModificarTema" href="#">Ir</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
+
+<!-- Modal Eliminar Tema -->
+<div class="modal fade" id="modalEliminarTema" tabindex="-1" role="dialog" aria-labelledby="modalEliminarTemaLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Alerta</h4>
+            </div>
+            <div class="modal-body">
+                Realmente desea ejecutar esta acción.  
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+                <button type="button" class="btn btn-danger" id="botonModalEliminarTema"  href="#">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade " id="radioVacio" tabindex="-1" role="dialog" aria-labelledby="radioVacioLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Alerta</h4>
+            </div>
+            <div class="modal-body">
+                Usted no ha seleccionado ningun elemento. Intentelo de nuevo. 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var x;
+    x = $(document);
+    x.ready(inicializarEventos);
+    function inicializarEventos() {
+        /*
+         * ***************
+         * Modificar Tema*
+         * ***************
+         */
+        var btnModificarTema;
+        btnModificarTema = $('#botonModificarTema');
+        btnModificarTema.click(modificarTema);
+
+        var btnModalModificarTema;
+        btnModalModificarTema = $('#botonModalModificarTema');
+        btnModalModificarTema.click(modalModificarTema);
+
+        /*
+         * **************
+         * Eliminar Tema*
+         * **************
+         */
+
+        var btnEliminarTema;
+        btnEliminarTema = $('#botonEliminarTema');
+        btnEliminarTema.click(eliminarTema);
+
+        var btnModalEliminarTema;
+        btnModalEliminarTema = $('#botonModalEliminarTema');
+        btnModalEliminarTema.click(modalEliminarTema);
+
+        /************************/
+
+        /*
+         * *********************
+         * Asignar Usuario Tema*
+         * *********************
+         */
+
+        var btnAsignarUsuario;
+        btnAsignarUsuario = $('#botonAsignarUsuario');
+        btnAsignarUsuario.click(asignarUsuario);
+
+        /************************/
+
+        /*
+         * *********************
+         * Asignar Usuario Tema*
+         * *********************
+         */
+
+        var btnAsignarEspacioTrabajo;
+        btnAsignarEspacioTrabajo = $('#botonAsignarEspacioTrabajo');
+        btnAsignarEspacioTrabajo.click(asignarEspacioTrabajo);
+
+        /************************/
+
+    }
+
+    function  modalEliminarTema() {
+
+        var rtTema;
+        rtTema = $('#radioTema:checked').val();
+        var url;
+        url = "{{ path('gs_proyectos_tema_eliminar', {'id': 'text'}) }}";
+        url = url.replace("text", rtTema);
+        window.open(url, '_self');
+
+    }
+
+    function eliminarTema() {
+
+        var rtTema;
+        rtTema = $('#radioTema:checked').val();
+
+        if (rtTema == "" || rtTema == null) {
+            $('#radioVacio').modal('show');
+        } else {
+            $('#modalEliminarTema').modal('show');
+        }
+    }
+
+    function  modalModificarTema() {
+
+        var rtTema;
+        rtTema = $('#radioTema:checked').val();
+        var url;
+        url = "{{ path('gs_proyectos_tema_modificar', {'id': 'text','mensaje': 0}) }}";
+        url = url.replace("text", rtTema);
+        window.open(url, '_self');
+
+    }
+    function modificarTema() {
+        var rtTema;
+        rtTema = $('#radioTema:checked').val();
+
+        if (rtTema == "" || rtTema == null) {
+            $('#radioVacio').modal('show');
+        } else {
+            $('#modalModificarTema').modal('show');
+        }
+    }
+
+    function  modalModificarTema() {
+
+        var rtTema;
+        rtTema = $('#radioTema:checked').val();
+        var url;
+        url = "{{ path('gs_proyectos_tema_modificar', {'id': 'text','mensaje': 0}) }}";
+        url = url.replace("text", rtTema);
+        window.open(url, '_self');
+
+    }
+    function asignarUsuario() {
+        var rtTema;
+        rtTema = $('#radioTema:checked').val();
+
+        if (rtTema == "" || rtTema == null) {
+            $('#radioVacio').modal('show');
+        } else {
+            var url;
+            url = "{{ path('gs_proyectos_tema_asignarsuario', {'tema': 'text'}) }}";
+            url = url.replace("text", rtTema);
+            window.open(url, '_self');
+        }
+    }
+
+    function asignarEspacioTrabajo() {
+        var rtTema;
+        rtTema = $('#radioTema:checked').val();
+
+        if (rtTema == "" || rtTema == null) {
+            $('#radioVacio').modal('show');
+        } else {
+            var url;
+            url = "{{ path('gs_proyectos_tema_asignarespaciotrabajo', {'tema': 'text'}) }}";
+            url = url.replace("text", rtTema);
+            window.open(url, '_self');
+        }
+    }
+
+</script>
+
+
+
 {% endblock %}

@@ -18,4 +18,10 @@ class TemaUsuarioRepository extends EntityRepository
                         ->setMaxResults(1)
                         ->getResult();
     }
+    
+     public function buscarTemaAsignado() {//Traer todos los temas en etapa de desarrollo
+        return $this->getEntityManager()
+                        ->createQuery('SELECT t FROM GSProyectosBundle:Tema t JOIN GSProyectosBundle:TemaUsuario tu WITH tu.tema = t.idtema and tu.funcionusuario = 1 and t.estado = true  GROUP BY tu.tema')                      
+                        ->getResult();
+    }
 }

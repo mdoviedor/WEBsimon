@@ -70,14 +70,18 @@ class AdministrarrecursoController extends Controller {
         return $this->render('GSProyectosBundle:Administrarrecurso:Modificar.html.twig', array('formRecurso' => $formRecurso->createView(), 'descripcion' => $descripcionRecurso, 'id' => $id));
     }
 
-    public function EliminarAction() {
-        
+    public function EliminarAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $recursos = new Recursos();
+        $recursos = $em->getRepository('GSProyectosBundle:Recursos')->find($id);
+        $em->remove($recursos);
+        $em->flush();
+        return $this->redirect($this->generateUrl('gs_proyectos_recursos_buscar'));
     }
 
     public function BuscarAction() {
         $em = $this->getDoctrine()->getManager();
         $recursos = new Recursos();
-
         $recursos = $em->getRepository('GSProyectosBundle:Recursos')->findBy(array(), array('idrecursos' => 'DESC'), 30);
         return $this->render('GSProyectosBundle:Administrarrecurso:Buscar.html.twig', array('recursos' => $recursos));
     }

@@ -1,0 +1,293 @@
+{% extends "::administrar.html.twig" %}
+{% block title %}GSProyectosBundle:Reportes:Informacioncolciencias{% endblock %}
+{% block titulo %}
+<h1>Información del Grupo SIMON</h1>
+{% endblock %}
+
+            {% block submenuizquierdo %}
+            {% endblock %}
+
+             {% block submenuderecho %}
+            {% endblock %}
+
+{% block contenido %}
+<h2>Usuarios</h2>
+<table class="table table-condensed table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                Nombres y Apellidos
+            </th>
+            <th>
+                ROL
+            </th>
+            <th>
+                Documento de Identidad
+            </th>
+            <th>
+                Fecha de Registro
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+{% set counterActivos = 0 %} 
+{% set counterInactivos = 0 %} 
+{% set counterTotal= 0 %} 
+{% set counterEstudiantePregradoActivo = 0 %} 
+{% set counterEstudiantePosgradoActivo = 0 %} 
+{% set counterInvestigarAsociadoActivo = 0 %} 
+{% set counterDirectorActivo = 0 %} 
+{% set counterEstudiantePregradoInactivo = 0 %} 
+{% set counterEstudiantePosgradoInactivo = 0 %} 
+{% set counterInvestigarAsociadoInactivo = 0 %} 
+{% set counterDirectorInactivo = 0 %} 
+{%for usuario in usuarios%}
+{%if usuario.user.enabled and usuario.tipousuario.nombre != 'Administrador'%}
+{%if usuario.tipousuario.idtipousuario == 2%}
+        {% set counterEstudiantePregradoActivo = counterEstudiantePregradoActivo + 1 %}
+{%elseif usuario.tipousuario.idtipousuario == 3%}
+        {% set counterEstudiantePosgradoActivo = counterEstudiantePosgradoActivo + 1 %}
+{%elseif usuario.tipousuario.idtipousuario == 4%}
+        {% set counterInvestigarAsociadoActivo = counterInvestigarAsociadoActivo + 1 %}
+{%elseif usuario.tipousuario.idtipousuario == 5%}
+        {% set counterDirectorActivo = counterDirectorActivo + 1 %}
+{%endif%}
+{% set counterActivos = counterActivos + 1 %}
+{% set counterTotal = counterTotal + 1 %}
+        <tr>
+            <td>
+                {{usuario.primernombre}} {{usuario.segundonombre}} {{usuario.primerapellido}} {{usuario.segundoapellido}}
+            </td>
+            <td>
+                {{usuario.tipousuario.nombre}} 
+            </td>
+            <td>
+                <b>{{usuario.tipodocumentoidentidad.nombre}}:</b> {{usuario.numerodocumentoidentidad}} 
+            </td>
+            <td>
+               {{usuario.fecharegistro | date('d-m-Y')}}
+            </td>
+        </tr>
+ {%elseif usuario.tipousuario.nombre != 'Administrador' and usuario.user.enabled == false%}
+        {%if usuario.tipousuario.idtipousuario == 2%}
+                {% set counterEstudiantePregradoInactivo = counterEstudiantePregradoInactivo + 1 %}
+        {%elseif usuario.tipousuario.idtipousuario == 3%}
+                {% set counterEstudiantePosgradoInactivo = counterEstudiantePosgradoInactivo + 1 %}
+        {%elseif usuario.tipousuario.idtipousuario == 4%}
+                {% set counterInvestigarAsociadoInactivo = counterInvestigarAsociadoInactivo + 1 %}
+        {%elseif usuario.tipousuario.idtipousuario == 5%}
+                {% set counterDirectorInactivo = counterDirectorInactivo + 1 %}
+        {%endif%}
+        {% set counterInactivos = counterInactivos + 1 %}
+        {% set counterTotal = counterTotal + 1 %}
+{%endif%}
+{%endfor%}
+        <tr>
+            <td>
+
+            </td>
+            <td>
+
+            </td>
+            <td>
+
+            </td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+
+            </td>
+            <td>
+
+            </td>
+            <td>
+                <b>Total Activos:</b>
+            </td>
+            <td>
+                {{ counterActivos }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+
+            </td>
+            <td>
+
+            </td>
+            <td>
+                <b> Total Inactivos:</b>
+            </td>
+            <td>
+                {{ counterInactivos }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+
+            </td>
+            <td>
+
+            </td>
+            <td>
+                <b> Total:</b>
+            </td>
+            <td>
+                {{ counterTotal }}
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="table table-condensed table-hover table-striped">
+    <thead>
+        <tr>
+            <th>
+
+            </th>
+            <th>
+                Estudiantes de Pregrado
+            </th>
+            <th>
+                Estudiantes de Posgrados
+            </th>
+            <th>
+                Investigadores Asociados
+            </th>
+            <th>
+                Directores
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>
+                Activos
+            </th>
+            <td>
+                {{ counterEstudiantePregradoActivo }}
+            </td>
+            <td>
+                {{ counterEstudiantePosgradoActivo }}
+            </td>
+            <td>
+                {{ counterInvestigarAsociadoActivo}}
+            </td>
+            <td>   
+                {{ counterDirectorActivo }}        
+            </td>
+
+        </tr>
+        <tr>
+            <th>
+                Inactivos
+            </th>
+            <td>
+                {{ counterEstudiantePregradoInactivo }}
+            </td>
+            <td>
+                {{ counterEstudiantePosgradoInactivo }}
+            </td>
+            <td>
+                {{ counterInvestigarAsociadoInactivo }}
+            </td>
+            <td>
+                {{ counterDirectorInactivo }}
+            </td>
+
+        </tr>
+
+        <tr>
+            <th>
+                Total
+            </th>
+            <td>
+                {% set totalEstudiantesPregado = counterEstudiantePregradoInactivo + counterEstudiantePregradoActivo %}
+                   {{ totalEstudiantesPregado}}
+            </td>
+            <td>
+                 {% set totalEstudiantesPosgrado = counterEstudiantePosgradoInactivo + counterInvestigarAsociadoActivo %}
+                   {{ totalEstudiantesPosgrado}}
+                
+            </td>
+            <td>
+                 {% set totalInvestigadoresAsociados = counterInvestigarAsociadoInactivo + counterEstudiantePosgradoActivo %}
+                   {{ totalInvestigadoresAsociados}}
+             
+            </td>
+            <td>                
+                  {% set totalDirectores = counterDirectorInactivo + counterDirectorActivo %}
+                   {{ totalDirectores}}
+            
+            </td>
+
+        </tr>
+
+    </tbody>
+</table>
+
+<h2>Producción en Desarrollo</h2>
+<table class="table table-condensed table-hover table-striped">
+    <thead>
+        <tr>           
+           
+            <th>
+                Titulo
+            </th>
+            <th>
+                Autores
+            </th>
+            <th>
+                Fecha Inicio
+            </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        {% set enDesarrollo = 0 %} 
+        {%for informacion in produccionEnDesarrollo %}
+         {% set enDesarrollo = enDesarrollo + 1  %} 
+        <tr>
+            <td>
+                {{ informacion.titulo }}
+            </td>
+            <td>
+                 {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': informacion.idtema , 'funcion': '1' })) }}
+            </td>
+            <td>
+                {{ informacion.fecharegistro |date('d-m-Y') }}
+            </td>            
+        </tr>
+         {%endfor%}
+        <tr>
+            <td>
+            </td>
+            <th>                
+            </th>
+            <td>             
+            </td>            
+        </tr>
+         <tr>
+            <td>
+            </td>
+            <th>
+                Total:
+            </th>
+            <td>
+                {{ enDesarrollo }}    
+            </td>            
+        </tr>
+    </tbody>
+</table>
+<h2>Producción Intelectual <small>Año en curso</small></h2>
+
+{% endblock %}
+
+
+
+{% block javascripts %}
+{% endblock %}

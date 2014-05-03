@@ -19,24 +19,32 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Contenidos</a></li>
-                <li><a href="#">Usuarios</a></li>                
+                <li><a href="{{path('gs_proyectos_vistaherramientas')}}"><span class="glyphicon glyphicon-home"></span> Inicio</a></li>
+                <li><a href="{{ path('gs_usuario_buscar') }}">Usuarios</a></li>                
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Producción Intelectual<b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Producción</a></li>
-                        <li><a href="#">Temas</a></li>
-                        <li><a href="#">Seminarios</a></li>
-                        <li><a href="#">Recursos</a></li>
+                        <li><a href="{{path('gs_proyectos_produccionintelectual_buscar')}}">Gestor de Producción</a></li>
+                        <li><a href="{{ path('gs_proyectos_tema_buscar')}}">Gestor de Temas</a></li>
+                        <li><a href="#">Gestor de Seminarios</a></li>
+                        <li><a href="{{ path('gs_proyectos_recursos_buscar') }}">Gestor de Recursos</a></li>
                         <li class="divider"></li>
                         <li><a href="#">Separated link</a></li>
                         <li class="divider"></li>
                         <li><a href="#">One more separated link</a></li>
                     </ul>
                 </li>
-                <li><a href="#">Semilleros</a></li>
-                <li><a href="#">Inventario</a></li>   
-                <li class="active"><a href="#">Ayuda</a></li>
+                <li class="dropdown active">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Opciones<b class="caret"></b></a>
+                    <ul class="dropdown-menu">                   
+                        <li><a href="{{path('gs_proyectos_reportes_informacioncolciencias')}}">Perfil</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Ayuda</a></li>
+                        <li class="divider"></li>
+                        <li><a href="{{ path('logout') }}">Salir</a></li>                       
+
+                    </ul>
+                </li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

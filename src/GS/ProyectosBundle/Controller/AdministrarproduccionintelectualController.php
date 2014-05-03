@@ -91,7 +91,7 @@ class AdministrarproduccionintelectualController extends Controller {
         $produccionIntelectual = new Produccionintelectual();
         $temaUsuario = new TemaUsuario();
         $em = $this->getDoctrine()->getManager();
-        $produccionIntelectual = $em->getRepository('GSProyectosBundle:Produccionintelectual')->findBy(array(), array('tema' => 'ASC', 'fecharegistro' => 'ASC'), 30);
+        $produccionIntelectual = $em->getRepository('GSProyectosBundle:Produccionintelectual')->findBy(array(), array('tema' => 'DESC', 'fecharegistro' => 'DESC'), 30);
 
 
         return $this->render('GSProyectosBundle:Administrarproduccionintelectual:buscar.html.twig', array('produccionIntelectual' => $produccionIntelectual));

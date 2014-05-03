@@ -71,7 +71,7 @@ class AdministrartemaController extends Controller {
         if ($request->getMethod() == 'POST') {
             $formTema->handleRequest($request);
             if ($formTema->isValid()) {
-                $descripcion = $request->request->get('editor','No entra nada');
+                $descripcion = $request->request->get('editor', 'No entra nada');
                 $tema->setDescripcion($descripcion);
                 $fechaRegistro = new \DateTime("now");
 
@@ -97,7 +97,7 @@ class AdministrartemaController extends Controller {
         return $this->render('GSProyectosBundle:Administrartema:Modificar.html.twig', array('formTema' => $formTema->createView(), 'tema' => $tema, 'descripcion' => $descripcionTema, 'mensaje' => $mensaje));
     }
 
-    public function EliminarAction() {
+    public function EliminarAction($id) {
 //        $encoders = array(new XmlEncoder(), new JsonEncoder());
 //        $normalizers = array(new GetSetMethodNormalizer());
 //
@@ -109,10 +109,21 @@ class AdministrartemaController extends Controller {
 //        $jsonContent = $serializer->serialize($usuario, 'json');
 //
 //        echo $jsonContent;
+        $em = $this->getDoctrine()->getManager();
+        $tema = new Tema();
+        $tema = $em->getRepository('GSProyectosBundle:Tema')->find($id);
+
+        $em->remove($tema);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('gs_proyectos_tema_buscar'));
     }
 
     public function BuscarAction() {
-        return $this->render('GSProyectosBundle:Administrartema:buscar.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $tema = new Tema();
+        $tema = $em->getRepository('GSProyectosBundle:Tema')->findBY(array(), array('idtema' => 'DESC'), 30);
+        return $this->render('GSProyectosBundle:Administrartema:buscar.html.twig', array('tema' => $tema));
     }
 
     /*

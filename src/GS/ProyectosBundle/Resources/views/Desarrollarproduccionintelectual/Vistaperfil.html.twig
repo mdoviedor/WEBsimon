@@ -104,7 +104,6 @@
     function buscarFiltroTamano() {
         var tamano;
         tamano = $('#listaTamano').val()
-
         var url;
         url = "{{ path('gs_consultas_proyectos_desarrollarproduccionintelectual_vistaperfilusuario', {'id': id, 'limite': 'text3'}) }}";
         url = url.replace("text3", tamano);

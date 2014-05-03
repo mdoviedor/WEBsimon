@@ -19,4 +19,10 @@ class UsuarioRepository extends EntityRepository
                         ->setParameter('primerapellido', '%' . $primerapellido . '%')
                         ->getResult();
     }
+    
+//     public function contarUsuariosActivos() {
+//        return $this->getEntityManager()
+//                        ->createQuery('SELECT COUNT(u.numerodocumentoidentidad) FROM GSProyectosBundle:Usuario u WHERE u.user = :')                    
+//                        ->getResult();
+//    }
 }
