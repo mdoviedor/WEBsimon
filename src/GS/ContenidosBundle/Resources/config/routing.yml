@@ -1,6 +1,8 @@
 gs_contenidos_index:
     pattern:  /
     defaults: { _controller: GSContenidosBundle:Index:index }
+    
+    
 gs_contenidos_usuarios_ver:
     pattern: contenidos/usuarios/ver
     defaults: { _controller: GSContenidosBundle:Usuarios:Ver }
@@ -11,6 +13,7 @@ gs_contenidos_produccionintelectual_buscar:
     requirements:
         tamano:  \d+        
 
+#Se pasa el idproduccionintelectual correspondiente al modelo Produccionintelectual
 gs_contenidos_produccionintelectual_ver:
     pattern: contenidos/produccionIntelectual/ver/{id}
     defaults: { _controller: GSContenidosBundle:Produccionintelectual:Ver }
@@ -22,3 +25,15 @@ gs_contenidos_produccionintelectual_vistaperfilusuario:
     defaults: { _controller: GSContenidosBundle:Produccionintelectual:Vistaperfil, limite: 5 }
     requirements:
         limite:  \d+ 
+        
+gs_contenidos_produccionintelectual_temasofertados:
+    pattern: contenidos/produccionIntelectual/temasOfertados
+    defaults: { _controller: GSContenidosBundle:Produccionintelectual:Temasofertados }
+    
+gs_contenidos_produccionintelectual_ultimostemasofertados:
+    pattern: contenidos/produccionIntelectual/ultimosTemasOfertados
+    defaults: { _controller: GSContenidosBundle:Produccionintelectual:Ultimostemasofertados }
+
+gs_contenidos_produccionintelectual_vertemaofertado:
+    pattern: contenidos/produccionIntelectual/temasOfertados/ver/{id}
+    defaults: { _controller: GSContenidosBundle:Produccionintelectual:Vertemaofertado }

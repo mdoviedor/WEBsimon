@@ -1,0 +1,21 @@
+{% extends "::contenidos.html.twig" %}
+{% block title %}Grupo Simon: Ultimos Temas Ofertados{% endblock %}
+
+{% block titulo %}  
+<h4>Temas Ofertados</h4>
+{% endblock %}
+
+{% block contenido %}
+<ul>
+{%for tema in temas %}
+    <li><a href="{{ path('gs_contenidos_produccionintelectual_vertemaofertado',{'id': tema.idtema}) }}" target="_blank" onClick="window.open(this.href, this.target, 'width=702,height=602');
+                        return false;">{{ tema.titulo }}</a></li>
+{%endfor%}
+</ul>
+<div style="width: 100%" class="text-right">
+    <i><a href="http://localhost/website/index.php/produccion-intelectual/temas-ofertados" target="_parent">Ver más...</a></i>
+</div>
+{% endblock %}
+{% block javascripts %}
+
+{% endblock %}

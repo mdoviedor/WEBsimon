@@ -131,8 +131,7 @@
             </tfoot>
 
         </table>
-
-    </div>    
+    </div>   
     <select class="center-block" id="listaTamano" name="listaTamano">
         <option value="30">30</option>
         <option value="60">60</option>
@@ -140,6 +139,106 @@
         <option value="120">120</option>
         <option value="100000">Todos</option>                        
     </select>
+    <hr>
+    <h3>Producción Intelectual más Vista</h3>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Titulo</th>   
+                <th>Tipo</th>
+                <th>Fecha</th>
+                <th></th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+            {%for produccion in produccionIntelectualMasVista%}
+            <tr>
+                <td>
+                    {{ produccion.titulo | upper}}. <b>Tema:</b> {{ produccion.tema.titulo }}                 
+                    <strong>Autor(es):</strong>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '1' })) }}
+
+                    <strong>Director(es):</strong>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '3' })) }}
+
+                    <strong>Codirector(es):</strong> {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '2' })) }}
+                </td>
+                <td>
+                    {{ produccion.tipoproduccion.nombre }}
+                </td>
+                <td>
+                    {{ produccion.fecharegistro | date('m-Y') }}
+                </td>
+                <td>
+                    <a href="{{ path('gs_contenidos_produccionintelectual_ver',{'id': produccion.idproduccionintelectual})}}">
+                        <span class="glyphicon glyphicon-eye-open"></span> Abrir
+                    </a>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr align="center">
+                <td colspan="6">
+
+                </td>
+            </tr>
+        </tfoot>
+
+    </table>
+    <hr>
+     <h3>Producción Intelectual Destacada</h3>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Titulo</th>   
+                <th>Tipo</th>
+                <th>Fecha</th>
+                <th></th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+            {%for produccion in produccionIntelectualDestacada%}
+            <tr>
+                <td>
+                    {{ produccion.titulo | upper}}. <b>Tema:</b> {{ produccion.tema.titulo }}                 
+                    <strong>Autor(es):</strong>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '1' })) }}
+
+                    <strong>Director(es):</strong>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '3' })) }}
+
+                    <strong>Codirector(es):</strong> {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '2' })) }}
+                </td>
+                <td>
+                    {{ produccion.tipoproduccion.nombre }}
+                </td>
+                <td>
+                    {{ produccion.fecharegistro | date('m-Y') }}
+                </td>
+                <td>
+                    <a href="{{ path('gs_contenidos_produccionintelectual_ver',{'id': produccion.idproduccionintelectual})}}">
+                        <span class="glyphicon glyphicon-eye-open"></span> Abrir
+                    </a>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr align="center">
+                <td colspan="6">
+
+                </td>
+            </tr>
+        </tfoot>
+
+    </table>
+    
+    <hr>
+
+
 {% endblock %}
 
 {% block javascripts %}

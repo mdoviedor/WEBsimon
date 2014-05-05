@@ -1,0 +1,27 @@
+{% extends "::contenidos.html.twig" %}
+{% block title %}Grupo Simon: Temas Ofertados{% endblock %}
+
+{% block titulo %}  
+<h1>Temas Ofertados</h1>
+{% endblock %}
+
+{% block contenido %}
+{%for tema in temaOfertado %}
+<h2>{{ tema.titulo }}</h2>
+<dl class="dl-horizontal">
+    <dt>Tiempo estimado:</dt>
+    <dd><kbd>{{tema.tiempoestimado}}</kbd> meses.</dd>
+    <dt>Fecha de publicación:</dt>
+    <dd>{{tema.fecharegistro | date('d-m-Y')}}</dd>
+    <dt>Descripción:</dt>
+    <dd>
+{{ render(controller('GSContenidosBundle:Produccionintelectual:Decodificardescripciontema', { 'descripcion': tema.descripcion })) }}
+</dd>
+</dl>
+
+{%endfor%}
+
+{% endblock %}
+{% block javascripts %}
+
+{% endblock %}
