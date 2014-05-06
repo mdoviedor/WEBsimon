@@ -5,22 +5,27 @@
 {% endblock %}
 
 {% block submenuderecho %}    
-<button type="submit" class="btn btn-success btn-xs" id="botonGuardar">
-    <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
-</button>
-<button type="submit" class="btn btn-danger btn-xs" id="botonEliminar">
-    <span class="glyphicon glyphicon-trash"></span> Eliminar
-</button>
-<a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_usuario_buscar') }}">
-    <span class="glyphicon glyphicon-log-out"></span> Salir
-</a>
+
 {% endblock %}
 
 
 {% block contenido %}
 
-<form id="formulario" action="{{ path('gs_usuario_modificar',{'id':id, 'mensaje':'0'}) }}" method="post" {{ form_enctype(formUsuario) }}>
+<form class="form-horizontal" role="form" id="formulario" action="{{ path('gs_usuario_modificar',{'id':id, 'mensaje':'0'}) }}" method="post" {{ form_enctype(formUsuario) }}>
+    <div class="row">
+        <div class="col-xs-6 col-md-4" style="border-color: #000;">
 
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-8" style="text-align: right;">           
+            <button type="submit" class="btn btn-success btn-xs" id="botonGuardar">
+                <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
+            </button>
+            <a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{path('gs_usuario_buscar')}}">
+                <span class="glyphicon glyphicon-log-out"></span> Salir
+            </a>
+        </div>
+    </div>
+    <br>
 {% if mensaje == '1'%}
     <br>
     <div class="alert alert-info">
@@ -28,75 +33,125 @@
     </div>
     <br>
 {% endif %}
+
+  {{ form_errors(formUsuario) }}  
     <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-8">  
-  {{ form_errors(formUsuario) }}     
-       {{ form_label(formUsuario.numerodocumentoidentidad.first) }}
-        {{ form_errors(formUsuario.numerodocumentoidentidad.first) }}      
+        <div class="col-md-6">
+            <div class="form-group">
+       {{ form_label(formUsuario.numerodocumentoidentidad.first, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(formUsuario.numerodocumentoidentidad.first) }}  
+                <div class="col-sm-8">
         {{ form_widget(formUsuario.numerodocumentoidentidad.first) }}
+                </div>
+            </div>
+            <div class="form-group">
 
-            <br>
-        {{ form_label(formUsuario.numerodocumentoidentidad.second) }}
+        {{ form_label(formUsuario.numerodocumentoidentidad.second, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
         {{ form_errors(formUsuario.numerodocumentoidentidad.second) }}
+                <div class="col-sm-8">
         {{ form_widget(formUsuario.numerodocumentoidentidad.second) }}
-            <br>
-        {{ form_label(formUsuario.primernombre) }}
+                </div>
+            </div>
+            <div class="form-group">
+        {{ form_label(formUsuario.primernombre, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
         {{ form_errors(formUsuario.primernombre) }}
+                <div class="col-sm-8">
         {{ form_widget(formUsuario.primernombre) }}
-            <br>
-        {{ form_label(formUsuario.segundonombre) }}
+                </div>
+            </div>
+            <div class="form-group">
+        {{ form_label(formUsuario.segundonombre, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
         {{ form_errors(formUsuario.segundonombre) }}
+                <div class="col-sm-8">
         {{ form_widget(formUsuario.segundonombre) }}
-            <br>
-        {{ form_label(formUsuario.primerapellido) }}
+                </div>
+            </div>
+            <div class="form-group">
+        {{ form_label(formUsuario.primerapellido, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
         {{ form_errors(formUsuario.primerapellido) }}
+                <div class="col-sm-8">
         {{ form_widget(formUsuario.primerapellido) }}
-            <br>
-         {{ form_label(formUsuario.segundoapellido) }}
+                </div>
+            </div>
+            <div class="form-group">
+         {{ form_label(formUsuario.segundoapellido, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
         {{ form_errors(formUsuario.segundoapellido) }}
+                <div class="col-sm-8">
         {{ form_widget(formUsuario.segundoapellido) }}
-            <br>
-        {{ form_label(formUsuario.email.first) }}
+                </div>
+            </div>
+            <div class="form-group">
+        {{ form_label(formUsuario.email.first, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
         {{ form_errors(formUsuario.email.first) }}
+                <div class="col-sm-8">
         {{ form_widget(formUsuario.email.first,{'attr':{'value': email}}) }}        
-            <br>
-        {{ form_label(formUsuario.email.second) }}
+                </div>
+            </div>
+            <div class="form-group">
+        {{ form_label(formUsuario.email.second, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
         {{ form_errors(formUsuario.email.second) }}
+                <div class="col-sm-8">
         {{ form_widget(formUsuario.email.second,{'attr':{'value': email}}) }}
-            <br>
-        {{ form_label(formUsuario.telefonofijo) }}
-        {{ form_errors(formUsuario.telefonofijo) }}
-        {{ form_widget(formUsuario.telefonofijo) }}
-            <br>
-         {{ form_label(formUsuario.telefonocelular) }}
-        {{ form_errors(formUsuario.telefonocelular) }}
-        {{ form_widget(formUsuario.telefonocelular) }}
-            <br>
-        {{ form_label(formUsuario.tipodocumentoidentidad) }}
-        {{ form_errors(formUsuario.tipodocumentoidentidad) }}
-        {{ form_widget(formUsuario.tipodocumentoidentidad) }}
-            <br>
-         {{ form_label(formUsuario.tipousuario) }}
-        {{ form_errors(formUsuario.tipousuario) }}
-        {{ form_widget(formUsuario.tipousuario) }}
-            <br>
-        {{ form_label(formUsuario.enable) }}
-        {{ form_errors(formUsuario.enable) }}
-        {{ form_widget(formUsuario.enable) }}
-            <br>
-        {{ form_label(formUser.password.first) }}
-        {{ form_errors(formUser.password.first) }}
-        {{ form_widget(formUser.password.first) }}
-            <br>
-        {{ form_label(formUser.password.second) }}
-        {{ form_errors(formUser.password.second) }}
-        {{ form_widget(formUser.password.second) }}
-
-            <br>
+                </div>
+            </div>
         </div>
-        <div class="col-xs-6 col-md-4">
+        <div class="col-md-6">
+            <div class="form-group">
+        {{ form_label(formUsuario.telefonofijo, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(formUsuario.telefonofijo) }}
+                <div class="col-sm-8">
+        {{ form_widget(formUsuario.telefonofijo) }}
+                </div>
+            </div>
+            <div class="form-group">
+         {{ form_label(formUsuario.telefonocelular, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(formUsuario.telefonocelular) }}
+                <div class="col-sm-8">
+        {{ form_widget(formUsuario.telefonocelular) }}
+                </div>
+            </div>
+            <div class="form-group">
+        {{ form_label(formUsuario.tipodocumentoidentidad, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(formUsuario.tipodocumentoidentidad) }}  
+                <div class="col-sm-8">
+
+        {{ form_widget(formUsuario.tipodocumentoidentidad) }}
+                </div>
+            </div>
+            <div class="form-group">
+         {{ form_label(formUsuario.tipousuario, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(formUsuario.tipousuario) }}
+                <div class="col-sm-8">
+        {{ form_widget(formUsuario.tipousuario) }}
+                </div>
+            </div>
+            <div class="form-group">
+        {{ form_label(formUsuario.enable, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(formUsuario.enable) }}
+                <div class="col-sm-8">
+        {{ form_widget(formUsuario.enable) }}
+                </div>
+            </div>
+            <div class="form-group">
+        {{ form_label(formUser.password.first, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(formUser.password.first) }}
+                <div class="col-sm-8">
+        {{ form_widget(formUser.password.first) }}
+                </div>
+            </div>
+            <div class="form-group">
+        {{ form_label(formUser.password.second, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(formUser.password.second) }}
+                <div class="col-sm-8">
+        {{ form_widget(formUser.password.second) }}
+                </div>
+            </div>
         </div>
     </div>
+
+
+
+
 
     {{ form_rest(formUsuario) }}
     {{ form_rest(formUser) }}

@@ -13,17 +13,20 @@ class ProduccionintelectualType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
+        $ano = \date("Y");
+        $mes = \date("M");
+        $dia = \date("d");
         $builder
                 ->add('archivo', 'file', array(
                     'label' => '* Archivo:',
                     'attr' => array('class' => 'form-control'),
-                    'mapped'=>false
+                    'mapped' => false
                 ))
                 ->add('resumen', 'textarea', array(
                     'label' => '* Resumen:',
                     'attr' => array('class' => 'form-control'),
                 ))
-                 ->add('titulo', 'textarea', array(
+                ->add('titulo', 'textarea', array(
                     'label' => '* Titulo:',
                     'attr' => array('class' => 'form-control'),
                 ))
@@ -34,14 +37,14 @@ class ProduccionintelectualType extends AbstractType {
                 ->add('fechainiciopublicacion', 'date', array(
                     'required' => false,
                     'label' => 'Fecha de inicio de la publicación:',
-                
-                    
-                    ))
+                    'years' => range($ano, $ano + 5),
+                    'empty_value' => array('year' => 'Año', 'month' => 'Mes', 'day' => 'Día'),
+                ))
                 ->add('fechafinpublicacion', 'date', array(
                     'required' => false,
-                            'label' => 'Fecha de fin de la publicación::',
-                    
-                    
+                    'label' => 'Fecha de fin de la publicación::',
+                    'years' => range($ano, $ano + 5),
+                    'empty_value' => array('year' => 'Año', 'month' => 'Mes', 'day' => 'Día'),
                 ))
                 ->add('estado', 'choice', array(
                     'choices' => array(true => 'Publicado', false => 'Despublicado'),

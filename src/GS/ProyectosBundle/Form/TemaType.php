@@ -13,21 +13,30 @@ class TemaType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
+        $ano = \date("Y");
+        $mes = \date("M");
+        $dia = \date("d");
         $builder
-                ->add('titulo','textarea',array(
-                    'label'=>'* Titulo:',
-                    'attr'=>array('class'=>'form-control')
+                ->add('titulo', 'textarea', array(
+                    'label' => '* Titulo:',
+                    'attr' => array('class' => 'form-control'),
                 ))
-                ->add('tiempoestimado','number', array(
-                    'label'=>'* Tiempo estimado para el desarrollo del proyecto:'
+                ->add('tiempoestimado', 'number', array(
+                    'label' => '* Tiempo estimado para el desarrollo del proyecto (Meses):',
+                    'attr' => array('class' => 'form-control',
+                    ),
                 ))
                 ->add('fechainiciopublicacion', 'date', array(
-                    'required'=>false,
-                    'label'=>'Fecha de inicio de la publicación:'
+                    'empty_value' => array('year' => 'Año', 'month' => 'Mes', 'day' => 'Día'),
+                    'required' => false,
+                    'label' => 'Fecha de inicio de la publicación:',
+                    'years' => range($ano, $ano + 5),
                 ))
                 ->add('fechafinpublicacion', 'date', array(
-                    'required'=>false,
-                    'label'=>'Fecha de fin de la publicación:'
+                    'required' => false,
+                    'label' => 'Fecha de fin de la publicación:',
+                    'years' => range($ano, $ano + 5),
+                    'empty_value' => array('year' => 'Año', 'month' => 'Mes', 'day' => 'Día'),
                 ))
         ;
     }

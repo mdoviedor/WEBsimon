@@ -42,7 +42,7 @@ class UsuarioType extends AbstractType {
                     'attr' => array('class' => 'form-control'),
                     'required' => false))
                 ->add('telefonocelular', 'text', array(
-                    'label' => 'Télefono Celular',
+                    'label' => 'Teléfono Celular:',
                     'attr' => array('class' => 'form-control'),
                     'required' => false))
                 //  ->add('fecharegistro')

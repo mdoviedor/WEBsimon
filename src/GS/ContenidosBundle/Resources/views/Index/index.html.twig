@@ -1,20 +1,32 @@
-{# empty Twig template #}
-<h3>Iniciar Sesión</h3>
+{% extends "::inicio.html.twig" %}
 
 
+{% block contenido %}
+
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <br><br><br><br>
+        <h3>Iniciar Sesión</h3>
 {% if error %}
-<div id="login-error">{{ error.message|trans }}</div>
+        <div id="login-error">{{ error.message|trans }}</div>
 {% endif %}
-<form action="{{ path('login_check') }}" method="post">
-    <input type="hidden" name="_csrf_token" value="{% render(controller('GSUserBundle:Security:getToken')) %}" />
+        <form role="form" action="{{ path('login_check') }}" method="post">
+            <div class="form-group">
+                <input type="hidden" name="_csrf_token" value="{% render(controller('GSUserBundle:Security:getToken')) %}" />               
+                <label for="username">Usuario:</label>
+                <input class="form-control" id="username" type="text" name="_username" value="{{ last_username }}" /> 
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña:</label>
+                <input class="form-control" id="password" type="password" name="_password" />
+            </div>
+            <button type="submit" class="btn btn-default" name="login" >Iniciar Sesión</button>  
+        </form>
 
-    <label for="username">Usuario</label><br>
-    <input id="username" type="text" name="_username" value="{{ last_username }}" />  <br>
 
-    <label for="password">Contraseña</label><br>
-    <input id="password" type="password" name="_password" /><br><br>
+    </div>
+    <div class="col-md-4"></div>
+</div>
 
-    <input type="submit" name="login" value="Iniciar sesión" />  
-
-
-</form>
+{% endblock %}

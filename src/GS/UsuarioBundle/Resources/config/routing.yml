@@ -8,7 +8,7 @@ gs_usuario_crear:
 
 gs_usuario_modificar:
     pattern: administrador/administrarUsuario/modificar/{id}.{mensaje}
-    defaults: { _controller: GSUsuarioBundle:Administrar:Modificar }
+    defaults: { _controller: GSUsuarioBundle:Administrar:Modificar, mensaje: 0 }
 
 gs_usuario_eliminar:
     pattern: administrador/administrarUsuario/eliminar

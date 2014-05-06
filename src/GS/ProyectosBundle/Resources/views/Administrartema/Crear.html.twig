@@ -9,12 +9,7 @@
 
 
 {% block submenuderecho %}    
-<button type="submit" class="btn btn-success btn-xs" id="botonGuardar">
-    <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
-</button>
-<a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_tema_buscar') }}">
-    <span class="glyphicon glyphicon-log-out"></span> Salir
-</a>
+
 {% endblock %}
 
 
@@ -22,21 +17,42 @@
 
 {% block contenido %}
 <br>
-<form id="formulario" name="formulario"  action="{{ path('gs_proyectos_tema_crear') }}" method="post" {{ form_enctype(formTema) }}>
+<form  role="form" id="formulario" name="formulario"  action="{{ path('gs_proyectos_tema_crear') }}" method="post" {{ form_enctype(formTema) }}>
+    <div class="row">
+        <div class="col-xs-6 col-md-4" style="border-color: #000;">
+
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-8" style="text-align: right;">           
+            <button type="submit" class="btn btn-success btn-xs" id="botonGuardar">
+                <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
+            </button>
+            <a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_tema_buscar') }}">
+                <span class="glyphicon glyphicon-log-out"></span> Salir
+            </a>
+        </div>
+    </div>
     <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-8">  
-
-        {{ form_errors(formTema) }}
-        {{ form_label(formTema.titulo) }}     <br>
+              {{ form_errors(formTema) }}
+            <div class="form-group">
+        {{ form_label(formTema.titulo) }}  
         {{ form_errors(formTema.titulo) }}
+
         {{ form_widget(formTema.titulo) }} 
-            <br>
-         {{ form_label(formTema.tiempoestimado) }}     <br>
+
+
+            </div>
+            <div class="form-group">
+         {{ form_label(formTema.tiempoestimado) }}   
         {{ form_errors(formTema.tiempoestimado) }}
-        {{ form_widget(formTema.tiempoestimado) }} <label> Meses.</label>
-            <br><br>
+              
+        {{ form_widget(formTema.tiempoestimado) }} 
+                 
+
+            </div>
+
             <label>* Descripción:</label><br>
-            <textarea id="editor" name="editor" rows="10" cols="30" style="width:100%;height:400px" required="true">
+            <textarea class="form-control" id="editor" name="editor" rows="10" cols="30" style="width:100%;height:400px" required="true">
              
             </textarea>
 
@@ -50,12 +66,14 @@
         {{ form_label(formTema.fechafinpublicacion) }}   <br>
         {{ form_errors(formTema.fechafinpublicacion) }}
         {{ form_widget(formTema.fechafinpublicacion) }}
-            <br>
+           
 
         </div>
     </div>
        {{ form_rest(formTema) }}
 </form> 
+ <br>
+            <br>
 {% endblock %}
 
 
@@ -70,21 +88,20 @@
     x.ready(inicializarEventos);
 
     function inicializarEventos() {
-
-        var btn;
-        btn = $('#botonGuardar');
-        btn.click(enviarFormulario)
+        /*
+         var btn;
+         btn = $('#botonGuardar');
+         btn.click(enviarFormulario)*/
     }
     function enviarFormulario() {
-        var frm;
-
-        frm = $('#formulario');
-        frm.submit();
+        /*  var frm;
+         
+         frm = $('#formulario');
+         frm.submit();*/
     }
 
 
     $("#editor").kendoEditor({
-   
         tools: [
             "bold",
             "italic",

@@ -69,7 +69,7 @@
                {{usuario.fecharegistro | date('d-m-Y')}}
             </td>
         </tr>
- {%elseif usuario.tipousuario.nombre != 'Administrador' and usuario.user.enabled == false%}
+ {%elseif usuario.tipousuario.nombre != 'Administrador' and usuario.user.enabled == false %}
         {%if usuario.tipousuario.idtipousuario == 2%}
                 {% set counterEstudiantePregradoInactivo = counterEstudiantePregradoInactivo + 1 %}
         {%elseif usuario.tipousuario.idtipousuario == 3%}
@@ -210,12 +210,12 @@
                    {{ totalEstudiantesPregado}}
             </td>
             <td>
-                 {% set totalEstudiantesPosgrado = counterEstudiantePosgradoInactivo + counterInvestigarAsociadoActivo %}
+                 {% set totalEstudiantesPosgrado = counterEstudiantePosgradoInactivo + counterEstudiantePosgradoActivo %}
                    {{ totalEstudiantesPosgrado}}
                 
             </td>
             <td>
-                 {% set totalInvestigadoresAsociados = counterInvestigarAsociadoInactivo + counterEstudiantePosgradoActivo %}
+                 {% set totalInvestigadoresAsociados = counterInvestigarAsociadoInactivo +  counterInvestigarAsociadoActivo %}
                    {{ totalInvestigadoresAsociados}}
              
             </td>

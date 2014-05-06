@@ -143,12 +143,22 @@ class AdministrarController extends Controller {
         return $this->render('GSUsuarioBundle:Administrar:agregarespaciotrabajo.html.twig', array('temasDisponibles' => $temasDisponibles));
     }
 
-    public function EliminarAction() {
+    public function EliminarAction($id) {
+        $usuario = new Usuario();
+        $em = $this->getDoctrine()->getManager();        
+        $usuario = $em->getRepository('GSUsuarioBundle:Usuario')->find($id);
+        $em->remove($usuario);
+        $em->flush();
+        
+          return $this->redirect($this->generateUrl('gs_usuario_buscar'));
         
     }
 
-    public function BuscarAction() {
-        return $this->render('GSUsuarioBundle:Administrar:buscar.html.twig');
+    public function BuscarAction() {        
+        $em = $this->getDoctrine()->getManager();
+        $usuario = new Usuario();        
+        $usuario = $em->getRepository('GSUsuarioBundle:Usuario')->findBy(array(), array('fecharegistro'=>'DESC'), 30);        
+        return $this->render('GSUsuarioBundle:Administrar:buscar.html.twig',array('usuarios'=>$usuario));
     }
 
 }

@@ -7,12 +7,7 @@
 {% endblock %}
 
 {% block submenuderecho %}    
-<button type="submit" class="btn btn-success btn-xs" id="botonGuardar">
-    <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
-</button>
-<a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_produccionintelectual_buscar',{'limite':'30'}) }}">
-    <span class="glyphicon glyphicon-log-out"></span> Salir
-</a>
+
 {% endblock %}
 
 {% block contenido %}
@@ -24,51 +19,98 @@
 </div>
 {% endif %}
 
-<form id="formulario" name="formulario"  action="{{ path('gs_proyectos_produccionintelectual_crear') }}" method="post" {{ form_enctype(formProduccionIntelectual) }}>
+<form  class="form-horizontal" role="form"  id="formulario" name="formulario"  action="{{ path('gs_proyectos_produccionintelectual_crear') }}" method="post" {{ form_enctype(formProduccionIntelectual) }}>
     {{ form_errors(formProduccionIntelectual) }}
     <div class="row">
+        <div class="col-xs-6 col-md-4" style="border-color: #000;">
+
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-8" style="text-align: right;">           
+            <button type="submit" class="btn btn-success btn-xs" id="botonGuardar">
+                <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
+            </button>
+            <a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_produccionintelectual_buscar') }}">
+                <span class="glyphicon glyphicon-log-out"></span> Salir
+            </a>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-8">  
-        {{ form_label(formProduccionIntelectual.tema) }} <br>
+            <div class="form-group">
+        {{ form_label(formProduccionIntelectual.tema, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }} 
         {{ form_errors(formProduccionIntelectual.tema) }}
+                <div class="col-sm-8">
         {{ form_widget(formProduccionIntelectual.tema) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-8"><div id="participantes">
+
+                    </div></div>
+
+            </div>
 
 
-            <div id="participantes">
-
-            </div>        
-        {{ form_label(formProduccionIntelectual.acceso) }} <br>
+            <div class="form-group">
+        {{ form_label(formProduccionIntelectual.acceso, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }} 
         {{ form_errors(formProduccionIntelectual.acceso) }}
+                <div class="col-sm-8">
         {{ form_widget(formProduccionIntelectual.acceso) }}
-            <br>
+                </div>
+            </div>
+            <div class="form-group">
 
-         {{ form_label(formProduccionIntelectual.estado) }} <br>
+         {{ form_label(formProduccionIntelectual.estado, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }} 
         {{ form_errors(formProduccionIntelectual.estado) }}
+                <div class="col-sm-8">
         {{ form_widget(formProduccionIntelectual.estado) }}
-            <br>
-         {{ form_label(formProduccionIntelectual.destacado) }} <br>
+                </div>
+            </div>
+            <div class="form-group">
+         {{ form_label(formProduccionIntelectual.destacado, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }} 
         {{ form_errors(formProduccionIntelectual.destacado) }}
+                <div class="col-sm-8">
         {{ form_widget(formProduccionIntelectual.destacado) }}
-            <br>
+                </div>
+            </div>
+            <div class="form-group">
 
-          {{ form_label(formProduccionIntelectual.tipoproduccion) }} <br>
+          {{ form_label(formProduccionIntelectual.tipoproduccion, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }} 
         {{ form_errors(formProduccionIntelectual.tipoproduccion) }}
+                <div class="col-sm-8">
         {{ form_widget(formProduccionIntelectual.tipoproduccion) }}
-            <br>
-              {{ form_label(formProduccionIntelectual.titulo) }} <br>
+                </div>
+            </div>
+            <div class="form-group">
+              {{ form_label(formProduccionIntelectual.titulo, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }} 
         {{ form_errors(formProduccionIntelectual.titulo) }}
+                <div class="col-sm-8">
         {{ form_widget(formProduccionIntelectual.titulo) }}
-            <br>
-          {{ form_label(formProduccionIntelectual.resumen) }} <br>
+                </div>
+            </div>
+            <div class="form-group">
+          {{ form_label(formProduccionIntelectual.resumen, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
         {{ form_errors(formProduccionIntelectual.resumen) }}
+                <div class="col-sm-8">
         {{ form_widget(formProduccionIntelectual.resumen) }}
-            <br>
-         {{ form_label(formProduccionIntelectual.palabrasclave) }} <br>
+                </div>
+            </div>
+            <div class="form-group">
+         {{ form_label(formProduccionIntelectual.palabrasclave, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }} 
         {{ form_errors(formProduccionIntelectual.palabrasclave) }}
+                <div class="col-sm-8">
         {{ form_widget(formProduccionIntelectual.palabrasclave) }}
-            <br>
-         {{ form_label(formProduccionIntelectual.archivo) }} <br>
+                </div>
+            </div>
+            <div class="form-group">
+         {{ form_label(formProduccionIntelectual.archivo, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
         {{ form_errors(formProduccionIntelectual.archivo) }}
+                <div class="col-sm-8">
         {{ form_widget(formProduccionIntelectual.archivo) }}
+                </div>
+            </div>
+
         </div>
         <div class="col-xs-6 col-md-4">
             <br>
@@ -95,20 +137,21 @@
 
     function inicializarEventos() {
         traerParticipantes();
-
-        var btn;
-        btn = $('#botonGuardar');
-        btn.click(enviarFormulario)
+        /*
+         var btn;
+         btn = $('#botonGuardar');
+         btn.click(enviarFormulario)*/
 
         var sltTema;
         sltTema = $('#gs_proyectosbundle_produccionintelectual_tema');
         sltTema.change(traerParticipantes);
     }
-    function enviarFormulario() {
-        var frm;
-        frm = $('#formulario');
-        frm.submit();
-    }
+    /*
+     function enviarFormulario() {
+     var frm;
+     frm = $('#formulario');
+     frm.submit();
+     }*/
 
     function traerParticipantes() {
         var valor = $("#gs_proyectosbundle_produccionintelectual_tema").val();
