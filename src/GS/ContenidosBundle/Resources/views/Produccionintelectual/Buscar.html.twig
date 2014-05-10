@@ -115,295 +115,296 @@
 
 
     </div>
-    <br>
-    <div id="catalogoBibliografico">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Titulo</th>   
-                    <th>Tipo</th>
-                    <th>Fecha</th>
-                    <th></th>
-                </tr>
+</div>
+<br>
+<div id="catalogoBibliografico">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Titulo</th>   
+                <th>Tipo</th>
+                <th>Fecha</th>
+                <th></th>
+            </tr>
 
-            </thead>
+        </thead>
 
-            <tbody>
+        <tbody>
             {%for produccion in produccionIntelectual%}
-                <tr>
-                    <td>
-                    {{ produccion.titulo | upper}}. <b>Tema:</b> {{ produccion.tema.titulo }}                 
-                        <strong>Autor(es):</strong>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '1' })) }}
-
-                        <strong>Director(es):</strong>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '3' })) }}
-
-                        <strong>Codirector(es):</strong> {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '2' })) }}
-                    </td>
-                    <td>
-                    {{ produccion.tipoproduccion.nombre }}
-                    </td>
-                    <td>
-                    {{ produccion.fecharegistro | date('m-Y') }}
-                    </td>
-                    <td>
-                        <a href="{{ path('gs_contenidos_produccionintelectual_ver',{'id': produccion.idproduccionintelectual})}}">
-                            <span class="glyphicon glyphicon-eye-open"></span> Abrir
-                        </a>
-                    </td>
-
-                </tr>
-            {% endfor %}
-            </tbody>
-            <tfoot>
-                <tr align="center">
-                    <td colspan="6">
-
-                    </td>
-                </tr>
-            </tfoot>
-
-        </table>
-    </div>   
-    <select class="center-block" id="listaTamano" name="listaTamano">
-        <option value="30">30</option>
-        <option value="60">60</option>
-        <option value="90">90</option>
-        <option value="120">120</option>
-        <option value="100000">Todos</option>                        
-    </select>
-    <hr>
-    <h3>Producción Intelectual más Vista</h3>
-    <table class="table table-hover">
-        <thead>
             <tr>
-                <th>Titulo</th>   
-                <th>Tipo</th>
-                <th>Fecha</th>
-                <th></th>
+                <td>
+                    {{ produccion.titulo | upper}}. <b>Tema:</b> {{ produccion.tema.titulo }}                 
+                    <strong>Autor(es):</strong>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '1' })) }}
+
+                    <strong>Director(es):</strong>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '3' })) }}
+
+                    <strong>Codirector(es):</strong> {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '2' })) }}
+                </td>
+                <td>
+                    {{ produccion.tipoproduccion.nombre }}
+                </td>
+                <td>
+                    {{ produccion.fecharegistro | date('m-Y') }}
+                </td>
+                <td>
+                    <a href="{{ path('gs_contenidos_produccionintelectual_ver',{'id': produccion.idproduccionintelectual})}}">
+                        <span class="glyphicon glyphicon-eye-open"></span> Abrir
+                    </a>
+                </td>
+
             </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr align="center">
+                <td colspan="6">
 
-        </thead>
+                </td>
+            </tr>
+        </tfoot>
 
-        <tbody>
+    </table>
+</div>   
+<select class="center-block" id="listaTamano" name="listaTamano">
+    <option value="30">30</option>
+    <option value="60">60</option>
+    <option value="90">90</option>
+    <option value="120">120</option>
+    <option value="100000">Todos</option>                        
+</select>
+<hr>
+<h3>Producción Intelectual más Vista</h3>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Titulo</th>   
+            <th>Tipo</th>
+            <th>Fecha</th>
+            <th></th>
+        </tr>
+
+    </thead>
+
+    <tbody>
             {%for produccion in produccionIntelectualMasVista%}
-            <tr>
-                <td>
+        <tr>
+            <td>
                     {{ produccion.titulo | upper}}. <b>Tema:</b> {{ produccion.tema.titulo }}                 
-                    <strong>Autor(es):</strong>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '1' })) }}
+                <strong>Autor(es):</strong>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '1' })) }}
 
-                    <strong>Director(es):</strong>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '3' })) }}
+                <strong>Director(es):</strong>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '3' })) }}
 
-                    <strong>Codirector(es):</strong> {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '2' })) }}
-                </td>
-                <td>
+                <strong>Codirector(es):</strong> {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '2' })) }}
+            </td>
+            <td>
                     {{ produccion.tipoproduccion.nombre }}
-                </td>
-                <td>
+            </td>
+            <td>
                     {{ produccion.fecharegistro | date('m-Y') }}
-                </td>
-                <td>
-                    <a href="{{ path('gs_contenidos_produccionintelectual_ver',{'id': produccion.idproduccionintelectual})}}">
-                        <span class="glyphicon glyphicon-eye-open"></span> Abrir
-                    </a>
-                </td>
+            </td>
+            <td>
+                <a href="{{ path('gs_contenidos_produccionintelectual_ver',{'id': produccion.idproduccionintelectual})}}">
+                    <span class="glyphicon glyphicon-eye-open"></span> Abrir
+                </a>
+            </td>
 
-            </tr>
+        </tr>
             {% endfor %}
-        </tbody>
-        <tfoot>
-            <tr align="center">
-                <td colspan="6">
+    </tbody>
+    <tfoot>
+        <tr align="center">
+            <td colspan="6">
 
-                </td>
-            </tr>
-        </tfoot>
+            </td>
+        </tr>
+    </tfoot>
 
-    </table>
-    <hr>
-    <h3>Producción Intelectual Destacada</h3>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Titulo</th>   
-                <th>Tipo</th>
-                <th>Fecha</th>
-                <th></th>
-            </tr>
+</table>
+<hr>
+<h3>Producción Intelectual Destacada</h3>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Titulo</th>   
+            <th>Tipo</th>
+            <th>Fecha</th>
+            <th></th>
+        </tr>
 
-        </thead>
+    </thead>
 
-        <tbody>
+    <tbody>
             {%for produccion in produccionIntelectualDestacada%}
-            <tr>
-                <td>
+        <tr>
+            <td>
                     {{ produccion.titulo | upper}}. <b>Tema:</b> {{ produccion.tema.titulo }}                 
-                    <strong>Autor(es):</strong>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '1' })) }}
+                <strong>Autor(es):</strong>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '1' })) }}
 
-                    <strong>Director(es):</strong>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '3' })) }}
+                <strong>Director(es):</strong>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '3' })) }}
 
-                    <strong>Codirector(es):</strong> {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '2' })) }}
-                </td>
-                <td>
+                <strong>Codirector(es):</strong> {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '2' })) }}
+            </td>
+            <td>
                     {{ produccion.tipoproduccion.nombre }}
-                </td>
-                <td>
+            </td>
+            <td>
                     {{ produccion.fecharegistro | date('m-Y') }}
-                </td>
-                <td>
-                    <a href="{{ path('gs_contenidos_produccionintelectual_ver',{'id': produccion.idproduccionintelectual})}}">
-                        <span class="glyphicon glyphicon-eye-open"></span> Abrir
-                    </a>
-                </td>
+            </td>
+            <td>
+                <a href="{{ path('gs_contenidos_produccionintelectual_ver',{'id': produccion.idproduccionintelectual})}}">
+                    <span class="glyphicon glyphicon-eye-open"></span> Abrir
+                </a>
+            </td>
 
-            </tr>
+        </tr>
             {% endfor %}
-        </tbody>
-        <tfoot>
-            <tr align="center">
-                <td colspan="6">
+    </tbody>
+    <tfoot>
+        <tr align="center">
+            <td colspan="6">
 
-                </td>
-            </tr>
-        </tfoot>
+            </td>
+        </tr>
+    </tfoot>
 
-    </table>
+</table>
 
-    <hr>
+<hr>
 
 
 {% endblock %}
 
 {% block javascripts %}
 {{ parent()}}
-    <script type="text/javascript">
-        var x;
-        x = $(document);
-        x.ready(inicializarEventos);
-        function inicializarEventos() {
-            var btn;
-            btn = $('#botonBuscar');
-            btn.click(buscar);
+<script type="text/javascript">
+    var x;
+    x = $(document);
+    x.ready(inicializarEventos);
+    function inicializarEventos() {
+        var btn;
+        btn = $('#botonBuscar');
+        btn.click(buscar);
 
-            var btnFiltro;
-            btnFiltro = $('#botonBuscarFiltro');
-            btnFiltro.click(buscarFiltro);
+        var btnFiltro;
+        btnFiltro = $('#botonBuscarFiltro');
+        btnFiltro.click(buscarFiltro);
 
-            var sltTamano;
-            sltTamano = $('#listaTamano');
-            sltTamano.change(buscarFiltroTamano);
-        }
-        function buscar() {
-            var parametro;
-            parametro = $('#campoBuscar').val();
-            if (parametro == "" || parametro == null) {
-                var url;
-                url = "{{ path('gs_contenidos_produccionintelectual_buscar') }}";
-                window.open(url, '_self');
-            } else {
-                var url;
-                url = "{{ path('gs_contenidos_produccionintelectual_buscar', {'tamano': 100, 'parametro': 'text'}) }}";
-                url = url.replace("text", parametro);
-                window.open(url, '_self');
-            }
-        }
-        function buscarFiltro() {
-            /*
-             var primerNombre;
-             var segundoNombre;
-             var titulo;
-             var tipoProduccion;
-             var tamano;
-             
-             primerNombre = $('#campoPrimerNombre').val();
-             segundoNombre = $('#campoSegundoNombre').val();
-             titulo = $('#campoTitulo').val();
-             tipoProduccion = $('#listaTipoProduccion').val();
-             tamano = $('#listaTamano').val()
-             if (primerNombre == "" || primerNombre == null) {
-             primerNombre = "XXX";
-             }
-             if (segundoNombre == "" || segundoNombre == null) {
-             segundoNombre = "XXX";
-             }
-             if (titulo == "" || titulo == null) {
-             titulo = "XXX";
-             }
-             
-             var url;
-             url = "";
-             url = url.replace("text", titulo);
-             url = url.replace("text1", tipoProduccion);
-             url = url.replace("text2", primerNombre);
-             url = url.replace("text3", segundoNombre);
-             url = url.replace("text4", tamano);
-             $('#catalogoBibliografico').load(url);
-             var tamano;
-             tamano = $('#listaTamano').val();
-             
-             */
-
-            var formulario;
-            formulario = $('#formularioBuscarProduccion');
+        var sltTamano;
+        sltTamano = $('#listaTamano');
+        sltTamano.change(buscarFiltroTamano);
+    }
+    function buscar() {
+        var parametro;
+        parametro = $('#campoBuscar').val();
+        if (parametro == "" || parametro == null) {
             var url;
-            url = "{{ path('gs_consultas_produccionintelectual_busquedaavanzadacomunidad')}}";
-
-            $.ajax({
-                type: "POST",
-                url: url,
-                contentType: "application/x-www-form-urlencoded",
-                data: formulario.serialize(),
-                beforeSend: inicioEnvio,
-                success: function(data)
-                {
-                    $('#catalogoBibliografico').html(data);
-                },
-                timeout: 4000,
-                error: problemas
-            });
-            return false;
-        }
-        function inicioEnvio()
-        {
-            var x = $("#catalogoBibliografico");
-            x.html('Cargando ...');
-        }
-        function problemas()
-        {
-            $("#catalogoBibliografico").text('Problemas en el servidor. Intentelo de nuevo.');
-        }
-        function buscarFiltroTamano() {
-
-            var primerNombre;
-            var segundoNombre;
-            var titulo;
-            var tipoProduccion;
-            var tamano;
-
-            primerNombre = $('#campoPrimerNombre').val();
-            segundoNombre = $('#campoSegundoNombre').val();
-            titulo = $('#campoTitulo').val();
-            tipoProduccion = $('#listaTipoProduccion').val();
-            tamano = $('#listaTamano').val()
-            if (primerNombre == "" || primerNombre == null) {
-                primerNombre = "XXX";
-            }
-            if (segundoNombre == "" || segundoNombre == null) {
-                segundoNombre = "XXX";
-            }
-            if (titulo == "" || titulo == null) {
-                titulo = "XXX";
-            }
-
+            url = "{{ path('gs_contenidos_produccionintelectual_buscar') }}";
+            window.open(url, '_self');
+        } else {
             var url;
-            url = "{{ path('gs_consultas_produccionintelectual_busquedaavanzadacomunidad', {'titulo': 'text', 'tipoproduccion': 'text1', 'numeroresultados': 'text4', 'primernombre': 'text2', 'primerapellido': 'text3'}) }}";
-            url = url.replace("text", titulo);
-            url = url.replace("text1", tipoProduccion);
-            url = url.replace("text2", primerNombre);
-            url = url.replace("text3", segundoNombre);
-            url = url.replace("text4", tamano);
-            $('#catalogoBibliografico').load(url);
-            inicializarEventos();
+            url = "{{ path('gs_contenidos_produccionintelectual_buscar', {'tamano': 100, 'parametro': 'text'}) }}";
+            url = url.replace("text", parametro);
+            window.open(url, '_self');
+        }
+    }
+    function buscarFiltro() {
+        /*
+         var primerNombre;
+         var segundoNombre;
+         var titulo;
+         var tipoProduccion;
+         var tamano;
+             
+         primerNombre = $('#campoPrimerNombre').val();
+         segundoNombre = $('#campoSegundoNombre').val();
+         titulo = $('#campoTitulo').val();
+         tipoProduccion = $('#listaTipoProduccion').val();
+         tamano = $('#listaTamano').val()
+         if (primerNombre == "" || primerNombre == null) {
+         primerNombre = "XXX";
+         }
+         if (segundoNombre == "" || segundoNombre == null) {
+         segundoNombre = "XXX";
+         }
+         if (titulo == "" || titulo == null) {
+         titulo = "XXX";
+         }
+             
+         var url;
+         url = "";
+         url = url.replace("text", titulo);
+         url = url.replace("text1", tipoProduccion);
+         url = url.replace("text2", primerNombre);
+         url = url.replace("text3", segundoNombre);
+         url = url.replace("text4", tamano);
+         $('#catalogoBibliografico').load(url);
+         var tamano;
+         tamano = $('#listaTamano').val();
+             
+         */
+
+        var formulario;
+        formulario = $('#formularioBuscarProduccion');
+        var url;
+        url = "{{ path('gs_consultas_produccionintelectual_busquedaavanzadacomunidad')}}";
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            contentType: "application/x-www-form-urlencoded",
+            data: formulario.serialize(),
+            beforeSend: inicioEnvio,
+            success: function(data)
+            {
+                $('#catalogoBibliografico').html(data);
+            },
+            timeout: 4000,
+            error: problemas
+        });
+        return false;
+    }
+    function inicioEnvio()
+    {
+        var x = $("#catalogoBibliografico");
+        x.html('Cargando ...');
+    }
+    function problemas()
+    {
+        $("#catalogoBibliografico").text('Problemas en el servidor. Intentelo de nuevo.');
+    }
+    function buscarFiltroTamano() {
+
+        var primerNombre;
+        var segundoNombre;
+        var titulo;
+        var tipoProduccion;
+        var tamano;
+
+        primerNombre = $('#campoPrimerNombre').val();
+        segundoNombre = $('#campoSegundoNombre').val();
+        titulo = $('#campoTitulo').val();
+        tipoProduccion = $('#listaTipoProduccion').val();
+        tamano = $('#listaTamano').val()
+        if (primerNombre == "" || primerNombre == null) {
+            primerNombre = "XXX";
+        }
+        if (segundoNombre == "" || segundoNombre == null) {
+            segundoNombre = "XXX";
+        }
+        if (titulo == "" || titulo == null) {
+            titulo = "XXX";
         }
 
-    </script>
+        var url;
+        url = "{{ path('gs_consultas_produccionintelectual_busquedaavanzadacomunidad', {'titulo': 'text', 'tipoproduccion': 'text1', 'numeroresultados': 'text4', 'primernombre': 'text2', 'primerapellido': 'text3'}) }}";
+        url = url.replace("text", titulo);
+        url = url.replace("text1", tipoProduccion);
+        url = url.replace("text2", primerNombre);
+        url = url.replace("text3", segundoNombre);
+        url = url.replace("text4", tamano);
+        $('#catalogoBibliografico').load(url);
+        inicializarEventos();
+    }
+
+</script>
 {% endblock %}

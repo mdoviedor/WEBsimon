@@ -3,8 +3,8 @@ gs_consultas_homepage:
     defaults: { _controller: GSConsultasBundle:Default:index }
 
 gs_consultas_usuario_busquedaavanzada:
-    pattern: consultas/usuario/busquedaAvanzada/{numerodocumentoidentidad}.{primernombre}.{segundonombre}.{primerapellido}.{segundoapellido}.{email}.{numeroresultados}
-    defaults: { _controller: GSConsultasBundle:Consultasusuario:Busquedaavanzada }
+    pattern: consultas/usuario/busquedaAvanzada/{numeroresultados}
+    defaults: { _controller: GSConsultasBundle:Consultasusuario:Busquedaavanzada, numeroresultados: 30 }
     
 gs_consultas_usuario_vermas:
     pattern: consultas/usuario/verMas/{numerodocumentoidentidad}.{primernombre}.{segundonombre}.{primerapellido}.{segundoapellido}.{email}

@@ -1,0 +1,206 @@
+{% extends "::administrar.html.twig" %}
+
+{% block title %}GSProyectosBundle:Administrarseminario:Crear{% endblock %}
+
+{% block titulo %}  
+<h1>Administrar Seminario:<small>Crear</small></h1>
+{% endblock %}
+{% block submenuderecho %}    
+
+{% endblock %}
+
+
+
+
+{% block contenido %}
+<br>
+<form  role="form" id="formulario" name="formulario"  action="{{ path('gs_proyectos_seminarios_crear') }}" method="post" {{ form_enctype(formSeminario) }}>
+    <div class="row">
+        <div class="col-xs-6 col-md-4" style="border-color: #000;">
+
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-8" style="text-align: right;">           
+            <button type="submit" class="btn btn-success btn-xs" id="botonGuardar">
+                <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
+            </button>
+            <a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_seminarios_buscar') }}">
+                <span class="glyphicon glyphicon-log-out"></span> Salir
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-8">  
+        {{ form_errors(formSeminario) }}
+            <div class="form-group">
+        {{ form_label(formSeminario.titulo) }}  
+        {{ form_errors(formSeminario.titulo) }}
+
+        {{ form_widget(formSeminario.titulo) }} 
+
+            </div>
+            <div class="form-group">
+         {{ form_label(formSeminario.fecha) }}   
+        {{ form_errors(formSeminario.fecha) }}
+
+        {{ form_widget(formSeminario.fecha) }} 
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+         {{ form_label(formSeminario.acceso) }}   
+        {{ form_errors(formSeminario.acceso) }}
+
+        {{ form_widget(formSeminario.acceso) }} 
+                    </div>
+                    <div class="form-group">
+         {{ form_label(formSeminario.destacado) }}   
+        {{ form_errors(formSeminario.destacado) }}
+
+        {{ form_widget(formSeminario.destacado) }} 
+                    </div>
+                    <div class="form-group">
+         {{ form_label(formSeminario.estado) }}   
+        {{ form_errors(formSeminario.estado) }}
+
+        {{ form_widget(formSeminario.estado) }} 
+                    </div>
+                    <div class="form-group">
+         {{ form_label(formSeminario.mostrattitulo) }}   
+        {{ form_errors(formSeminario.mostrattitulo) }}
+
+        {{ form_widget(formSeminario.mostrattitulo) }} 
+                    </div>
+                    <div class="form-group">
+         {{ form_label(formSeminario.mostrarautor) }}   
+        {{ form_errors(formSeminario.mostrarautor) }}
+
+        {{ form_widget(formSeminario.mostrarautor) }} 
+                    </div>       
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+         {{ form_label(formSeminario.mostrarcategoria) }}   
+        {{ form_errors(formSeminario.mostrarcategoria) }}
+
+        {{ form_widget(formSeminario.mostrarcategoria) }} 
+                    </div>
+                    <div class="form-group">
+         {{ form_label(formSeminario.mostrarfechacracion) }}   
+        {{ form_errors(formSeminario.mostrarfechacracion) }}
+
+        {{ form_widget(formSeminario.mostrarfechacracion) }} 
+                    </div>    
+
+                    <div class="form-group">
+         {{ form_label(formSeminario.mostrarfechapublicacion) }}   
+        {{ form_errors(formSeminario.mostrarfechapublicacion) }}
+
+        {{ form_widget(formSeminario.mostrarfechapublicacion) }} 
+                    </div>
+                    <div class="form-group">
+         {{ form_label(formSeminario.mostrarfechamodificacion) }}   
+        {{ form_errors(formSeminario.mostrarfechamodificacion) }}
+
+        {{ form_widget(formSeminario.mostrarfechamodificacion) }} 
+                    </div>
+                    <div class="form-group">
+         {{ form_label(formSeminario.prioridad) }}   
+        {{ form_errors(formSeminario.prioridad) }}
+
+        {{ form_widget(formSeminario.prioridad) }} 
+                    </div>
+
+                </div>
+            </div>
+
+
+
+            <label>* Descripción:</label><br>
+            <textarea class="form-control" id="editor" name="editor" rows="10" cols="30" style="width:100%;height:400px" required="true">
+             
+            </textarea>
+
+        </div>
+        <div class="col-xs-6 col-md-4">
+            <br>
+        {{ form_label(formSeminario.fechainiciopublicacion) }} <br>
+        {{ form_errors(formSeminario.fechainiciopublicacion) }}
+        {{ form_widget(formSeminario.fechainiciopublicacion) }}
+            <br>
+        {{ form_label(formSeminario.fechafinpublicacion) }}   <br>
+        {{ form_errors(formSeminario.fechafinpublicacion) }}
+        {{ form_widget(formSeminario.fechafinpublicacion) }}
+
+
+        </div>
+    </div>
+       {{ form_rest(formSeminario) }}
+</form> 
+<br>
+<br>
+{% endblock %}
+
+
+
+    {% block javascripts %}
+{{ parent()}}
+
+<script type="text/javascript">
+
+    var x;
+    x = $(document);
+    x.ready(inicializarEventos);
+
+    function inicializarEventos() {
+        /*
+         var btn;
+         btn = $('#botonGuardar');
+         btn.click(enviarFormulario)*/
+    }
+    function enviarFormulario() {
+        /*  var frm;
+         
+         frm = $('#formulario');
+         frm.submit();*/
+    }
+
+
+    $("#editor").kendoEditor({
+        tools: [
+            "bold",
+            "italic",
+            "underline",
+            "strikethrough",
+            "justifyLeft",
+            "justifyCenter",
+            "justifyRight",
+            "justifyFull",
+            "insertUnorderedList",
+            "insertOrderedList",
+            "indent",
+            "outdent",
+            "createLink",
+            "unlink",
+            "insertImage",
+            "subscript",
+            "superscript",
+            "createTable",
+            "addRowAbove",
+            "addRowBelow",
+            "addColumnLeft",
+            "addColumnRight",
+            "deleteRow",
+            "deleteColumn",
+            "viewHtml",
+            "formatting",
+            "fontName",
+            "fontSize",
+            "foreColor",
+            "backColor"
+        ]
+    });
+</script>
+
+    {% endblock %}

@@ -293,3 +293,24 @@ gs_proyectos_recursos_buscar:
 gs_proyectos_reportes_informacioncolciencias:
     pattern: administrador/informacionColciencias
     defaults: { _controller: GSProyectosBundle:Reportes:Informacioncolciencias }
+    
+#############################
+#ADMINISTRAR SEMINARIOS#
+#############################
+
+gs_proyectos_seminarios_crear:
+    pattern: administrador/administrarSeminarios/crear
+    defaults: { _controller: GSProyectosBundle:Administrarseminario:Crear }
+
+#Se pasa el idseminario correspondiente al modelo Seminario
+gs_proyectos_seminarios_modificar:
+    pattern: administrador/administrarSeminarios/modificar/{id}
+    defaults: { _controller: GSProyectosBundle:Administrarseminario:Modificar }
+
+gs_proyectos_seminarios_buscar:
+    pattern: administrador/administrarSeminarios/
+    defaults: { _controller: GSProyectosBundle:Administrarseminario:Buscar }
+
+gs_proyectos_seminarios_eliminar:
+    pattern: administrador/administrarSeminarios/eliminar/{id}
+    defaults: { _controller: GSProyectosBundle:Administrarseminario:Eliminar }

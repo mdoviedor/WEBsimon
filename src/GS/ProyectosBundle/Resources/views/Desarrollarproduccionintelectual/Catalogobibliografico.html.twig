@@ -35,12 +35,101 @@
 
     </div>
 </div>
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="collapsed">
+                    Filtros
+                </a>
+            </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse">
+            <div class="panel-body">
+
+                <form class="form-inline" id="formularioBuscarProduccion" name="formularioBuscarProduccion" rol="form" action="#" enctype="multipart/form-data" method="post">
+
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="campoTitulo">Título: </label>
+                                <input class="form-control" name="campoTitulo" id="campoTitulo">
+                                <p class="help-block">Título de la producción.</p>                        
+                            </div>
+                        </div>
+                    </div>                    
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="listaTipoProduccion">Tipo de Producción: </label>
+                                <select id="listaTipoProduccion" name="listaTipoProduccion" class="form-control">
+                                    {%for tipo in tipoProduccion%}
+                                    <option value="{{ tipo.idtipoproduccion }}"> {{ tipo.nombre }}</option>
+                                    {% endfor %}                        
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="campoPrimerNombre">Primer Nombre: </label>
+                                <input class="form-control" name="campoPrimerNombre" id="campoPrimerNombre">
+                                <p class="help-block">Primer nombre del autor.</p> 
+
+                            </div>
+                            <div class="form-group">
+                                <label for="campoSegundoNombre"> Primer Apellido: </label>
+                                <input class="form-control" name="campoSegundoNombre" id="campoSegundoNombre" >
+                                <p class="help-block">Primer apellido del autor.</p> 
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="fechaDesde">Desde: </label>
+                                <input type="date" class="form-control" id="fechaDesde" name="fechaDesde">
+                                <p class="help-block"> Formato de la fecha: DD/MM/AAAA</p> 
+                            </div>
+                            <div class="form-group">
+                                <label for="fechaHasta">Hasta: </label>
+                                <input type="date" class="form-control" id="fechaHasta" name="fechaHasta">
+                                <p class="help-block"> Formato de la fecha: DD/MM/AAAA</p> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+
+                            <div class="checkbox">
+                                <label for="destacado">
+                                    <input type="checkbox" id="destacado" name="destacado"value="true"> Producción destacada 
+                                </label>                    
+                            </div>                            
+                        </div>
+                    </div>
+                    <br>
+                    <div style="text-align: right">
+                        <button type="submit" id="botonBuscarFiltro" name="botonBuscarFiltro" class="btn btn-primary" >
+                            <span class="glyphicon glyphicon-search"> Buscar</span> 
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+</div>
 <div id="catalogoBibliografico">
     <table class="table table-hover">
         <thead>
             <tr>
                 <th>Titulo</th>
-                  <th>Autor(es)</th>
+                <th>Autor(es)</th>
                 <th>Director(es)</th>
                 <th>Codirector(es)</th>
                 <th>Fecha</th>
@@ -77,7 +166,7 @@
             {% endfor %}
         </tbody>
         <tfoot>
-  <tr align="center">
+            <tr align="center">
                 <td colspan="6">
                     <select >
                         <option>30</option>

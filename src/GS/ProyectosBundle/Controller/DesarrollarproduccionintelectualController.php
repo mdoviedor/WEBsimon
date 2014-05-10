@@ -11,6 +11,7 @@ use GS\ProyectosBundle\Entity\Usuario;
 use GS\UserBundle\Entity\User;
 use GS\ProyectosBundle\Entity\TemaBibliografia;
 use GS\ProyectosBundle\Entity\Tema;
+use GS\ProyectosBundle\Entity\Tipoproduccion;
 use GS\ProyectosBundle\Entity\Produccionintelectual;
 use GS\ProyectosBundle\Entity\Espaciotrabajo;
 use GS\ProyectosBundle\Entity\Cronograma;
@@ -288,7 +289,7 @@ class DesarrollarproduccionintelectualController extends Controller {
         if ($temaUsuario && $temaBibliografia) { //Si el usuario es propietario del tema que intenta modificar
             if ($bibliografia->getNombrearchivo()) {
                 $fs = new Filesystem();
-                $fs->remove($bibliografia->getArchivo() . $bibliografia->getNombrearchivo().'.zip');
+                $fs->remove($bibliografia->getArchivo() . $bibliografia->getNombrearchivo() . '.zip');
             }
             $em->remove($bibliografia);
             $em->flush($bibliografia);
@@ -597,9 +598,11 @@ class DesarrollarproduccionintelectualController extends Controller {
 
     public function CatalogobibliograficoAction() {
         $em = $this->getDoctrine()->getManager();
+        $tipoProduccion = new Tipoproduccion();
         $produccionIntelectual = new Produccionintelectual();
+        $tipoProduccion = $em->getRepository('GSProyectosBundle:Tipoproduccion')->findAll();
         $produccionIntelectual = $em->getRepository('GSProyectosBundle:Produccionintelectual')->findBy(array(), array('fecharegistro' => 'DESC'), 30);
-        return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Catalogobibliografico.html.twig', array('produccionIntelectual' => $produccionIntelectual));
+        return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Catalogobibliografico.html.twig', array('produccionIntelectual' => $produccionIntelectual, 'tipoProduccion' => $tipoProduccion));
     }
 
     /*

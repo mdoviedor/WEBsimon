@@ -34,63 +34,128 @@
 {% endblock %}
 {% block contenido %}
 <br>
-<br>
-<div id="usuarios"></div>
-<table class="table table-hover table-condensed table-striped">
-    <thead>
-        <tr>
-            <th>
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="collapsed">
+                    Filtros
+                </a>
+            </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse">
+            <div class="panel-body">
 
-            </th>
-            <th>
-                Identificación
-            </th>
-            <th>
-                Nombre
-            </th>    
-            <th>
-                Correo Electrónico
-            </th>
-            <th>
-                Fecha de Registro
-            </th>  
-            <th>
-                Estado
-            </th>   
-        </tr>
+                <form class="form-inline" id="formularioBuscarUsuario" name="formularioBuscarUsuario" rol="form" action="#" enctype="multipart/form-data" method="post">
 
-    </thead>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="campoNumeroDocumentoIdentidad">Número de documento de identidad: </label>
+                                <input class="form-control" name="campoNumeroDocumentoIdentidad" id="campoNumeroDocumentoIdentidad">                                                
+                            </div>
+                        </div>
+                    </div>                  
 
-    <tbody>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="campoPrimerNombre">Primer Nombre: </label>
+                                <input class="form-control" name="campoPrimerNombre" id="campoPrimerNombre">                            
+
+                            </div>
+                            <div class="form-group">
+                                <label for="campoSegundoNombre"> Segundo Nombre: </label>
+                                <input class="form-control" name="campoSegundoNombre" id="campoSegundoNombre" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="campoSegundoApellido">Primer Apellido: </label>
+                                <input class="form-control" name="campoPrimerApellido" id="campoPrimerApellido">                             
+                            </div>
+                            <div class="form-group">
+                                <label for="campoSegundoApellido"> Segundo Apellido: </label>
+                                <input class="form-control" name="campoSegundoApellido" id="campoSegundoApellido" >                             
+
+                            </div>
+                        </div>
+                    </div>                    
+                    <br>
+                    <div style="text-align: right">
+                        <button type="submit" id="botonBuscarFiltro" name="botonBuscarFiltro" class="btn btn-primary" >
+                            <span class="glyphicon glyphicon-search"> Buscar</span> 
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<div id="usuarios">
+
+
+    <table class="table table-hover table-condensed table-striped">
+        <thead>
+            <tr>
+                <th>
+
+                </th>
+                <th>
+                    Identificación
+                </th>
+                <th>
+                    Nombre
+                </th>    
+                <th>
+                    Correo Electrónico
+                </th>
+                <th>
+                    Fecha de Registro
+                </th>  
+                <th>
+                    Estado
+                </th>   
+            </tr>
+
+        </thead>
+
+        <tbody>
         {%for usuario in usuarios %}
-        <tr>
-            <td>
-                <input type="radio" id="radioUsuario" name="radioUsuario" value="{{usuario.numerodocumentoidentidad}}">
-            </td>
-            <td>
+            <tr>
+                <td>
+                    <input type="radio" id="radioUsuario" name="radioUsuario" value="{{usuario.numerodocumentoidentidad}}">
+                </td>
+                <td>
              {{usuario.numerodocumentoidentidad}}
-            </td>
-            <td>
+                </td>
+                <td>
                    {{ usuario.primernombre }} {{ usuario.segundonombre }} {{ usuario.primerapellido }} {{ usuario.segundoapellido }}
 
-            </td>
-            <td>
+                </td>
+                <td>
                 {{ usuario.user.email }}        
-            </td>
-            <td>
+                </td>
+                <td>
                 {{ usuario.fecharegistro | date ('d-m-Y') }}
-            </td>
-            <td>
+                </td>
+                <td>
                 {% if usuario.user.enabled %}
-                 Activo
+                    Activo
                    {% else %}       
-                 Inactivo
+                    Inactivo
                   {% endif %}
-            </td>
-        </tr>
+                </td>
+            </tr>
         {% endfor %}
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
 
 <select class="center-block" id="listaTamano" name="listaTamano">  
     <option>Seleccionar</option>
@@ -103,6 +168,7 @@
     <option value="120">120</option>
     <option value="100000">Todos</option>                        
 </select>
+<br>
 {% endblock %}
 
 {% block javascripts %}
@@ -156,12 +222,8 @@
         var btnModificarUsuario;
         btnModificarUsuario = $('#botonModificarUsuario');
         btnModificarUsuario.click(modificarUsuario);
+
         /*
-         var btnModalModificarTema;
-         btnModalModificarTema = $('#botonModalModificarTema');
-         btnModalModificarTema.click(modalModificarTema);
-         
-         /*
          * *****************
          * Eliminar Recurso*
          * *****************
@@ -175,8 +237,21 @@
         btnModalEliminarUsuario = $('#botonModalEliminarUsuario');
         btnModalEliminarUsuario.click(modalEliminarUsuario);
 
+        /*
+         * Buscar
+         */
 
+        var btn;
+        btn = $('#botonBuscar');
+        btn.click(buscar);
 
+        var btnFiltro;
+        btnFiltro = $('#botonBuscarFiltro');
+        btnFiltro.click(buscarFiltro);
+
+        var sltTamano;
+        sltTamano = $('#listaTamano');
+        sltTamano.change(buscarFiltroTamano);
     }
 
     function  modalEliminarUsuario() {
@@ -201,7 +276,6 @@
         }
     }
 
-
     function modificarUsuario() {
         var rtUsuario;
         rtUsuario = $('#radioUsuario:checked').val();
@@ -214,6 +288,88 @@
             url = url.replace("text", rtUsuario);
             window.open(url, '_self');
         }
+    }
+
+
+    function buscar() {
+       /* var parametro;
+        parametro = $('#campoBuscar').val();
+        if (parametro == "" || parametro == null) {
+            var url;
+            url = "{{ path('gs_contenidos_produccionintelectual_buscar') }}";
+            window.open(url, '_self');
+        } else {
+            var url;
+            url = "{{ path('gs_contenidos_produccionintelectual_buscar', {'tamano': 100, 'parametro': 'text'}) }}";
+            url = url.replace("text", parametro);
+            window.open(url, '_self');
+        }*/
+    }
+    function buscarFiltro() {     
+
+        var formulario;
+        formulario = $('#formularioBuscarUsuario');
+        var url;
+        url = "{{ path('gs_consultas_usuario_busquedaavanzada')}}";
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            contentType: "application/x-www-form-urlencoded",
+            data: formulario.serialize(),
+            beforeSend: inicioEnvio,
+            success: function(data)
+            {
+                $('#usuarios').html(data);
+            },
+            timeout: 4000,
+            error: problemas
+        });
+        return false;
+    }
+    function inicioEnvio()
+    {
+        var x = $("#catalogoBibliografico");
+        x.html('Cargando ...');
+    }
+    function problemas()
+    {
+        $("#catalogoBibliografico").text('Problemas en el servidor. Intentelo de nuevo.');
+    }
+    function buscarFiltroTamano() {
+/*
+        var primerNombre;
+        var segundoNombre;
+        var titulo;
+        var tipoProduccion;
+        var tamano;
+
+        primerNombre = $('#campoPrimerNombre').val();
+        segundoNombre = $('#campoSegundoNombre').val();
+        titulo = $('#campoTitulo').val();
+        tipoProduccion = $('#listaTipoProduccion').val();
+        tamano = $('#listaTamano').val()
+        if (primerNombre == "" || primerNombre == null) {
+            primerNombre = "XXX";
+        }
+        if (segundoNombre == "" || segundoNombre == null) {
+            segundoNombre = "XXX";
+        }
+        if (titulo == "" || titulo == null) {
+            titulo = "XXX";
+        }
+
+        var url;
+        url = "{{ path('gs_consultas_produccionintelectual_busquedaavanzadacomunidad', {'titulo': 'text', 'tipoproduccion': 'text1', 'numeroresultados': 'text4', 'primernombre': 'text2', 'primerapellido': 'text3'}) }}";
+        url = url.replace("text", titulo);
+        url = url.replace("text1", tipoProduccion);
+        url = url.replace("text2", primerNombre);
+        url = url.replace("text3", segundoNombre);
+        url = url.replace("text4", tamano);
+        $('#catalogoBibliografico').load(url);
+        inicializarEventos();
+        
+        */
     }
 
 

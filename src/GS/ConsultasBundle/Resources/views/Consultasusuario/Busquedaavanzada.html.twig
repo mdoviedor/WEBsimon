@@ -1,57 +1,42 @@
-{% extends "::base.html.twig" %}
-{% block body %}  
-<table class="table table-hover">
+ 
+<table class="table table-hover table-striped table-condensed">
     <thead>
         <tr>
-            <th>Seleccionar</th>
-            <th>Tipo de usuario</th>
-            <th>Documento de identidad</th>
-            <th>Nombres</th>
-            <th>Apellidos</th>
-            <th>Correo electrónico</th>    
+            <th></th>
+            <th>Identificación</th>
+            <th>Nombre</th>
+            <th>Correo Electrónico</th>
+            <th>Fecha de Registro</th>
+            <th>Estado</th>            
         </tr>
     </thead>
     <tbody>
         {%for usuario in usuarios %}
         <tr>
             <td>
-                <input type="radio" name="busquedaUsuario" value="{{ usuario.numerodocumentoidentidad }}" required="true">
-            </td>
-            <td>
-                {{ usuario.tipousuario.nombre }} 
+                <input type="radio" name="radioUsuario" id="radioUsuario" value="{{ usuario.numerodocumentoidentidad }}" required="true">
             </td>
             <td>
                 {{ usuario.numerodocumentoidentidad }} 
             </td>
             <td>
-                {{ usuario.primernombre }} {{ usuario.segundonombre }} 
+               {{ usuario.primernombre }} {{ usuario.segundonombre }} {{ usuario.primerapellido }} {{ usuario.segundoapellido }} 
             </td>
             <td>
-                {{ usuario.primerapellido }} {{ usuario.segundoapellido }} 
+                {{ usuario.user.email }}
             </td>
             <td>
-                {{ usuario.user.email }} 
-            </td>   
-            <td>
-                {% spaceless %}
-                <a href="{{
-                   path(
-                      'gs_consultas_usuario_vermas',
-                     { 'numerodocumentoidentidad': usuario.numerodocumentoidentidad,
-                       'primernombre': usuario.primernombre,
-                       'segundonombre': usuario.segundonombre,
-                       'primerapellido': usuario.primerapellido,
-                       'segundoapellido': usuario.segundoapellido,
-                       'email': usuario.user.email,
-                       }
-                   )
-                  }}">
-                   Ver mas
-                </a>
-                {% endspaceless %}
+                {{ usuario.fecharegistro  | date('d-m-y') }}
             </td>
+            <td>
+                {% if usuario.user.enabled  %} 
+                Activo
+                {% else %} 
+                Inactivo
+                {% endif %} 
+            </td>               
         </tr>
         {% endfor %}
+         
     </tbody>
 </table>
-{% endblock%} 
