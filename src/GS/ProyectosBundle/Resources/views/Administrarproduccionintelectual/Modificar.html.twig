@@ -1,7 +1,167 @@
-{% extends "::base.html.twig" %}
+{% extends "::administrar.html.twig" %}
 
 {% block title %}GSProyectosBundle:Administrarproduccionintelectual:Modificar{% endblock %}
 
-{% block body %}
-<h1>Welcome to the Administrarproduccionintelectual:Modificar page</h1>
+{% block titulo %}  
+<h1>Producción Intelectual: <small>Modificar.</small></h1>
+{% endblock %}
+
+{% block submenuderecho %}    
+
+{% endblock %}
+
+{% block contenido %}
+<br>
+{%if mensaje == '1'%}
+
+<div class="alert alert-danger">
+    <b>Mensaje.</b> El archivo que intenta cargar es incorrecto.     
+</div>
+{% endif %}
+
+<form  class="form-horizontal" role="form"  id="formulario" name="formulario"  action="{{ path('gs_proyectos_produccionintelectual_modificar',{'id': produccionIntelectual.idproduccionintelectual}) }}" method="post" {{ form_enctype(formProduccionIntelectual) }}>
+    {{ form_errors(formProduccionIntelectual) }}
+    <div class="row">
+        <div class="col-xs-6 col-md-4" style="border-color: #000;">
+
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-8" style="text-align: right;">           
+            <button type="submit" class="btn btn-success btn-xs" id="botonGuardar">
+                <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
+            </button>
+            <a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_produccionintelectual_buscar') }}">
+                <span class="glyphicon glyphicon-log-out"></span> Salir
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-8">  
+            <div class="form-group">
+        {{ form_label(formProduccionIntelectual.tema, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }} 
+        {{ form_errors(formProduccionIntelectual.tema) }}
+                <div class="col-sm-8">
+        {{ form_widget(formProduccionIntelectual.tema) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-8"><div id="participantes">
+
+                    </div></div>
+
+            </div>
+
+
+            <div class="form-group">
+        {{ form_label(formProduccionIntelectual.acceso, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }} 
+        {{ form_errors(formProduccionIntelectual.acceso) }}
+                <div class="col-sm-8">
+        {{ form_widget(formProduccionIntelectual.acceso) }}
+                    <p class="help-block">Privado, el archivo cargado solo es visible por los miembros del grupo SIMON. Publico, el archivo es visible por la comunidad.</p>
+                </div>
+            </div>
+            <div class="form-group">
+
+         {{ form_label(formProduccionIntelectual.estado, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }} 
+        {{ form_errors(formProduccionIntelectual.estado) }}
+                <div class="col-sm-8">
+        {{ form_widget(formProduccionIntelectual.estado) }}
+                </div>
+            </div>
+            <div class="form-group">
+         {{ form_label(formProduccionIntelectual.destacado, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }} 
+        {{ form_errors(formProduccionIntelectual.destacado) }}
+                <div class="col-sm-8">
+        {{ form_widget(formProduccionIntelectual.destacado) }}
+                </div>
+            </div>
+            <div class="form-group">
+
+          {{ form_label(formProduccionIntelectual.tipoproduccion, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }} 
+        {{ form_errors(formProduccionIntelectual.tipoproduccion) }}
+                <div class="col-sm-8">
+        {{ form_widget(formProduccionIntelectual.tipoproduccion) }}
+                </div>
+            </div>
+            <div class="form-group">
+              {{ form_label(formProduccionIntelectual.titulo, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }} 
+        {{ form_errors(formProduccionIntelectual.titulo) }}
+                <div class="col-sm-8">
+        {{ form_widget(formProduccionIntelectual.titulo) }}
+                </div>
+            </div>
+            <div class="form-group">
+          {{ form_label(formProduccionIntelectual.resumen, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(formProduccionIntelectual.resumen) }}
+                <div class="col-sm-8">
+        {{ form_widget(formProduccionIntelectual.resumen) }}
+                </div>
+            </div>
+            <div class="form-group">
+         {{ form_label(formProduccionIntelectual.palabrasclave, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }} 
+        {{ form_errors(formProduccionIntelectual.palabrasclave) }}
+                <div class="col-sm-8">
+        {{ form_widget(formProduccionIntelectual.palabrasclave) }}
+                    <p class="help-block">Se recomienda que las palabras claves esten separadas por coma(,). Ej: MSB, Sistemas de información, DS, etc.</p>
+                </div>
+            </div>
+            <div class="form-group">
+         {{ form_label(formProduccionIntelectual.archivo, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(formProduccionIntelectual.archivo) }}
+                <div class="col-sm-8">
+        {{ form_widget(formProduccionIntelectual.archivo) }}
+                    <p class="help-block">El formato del archivo debe ser "zip".</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-xs-6 col-md-4">
+            <br>
+         {{ form_label(formProduccionIntelectual.fechainiciopublicacion) }} <br>
+        {{ form_errors(formProduccionIntelectual.fechainiciopublicacion) }}
+        {{ form_widget(formProduccionIntelectual.fechainiciopublicacion) }}
+            <br>
+         {{ form_label(formProduccionIntelectual.fechafinpublicacion) }} <br>
+        {{ form_errors(formProduccionIntelectual.fechafinpublicacion) }}
+        {{ form_widget(formProduccionIntelectual.fechafinpublicacion) }}
+        </div>
+    </div>
+       {{ form_rest(formProduccionIntelectual) }}
+</form> 
+
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+    var x;
+    x = $(document);
+    x.ready(inicializarEventos);
+
+
+    function inicializarEventos() {
+        traerParticipantes();
+        /*
+         var btn;
+         btn = $('#botonGuardar');
+         btn.click(enviarFormulario)*/
+
+        var sltTema;
+        sltTema = $('#gs_proyectosbundle_produccionintelectual_tema');
+        sltTema.change(traerParticipantes);
+    }
+    /*
+     function enviarFormulario() {
+     var frm;
+     frm = $('#formulario');
+     frm.submit();
+     }*/
+
+    function traerParticipantes() {
+        var valor = $("#gs_proyectosbundle_produccionintelectual_tema").val();
+        var url = "{{ path('gs_proyectos_produccionintelectual_buscarparticipantes', {'id': 'text'}) }}";
+        url = url.replace("text", valor);
+        $('#participantes').load(url);
+
+    }
+</script>
 {% endblock %}

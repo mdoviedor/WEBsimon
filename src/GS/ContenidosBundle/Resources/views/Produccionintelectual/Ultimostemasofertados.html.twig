@@ -8,12 +8,15 @@
 {% block contenido %}
 
 {%for tema in temas %}
-   <a href="{{ path('gs_contenidos_produccionintelectual_vertemaofertado',{'id': tema.idtema}) }}" target="_blank" onClick="window.open(this.href, this.target, 'width=702,height=602');
-                        return false;">{{ tema.titulo }}</a>
+{%if date(tema.fechainiciopublicacion) < date() and (date(tema.fechafinpublicacion) > date() or tema.fechafinpublicacion is null)%}
+<p><a href="{{ path('gs_contenidos_produccionintelectual_vertemaofertado',{'id': tema.idtema}) }}" target="_blank" onClick="window.open(this.href, this.target, 'width=702,height=602');
+    return false;">{{ tema.titulo }}</a></p>
+{%endif%}
 {%endfor%}
 
 <div style="width: 100%" class="text-right">
-    <i><a href="http://localhost/website/index.php/produccion-intelectual/temas-ofertados" target="_parent">Ver más...</a></i>
+    <p>
+        <a href="http://localhost/website/index.php/produccion-intelectual/temas-ofertados" target="_parent">Ver más...</a></p>
 </div>
 {% endblock %}
 {% block javascripts %}

@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use GS\ConsultasBundle\Entity\Produccionintelectual;
 use GS\ConsultasBundle\Entity\TemaUsuario;
 use GS\ConsultasBundle\Entity\Usuario;
+use Symfony\Component\HttpFoundation\Request;
 
 class ConsultasProduccionintelectualController extends Controller {
     /*
@@ -28,11 +29,41 @@ class ConsultasProduccionintelectualController extends Controller {
      * Implementada en la plantilla busqueda avanzada comunidad
      */
 
-    public function BusquedaavanzadacomunidadAction($titulo, $tipoproduccion, $numeroresultados, $primernombre, $primerapellido) {
-        $estado = 3;
+    public function BusquedaavanzadacomunidadAction(Request $request, $limite) {
+        $estado = true;
         $produccionIntelectual = new Produccionintelectual();
         $em = $this->getDoctrine()->getManager();
-        $produccionIntelectual = $em->getRepository('GSConsultasBundle:Produccionintelectual')->busquedaAvanzada($estado, $titulo, $tipoproduccion, $numeroresultados, $primernombre, $primerapellido);
+        $numeroresultados = $limite;
+        $primernombre = $request->request->get('campoPrimerNombre', 'null');
+
+        $primerapellido = $request->request->get('campoSegundoNombre', 'null');
+        $titulo = $request->request->get('campoTitulo', 'null');
+        $tipoproduccion = $request->request->get('listaTipoProduccion', 'null');
+        $desde = $request->request->get('fechaDesde', 'null');
+        $hasta = $request->request->get('fechaHasta', 'null');
+        $destacado = $request->request->get('destacado', 'false');
+        
+        if (!$titulo) {
+            $titulo = "XXXXXXX";
+        }
+        if (!$primerapellido) {
+            $primerapellido = "XXXXXXX";
+        }
+        if (!$primernombre) {
+            $primernombre = "XXXXXXX";
+        }
+        if (!$tipoproduccion) {
+            $tipoproduccion = "XXXXXXX";
+        }
+        if (!$desde) {
+            $desde = "00/00/0000";
+        }
+        if (!$hasta) {
+            $hasta = "00/00/0000";
+        }
+
+        echo $destacado . $primernombre . $primerapellido . $titulo . $tipoproduccion. $desde. $hasta;
+        $produccionIntelectual = $em->getRepository('GSConsultasBundle:Produccionintelectual')->busquedaAvanzada($estado, $titulo, $tipoproduccion, $numeroresultados, $primernombre, $primerapellido, $desde, $hasta, $destacado);
         return $this->render('GSConsultasBundle:ConsultasProduccionintelectual:Busquedaavanzadacomunidad.html.twig', array('produccionesIntelectuales' => $produccionIntelectual));
     }
 
@@ -46,8 +77,8 @@ class ConsultasProduccionintelectualController extends Controller {
         $produccionIntelectual = $em->getRepository('GSProyectosBundle:Produccionintelectual')->buscarProduccionUsuario($usuario[0]->getNumerodocumentoidentidad(), $limite);
         return $this->render('GSConsultasBundle:ConsultasProduccionintelectual:Vistaperfil.html.twig', array('id' => $id, 'usuario' => $usuario, 'produccionIntelectual' => $produccionIntelectual));
     }
-    
-       public function VistaperfilcomunidadAction($id, $limite) {
+
+    public function VistaperfilcomunidadAction($id, $limite) {
         $em = $this->getDoctrine()->getManager();
         $temaUsuario = new TemaUsuario();
         $produccionIntelectual = new Produccionintelectual();

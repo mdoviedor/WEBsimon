@@ -20,7 +20,8 @@ class ProduccionintelectualType extends AbstractType {
                 ->add('archivo', 'file', array(
                     'label' => '* Archivo:',
                     'attr' => array('class' => 'form-control'),
-                    'mapped' => false
+                    'mapped' => false,
+                    'required' => false
                 ))
                 ->add('resumen', 'textarea', array(
                     'label' => '* Resumen:',

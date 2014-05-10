@@ -29,8 +29,9 @@ class TemaRepository extends EntityRepository {
      */
 
     public function buscarUltimosTemasOfertados() {
+        $date = \date('now');
         return $this->getEntityManager()
-                        ->createQuery('SELECT t FROM GSContenidosBundle:Tema t WHERE NOT EXISTS(SELECT tu FROM GSContenidosBundle:TemaUsuario tu WHERE t.idtema = tu.tema ORDER BY t.fecharegistro DESC)')
+                        ->createQuery('SELECT t FROM GSContenidosBundle:Tema t WHERE  NOT EXISTS(SELECT tu FROM GSContenidosBundle:TemaUsuario tu WHERE t.idtema = tu.tema ORDER BY t.fecharegistro DESC)')                       
                         ->setMaxResults(3)
                         ->getResult();
     }

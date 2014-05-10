@@ -288,7 +288,7 @@ class DesarrollarproduccionintelectualController extends Controller {
         if ($temaUsuario && $temaBibliografia) { //Si el usuario es propietario del tema que intenta modificar
             if ($bibliografia->getNombrearchivo()) {
                 $fs = new Filesystem();
-                $fs->remove($bibliografia->getArchivo(), $bibliografia->getNombrearchivo());
+                $fs->remove($bibliografia->getArchivo() . $bibliografia->getNombrearchivo().'.zip');
             }
             $em->remove($bibliografia);
             $em->flush($bibliografia);
@@ -828,6 +828,7 @@ class DesarrollarproduccionintelectualController extends Controller {
      * al numero total de respuestas solicitadas. 
      * Esta accion permite visualizar el perfil del usuario. 
      */
+
     public function VistaperfilAction($id, $limite) {
         $em = $this->getDoctrine()->getManager();
         $temaUsuario = new TemaUsuario();

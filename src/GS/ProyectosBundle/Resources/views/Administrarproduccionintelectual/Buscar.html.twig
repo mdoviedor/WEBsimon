@@ -7,16 +7,16 @@
 {% endblock %}
 
 {% block submenuderecho %}    
-<a type="submit" class="btn btn-success btn-xs" id="botonNuevoTema" href="{{ path('gs_proyectos_produccionintelectual_crear') }}">
+<a type="submit" class="btn btn-success btn-xs" id="botonNuevoProduccionIntelectual" href="{{ path('gs_proyectos_produccionintelectual_crear') }}">
     <span class="glyphicon glyphicon-plus"></span> Nuevo
 </a>
 
-<a type="submit" class="btn btn-default btn-xs" id="botonModificarTema" href="{{ path('gs_proyectos_tema_crear') }}">
+<button type="submit" class="btn btn-default btn-xs" id="botonModificarProduccionIntelectual" href="#">
     <span class="glyphicon glyphicon-refresh"></span> Modificar
-</a>
-<button type="submit" class="btn btn-danger btn-xs" id="botonEliminarTema" data-toggle="modal" data-target="#myModal">
-    <span class="glyphicon glyphicon-trash"></span> Eliminar
 </button>
+<a type="submit" class="btn btn-danger btn-xs" id="botonEliminarProduccionIntelectual" href="#">
+    <span class="glyphicon glyphicon-trash"></span> Eliminar
+</a>
 <a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_vistaherramientas') }}">
     <span class="glyphicon glyphicon-log-out"></span> Salir
 </a>
@@ -57,6 +57,9 @@
                 <th>
 
                 </th>
+                <th> 
+                    Titulo
+                </th>
                 <th>
                     Tema
                 </th>
@@ -85,7 +88,10 @@
     {%for produccion in produccionIntelectual%}
             <tr>
                 <td>
-                    <input type="radio" value="{{ produccion.idproduccionintelectual }}">
+                    <input type="radio" id="radioProduccionIntelectual" name="radioProduccionIntelectual" value="{{ produccion.idproduccionintelectual }}">
+                </td>
+                <td>
+                {{ produccion.titulo  }}
                 </td>
                 <td>
                 {{ produccion.tema.titulo  }}
@@ -140,8 +146,8 @@
 
 
 {% block javascripts %}
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- Modal Eliminar Recurso -->
+<div class="modal fade" id="modalEliminarProduccionIntelectual" tabindex="-1" role="dialog" aria-labelledby="modalEliminarProduccionIntelectualRecursoLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -149,13 +155,107 @@
                 <h4 class="modal-title" id="myModalLabel">Alerta</h4>
             </div>
             <div class="modal-body">
-                Realmente desea eliminar este contenido.  
+                Realmente desea ejecutar esta acción.  
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
-                <button type="button" class="btn btn-danger" href="{{ path('gs_proyectos_tema_buscar') }}">Eliminar</button>
+                <button type="button" class="btn btn-danger" id="botonModalEliminarProduccionIntelectual"  href="#">Eliminar</button>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade " id="radioVacio" tabindex="-1" role="dialog" aria-labelledby="radioVacioLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Alerta</h4>
+            </div>
+            <div class="modal-body">
+                Usted no ha seleccionado ningun elemento. Intentelo de nuevo. 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var x;
+    x = $(document);
+    x.ready(inicializarEventos);
+    function inicializarEventos() {
+        /*
+         * *********************************
+         * Modificar Producción Intelectual*
+         * *********************************
+         */
+        var btnModificarProduccionIntlectual;
+        btnModificarProduccionIntlectual = $('#botonModificarProduccionIntelectual');
+        btnModificarProduccionIntlectual.click(modificarProduccionIntlectual);
+        /*
+         var btnModalModificarTema;
+         btnModalModificarTema = $('#botonModalModificarTema');
+         btnModalModificarTema.click(modalModificarTema);
+         
+         /*
+         * *****************
+         * Eliminar Produccion Intelectual*
+         * *****************
+         */
+
+        var btnEliminarProduccionIntelectual;
+        btnEliminarProduccionIntelectual = $('#botonEliminarProduccionIntelectual');
+        btnEliminarProduccionIntelectual.click(eliminarProduccionIntelectual);
+
+        var btnModalEliminarProduccionIntelectual;
+        btnModalEliminarProduccionIntelectual = $('#botonModalEliminarProduccionIntelectual');
+        btnModalEliminarProduccionIntelectual.click(modalEliminarProduccionIntelectual);
+
+    }
+
+    function  modalEliminarProduccionIntelectual() {
+
+        var rtProduccionIntelectual;
+        rtProduccionIntelectual = $('#radioProduccionIntelectual:checked').val();
+        var url;
+        url = "{{ path('gs_proyectos_produccionintelectual_eliminar', {'id': 'text'}) }}";
+        url = url.replace("text", rtProduccionIntelectual);
+        window.open(url, '_self');
+
+    }
+
+    function eliminarProduccionIntelectual() {
+        var rtProduccionIntelectual;
+        rtProduccionIntelectual = $('#radioProduccionIntelectual:checked').val();
+
+        if (rtProduccionIntelectual == "" || rtProduccionIntelectual == null) {
+            $('#radioVacio').modal('show');
+        } else {
+            $('#modalEliminarProduccionIntelectual').modal('show');
+        }
+    }
+
+
+    function modificarProduccionIntlectual() {
+        var rtProduccionIntelectual;
+        rtProduccionIntelectual = $('#radioProduccionIntelectual:checked').val();
+
+        if (rtProduccionIntelectual == "" || rtProduccionIntelectual == null) {
+            $('#radioVacio').modal('show');
+        } else {
+            var url;
+            url = "{{ path('gs_proyectos_produccionintelectual_modificar', {'id': 'text'}) }}";
+            url = url.replace("text", rtProduccionIntelectual);
+            window.open(url, '_self');
+        }
+    }
+
+
+
+</script>
 {% endblock %}

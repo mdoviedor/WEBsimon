@@ -37,3 +37,7 @@ gs_contenidos_produccionintelectual_ultimostemasofertados:
 gs_contenidos_produccionintelectual_vertemaofertado:
     pattern: contenidos/produccionIntelectual/temasOfertados/ver/{id}
     defaults: { _controller: GSContenidosBundle:Produccionintelectual:Vertemaofertado }
+
+gs_contenidos_errores_alertageneral:
+    pattern: contenidos/errores/alertaGeneral
+    defaults: { _controller: GSContenidosBundle:Errores:Alertageneral }

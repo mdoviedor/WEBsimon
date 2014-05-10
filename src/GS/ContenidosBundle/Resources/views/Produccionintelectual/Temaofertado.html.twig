@@ -7,6 +7,7 @@
 
 {% block contenido %}
 {%for tema in temaOfertado %}
+{%if date(tema.fechainiciopublicacion) < date() and (date(tema.fechafinpublicacion) > date() or tema.fechafinpublicacion is null)%}
 <h2>{{ tema.titulo }}</h2>
 <dl class="dl-horizontal">
     <dt>Tiempo estimado:</dt>
@@ -16,9 +17,9 @@
     <dt>Descripción:</dt>
     <dd>
 {{ render(controller('GSContenidosBundle:Produccionintelectual:Decodificardescripciontema', { 'descripcion': tema.descripcion })) }}
-</dd>
+    </dd>
 </dl>
-
+{%endif%}
 {%endfor%}
 
 {% endblock %}

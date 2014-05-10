@@ -48,12 +48,14 @@ gs_proyectos_produccionintelectual_crear:
     pattern: administrador/administrarProduccionIntelectual/crear
     defaults: { _controller: GSProyectosBundle:Administrarproduccionintelectual:Crear }
 
+#Se pasa el idproduccionintelectual correspondiente al modelo Produccionintelectual
 gs_proyectos_produccionintelectual_modificar:
-    pattern: administrador/administrarProduccionIntelectual/modificar
+    pattern: administrador/administrarProduccionIntelectual/modificar/{id}
     defaults: { _controller: GSProyectosBundle:Administrarproduccionintelectual:Modificar }
 
+#Se pasa el idproduccionintelectual correspondiente al modelo Produccionintelectual
 gs_proyectos_produccionintelectual_eliminar:
-    pattern: administrador/administrarProduccionIntelectual/eliminar
+    pattern: administrador/administrarProduccionIntelectual/eliminar/{id}
     defaults: { _controller: GSProyectosBundle:Administrarproduccionintelectual:Eliminar }
 
 #El limite por defecto sera 30, el cual corresponde al maximo de elementos mostrados de la consulta
