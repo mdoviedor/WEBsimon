@@ -145,20 +145,24 @@ class AdministrarController extends Controller {
 
     public function EliminarAction($id) {
         $usuario = new Usuario();
-        $em = $this->getDoctrine()->getManager();        
+        $em = $this->getDoctrine()->getManager();
         $usuario = $em->getRepository('GSUsuarioBundle:Usuario')->find($id);
         $em->remove($usuario);
         $em->flush();
-        
-          return $this->redirect($this->generateUrl('gs_usuario_buscar'));
-        
+
+        return $this->redirect($this->generateUrl('gs_usuario_buscar'));
     }
 
-    public function BuscarAction() {        
+    public function BuscarAction($limite, $parametro) {
         $em = $this->getDoctrine()->getManager();
-        $usuario = new Usuario();        
-        $usuario = $em->getRepository('GSUsuarioBundle:Usuario')->findBy(array(), array('fecharegistro'=>'DESC'), 30);        
-        return $this->render('GSUsuarioBundle:Administrar:buscar.html.twig',array('usuarios'=>$usuario));
+        $usuario = new Usuario();
+        if ($parametro != "" || $parametro == "XXX") {
+            $usuario = $em->getRepository('GSUsuarioBundle:Usuario')->buscarUsuarios($parametro, $limite);
+        } else {
+            $usuario = $em->getRepository('GSUsuarioBundle:Usuario')->findBy(array(), array('fecharegistro' => 'DESC'), $limite);
+        }
+
+        return $this->render('GSUsuarioBundle:Administrar:buscar.html.twig', array('usuarios' => $usuario, 'limite' => $limite));
     }
 
 }

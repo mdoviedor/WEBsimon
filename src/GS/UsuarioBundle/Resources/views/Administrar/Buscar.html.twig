@@ -23,13 +23,14 @@
 {% block submenuizquierdo %}  
 <div class="form-inline">
     <div class="form-group">
-        <input type="search" class="form-control">
+        <input type="search" class="form-control" id="campoBuscar" name="campoBuscar" placeholder="Primer nombre, apellido o documento de identidad">
+
     </div>
     <div class="form-group">
-        <button type="button" class="btn btn-default btn-sm">
+        <button type="button" id="botonBuscar" name="botonBuscar" class="btn btn-default btn-sm">
             <span class="glyphicon glyphicon-search"> Buscar</span> 
         </button>
-    </div>
+    </div>    
 </div>
 {% endblock %}
 {% block contenido %}
@@ -158,7 +159,7 @@
 </div>
 
 <select class="center-block" id="listaTamano" name="listaTamano">  
-    <option>Seleccionar</option>
+    <option value="{{limite}}">{{limite}}</option>
     <option value="5">5</option>
     <option value="10">10</option>
     <option value="20">20</option>
@@ -222,7 +223,6 @@
         var btnModificarUsuario;
         btnModificarUsuario = $('#botonModificarUsuario');
         btnModificarUsuario.click(modificarUsuario);
-
         /*
          * *****************
          * Eliminar Recurso*
@@ -232,11 +232,9 @@
         var btnEliminarUsuario;
         btnEliminarUsuario = $('#botonEliminarUsuario');
         btnEliminarUsuario.click(eliminarUsuario);
-
         var btnModalEliminarUsuario;
         btnModalEliminarUsuario = $('#botonModalEliminarUsuario');
         btnModalEliminarUsuario.click(modalEliminarUsuario);
-
         /*
          * Buscar
          */
@@ -262,13 +260,11 @@
         url = "{{ path('gs_usuario_eliminar', {'id': 'text'}) }}";
         url = url.replace("text", rtUsuario);
         window.open(url, '_self');
-
     }
 
     function eliminarUsuario() {
         var rtUsuario;
         rtUsuario = $('#radioUsuario:checked').val();
-
         if (rtUsuario == "" || rtUsuario == null) {
             $('#radioVacio').modal('show');
         } else {
@@ -279,7 +275,6 @@
     function modificarUsuario() {
         var rtUsuario;
         rtUsuario = $('#radioUsuario:checked').val();
-
         if (rtUsuario == "" || rtUsuario == null) {
             $('#radioVacio').modal('show');
         } else {
@@ -289,29 +284,26 @@
             window.open(url, '_self');
         }
     }
-
-
     function buscar() {
-       /* var parametro;
-        parametro = $('#campoBuscar').val();
-        if (parametro == "" || parametro == null) {
-            var url;
-            url = "{{ path('gs_contenidos_produccionintelectual_buscar') }}";
-            window.open(url, '_self');
-        } else {
-            var url;
-            url = "{{ path('gs_contenidos_produccionintelectual_buscar', {'tamano': 100, 'parametro': 'text'}) }}";
-            url = url.replace("text", parametro);
-            window.open(url, '_self');
-        }*/
-    }
-    function buscarFiltro() {     
+        var campoBuscar;
+        var tamano;
+        campoBuscar = $('#campoBuscar').val();
+        tamano = $('#listaTamano').val();
+        if (campoBuscar == "" || campoBuscar == null) {
+            campoBuscar = 'XXX';
+        }
 
+        var url;
+        url = "{{ path('gs_usuario_buscar', {'limite': 'text','parametro':'text1'}) }}";
+        url = url.replace("text", tamano);
+        url = url.replace("text1", campoBuscar);
+        window.open(url, '_self');
+    }
+    function buscarFiltro() {
         var formulario;
         formulario = $('#formularioBuscarUsuario');
         var url;
         url = "{{ path('gs_consultas_usuario_busquedaavanzada')}}";
-
         $.ajax({
             type: "POST",
             url: url,
@@ -337,39 +329,56 @@
         $("#catalogoBibliografico").text('Problemas en el servidor. Intentelo de nuevo.');
     }
     function buscarFiltroTamano() {
-/*
+
         var primerNombre;
         var segundoNombre;
-        var titulo;
-        var tipoProduccion;
+        var primerApellido;
+        var segundoApellido;
+        var numeroDocumentoIdentidad;
+        var campoBuscar;
         var tamano;
-
+        campoBuscar = $('#campoBuscar').val();
         primerNombre = $('#campoPrimerNombre').val();
         segundoNombre = $('#campoSegundoNombre').val();
-        titulo = $('#campoTitulo').val();
-        tipoProduccion = $('#listaTipoProduccion').val();
-        tamano = $('#listaTamano').val()
-        if (primerNombre == "" || primerNombre == null) {
-            primerNombre = "XXX";
+        primerApellido = $('#campoPrimerApellido').val();
+        segundoApellido = $('#campoSegundoApellido').val();
+        numeroDocumentoIdentidad = $('#campoNumeroDocumentoIdentidad').val();
+        tamano = $('#listaTamano').val();
+        if ((campoBuscar == "" || campoBuscar == null) && (primerApellido == "" || primerApellido == null) && (primerNombre == "" || primerNombre == null) && (segundoApellido == "" || segundoApellido == null)
+                && (segundoNombre == "" || segundoNombre == null) && (numeroDocumentoIdentidad == "" || numeroDocumentoIdentidad == null)) {
+            var url;
+            url = "{{ path('gs_usuario_buscar', {'limite': 'text'}) }}";
+            url = url.replace("text", tamano);
+            window.open(url, '_self');
+        } else {
+            if (campoBuscar == "" || campoBuscar == null) {
+                var formulario;
+                formulario = $('#formularioBuscarUsuario');
+                var url;
+                url = "{{ path('gs_consultas_usuario_busquedaavanzada',{'numeroresultados':'text4'})}}";
+                url = url.replace("text4", tamano);
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    contentType: "application/x-www-form-urlencoded",
+                    data: formulario.serialize(),
+                    beforeSend: inicioEnvio,
+                    success: function(data)
+                    {
+                        $('#usuarios').html(data);
+                    },
+                    timeout: 4000,
+                    error: problemas
+                });
+                return false;
+            } else {
+                var url;
+                url = "{{ path('gs_usuario_buscar', {'limite': 'text','parametro':'text1'}) }}";
+                url = url.replace("text", tamano);
+                url = url.replace("text1", campoBuscar);
+                window.open(url, '_self');
+            }
         }
-        if (segundoNombre == "" || segundoNombre == null) {
-            segundoNombre = "XXX";
-        }
-        if (titulo == "" || titulo == null) {
-            titulo = "XXX";
-        }
-
-        var url;
-        url = "{{ path('gs_consultas_produccionintelectual_busquedaavanzadacomunidad', {'titulo': 'text', 'tipoproduccion': 'text1', 'numeroresultados': 'text4', 'primernombre': 'text2', 'primerapellido': 'text3'}) }}";
-        url = url.replace("text", titulo);
-        url = url.replace("text1", tipoProduccion);
-        url = url.replace("text2", primerNombre);
-        url = url.replace("text3", segundoNombre);
-        url = url.replace("text4", tamano);
-        $('#catalogoBibliografico').load(url);
-        inicializarEventos();
-        
-        */
     }
 
 

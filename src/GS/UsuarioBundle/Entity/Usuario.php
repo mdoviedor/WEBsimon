@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Usuario
  *
  * @ORM\Table(name="usuario", uniqueConstraints={@ORM\UniqueConstraint(name="user_UNIQUE", columns={"user"})}, indexes={@ORM\Index(name="usuario_tipoDocumentoIdentidad_idx", columns={"tipoDocumentoIdentidad"}), @ORM\Index(name="usuario_tipoUsuario_idx", columns={"tipoUsuario"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="GS\UsuarioBundle\Entity\UsuarioRepository")
  */
 class Usuario
 {
