@@ -73,6 +73,7 @@ class ProduccionintelectualType extends AbstractType {
             }
                 ))
                 ->add('tipoproduccion', 'entity', array(
+                    'empty_value' => 'Seleccionar',
                     'label' => '* Tipo de producción:',
                     'attr' => array('class' => 'form-control'),
                     'class' => 'GSProyectosBundle:Tipoproduccion',

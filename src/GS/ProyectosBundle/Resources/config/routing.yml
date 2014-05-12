@@ -314,3 +314,7 @@ gs_proyectos_seminarios_buscar:
 gs_proyectos_seminarios_eliminar:
     pattern: administrador/administrarSeminarios/eliminar/{id}
     defaults: { _controller: GSProyectosBundle:Administrarseminario:Eliminar }
+    
+gs_proyectos_seminarios_vistaseminario:
+    pattern: usuario/seminario/vista/{limite}
+    defaults: { _controller: GSProyectosBundle:Administrarseminario:Vistaseminario, limite: 5 }

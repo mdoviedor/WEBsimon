@@ -6,12 +6,7 @@
 <h1>Administrar Seminario:<small>Modificar</small></h1>
 {% endblock %}
 {% block submenuderecho %}    
-
 {% endblock %}
-
-
-
-
 {% block contenido %}
 <br>
 <form  role="form" id="formulario" name="formulario"  action="{{ path('gs_proyectos_seminarios_modificar',{'id': idSeminario}) }}" method="post" {{ form_enctype(formSeminario) }}>

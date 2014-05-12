@@ -42,7 +42,7 @@ class ConsultasusuarioController extends Controller {
         $usuario = $em->getRepository('GSConsultasBundle:Usuario')->busquedaAvanzada($numerodocumentoidentidad, $primernombre, $segundonombre, $primerapellido, $segundoapellido, $numeroresultados);
 
         if(!$usuario){
-            echo '<div class="alert alert-warning"><b>No se encontro ningun resultado.</b> Intentelo de nuveo ...</div>';
+            echo '<div class="alert alert-info"><b>No se encontro ningun resultado.</b> Intentelo de nuveo ...</div>';
         }        
 //        $user = $em->getRepository('GSConsultasBundle:User')->findBy(array('email' => $email));
 //        if($user){

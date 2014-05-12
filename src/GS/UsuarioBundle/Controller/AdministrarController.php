@@ -48,7 +48,6 @@ class AdministrarController extends Controller {
                     $u->r('ROLE_USUARIO'); // Instancia del objeto U
                 }
 
-
                 $userManager->updateUser($u); //Actualizacion del contenido del manejador
                 $this->getDoctrine()->getManager()->flush(); //Guarda en la base de datos U
 

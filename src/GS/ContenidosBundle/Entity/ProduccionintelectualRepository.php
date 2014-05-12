@@ -14,7 +14,7 @@ class ProduccionintelectualRepository extends EntityRepository {
 
     public function buscarProduccion($tamano, $parametro) {
         return $this->getEntityManager()
-                        ->createQuery('SELECT u FROM GSContenidosBundle:Produccionintelectual u WHERE u.titulo LIKE :titulo  OR u.palabrasclave LIKE :palabraclave')
+                        ->createQuery('SELECT u FROM GSContenidosBundle:Produccionintelectual u WHERE u.estado = true AND (u.titulo LIKE :titulo  OR u.palabrasclave LIKE :palabraclave)')
                         ->setParameter('titulo', '%' . $parametro . '%')
                         ->setParameter('palabraclave', '%' . $parametro . '%')
                         ->setMaxResults($tamano)
@@ -29,7 +29,7 @@ class ProduccionintelectualRepository extends EntityRepository {
 
     public function buscarProduccionUsuario($usuario, $limite) {
         return $this->getEntityManager()
-                        ->createQuery('SELECT p FROM GSContenidosBundle:Produccionintelectual p JOIN GSContenidosBundle:TemaUsuario tu WITH tu.usuario = :numeroDocumentoIdentidad AND tu.tema = p.tema ORDER BY p.fecharegistro DESC')
+                        ->createQuery('SELECT p FROM GSContenidosBundle:Produccionintelectual p JOIN GSContenidosBundle:TemaUsuario tu WITH p.estado = true tu.usuario = :numeroDocumentoIdentidad AND tu.tema = p.tema ORDER BY p.fecharegistro DESC')
                         ->setParameter('numeroDocumentoIdentidad', $usuario )                
                         ->setMaxResults($limite)
                         ->getResult();

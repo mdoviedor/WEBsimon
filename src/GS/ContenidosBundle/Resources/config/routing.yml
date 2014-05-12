@@ -8,7 +8,7 @@ gs_contenidos_usuarios_ver:
     defaults: { _controller: GSContenidosBundle:Usuarios:Ver }
 
 gs_contenidos_produccionintelectual_buscar:
-    pattern: /contenidos/produccionIntelectual/{tamano}/{parametro}
+    pattern: /contenidos/produccionIntelectual/{tamano}.{parametro}
     defaults: { _controller: GSContenidosBundle:Produccionintelectual:Buscar, tamano: 100, parametro: xxx}
     requirements:
         tamano:  \d+        

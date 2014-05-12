@@ -55,6 +55,7 @@
                             <div class="form-group">
                                 <label for="listaTipoProduccion">Tipo de Producción: </label>
                                 <select id="listaTipoProduccion" name="listaTipoProduccion" class="form-control">
+                                    <option value="0">Seleccionar</option>
                                     {%for tipo in tipoProduccion%}
                                     <option value="{{ tipo.idtipoproduccion }}"> {{ tipo.nombre }}</option>
                                     {% endfor %}                        
@@ -78,6 +79,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="form-group">
@@ -92,6 +94,8 @@
                             </div>
                         </div>
                     </div>
+                    {#
+              
                     <div class="panel panel-default">
                         <div class="panel-body">
 
@@ -102,6 +106,7 @@
                             </div>                            
                         </div>
                     </div>
+#}
                     <br>
                     <div style="text-align: right">
                         <button type="submit" id="botonBuscarFiltro" name="botonBuscarFiltro" class="btn btn-primary" >
@@ -166,6 +171,8 @@
     </table>
 </div>   
 <select class="center-block" id="listaTamano" name="listaTamano">
+    <option value="1">1</option> 
+    <option value="5">5</option>
     <option value="30">30</option>
     <option value="60">60</option>
     <option value="90">90</option>
@@ -295,54 +302,20 @@
     }
     function buscar() {
         var parametro;
+        var tamano;
         parametro = $('#campoBuscar').val();
+        tamano = $('#listaTamano').val();
         if (parametro == "" || parametro == null) {
-            var url;
-            url = "{{ path('gs_contenidos_produccionintelectual_buscar') }}";
-            window.open(url, '_self');
-        } else {
-            var url;
-            url = "{{ path('gs_contenidos_produccionintelectual_buscar', {'tamano': 100, 'parametro': 'text'}) }}";
-            url = url.replace("text", parametro);
-            window.open(url, '_self');
+            parametro = 'XXX';
         }
+        var url;
+        url = "{{ path('gs_contenidos_produccionintelectual_buscar', {'tamano':'text','parametro': 'text1'}) }}";
+        url = url.replace("text1", parametro);
+        url = url.replace("text", tamano);
+        window.open(url, '_self');
+
     }
     function buscarFiltro() {
-        /*
-         var primerNombre;
-         var segundoNombre;
-         var titulo;
-         var tipoProduccion;
-         var tamano;
-             
-         primerNombre = $('#campoPrimerNombre').val();
-         segundoNombre = $('#campoSegundoNombre').val();
-         titulo = $('#campoTitulo').val();
-         tipoProduccion = $('#listaTipoProduccion').val();
-         tamano = $('#listaTamano').val()
-         if (primerNombre == "" || primerNombre == null) {
-         primerNombre = "XXX";
-         }
-         if (segundoNombre == "" || segundoNombre == null) {
-         segundoNombre = "XXX";
-         }
-         if (titulo == "" || titulo == null) {
-         titulo = "XXX";
-         }
-             
-         var url;
-         url = "";
-         url = url.replace("text", titulo);
-         url = url.replace("text1", tipoProduccion);
-         url = url.replace("text2", primerNombre);
-         url = url.replace("text3", segundoNombre);
-         url = url.replace("text4", tamano);
-         $('#catalogoBibliografico').load(url);
-         var tamano;
-         tamano = $('#listaTamano').val();
-             
-         */
-
         var formulario;
         formulario = $('#formularioBuscarProduccion');
         var url;
@@ -379,31 +352,60 @@
         var titulo;
         var tipoProduccion;
         var tamano;
-
+        var parametro;
+        var desde;
+        var hasta;
+        parametro = $('#campoBuscar').val();
         primerNombre = $('#campoPrimerNombre').val();
         segundoNombre = $('#campoSegundoNombre').val();
         titulo = $('#campoTitulo').val();
         tipoProduccion = $('#listaTipoProduccion').val();
-        tamano = $('#listaTamano').val()
-        if (primerNombre == "" || primerNombre == null) {
-            primerNombre = "XXX";
-        }
-        if (segundoNombre == "" || segundoNombre == null) {
-            segundoNombre = "XXX";
-        }
-        if (titulo == "" || titulo == null) {
-            titulo = "XXX";
-        }
+        desde = $('#fechaDesde').val();
+        hasta = $('#fechaHasta').val();
+        tamano = $('#listaTamano').val();
 
-        var url;
-        url = "{{ path('gs_consultas_produccionintelectual_busquedaavanzadacomunidad', {'titulo': 'text', 'tipoproduccion': 'text1', 'numeroresultados': 'text4', 'primernombre': 'text2', 'primerapellido': 'text3'}) }}";
-        url = url.replace("text", titulo);
-        url = url.replace("text1", tipoProduccion);
-        url = url.replace("text2", primerNombre);
-        url = url.replace("text3", segundoNombre);
-        url = url.replace("text4", tamano);
-        $('#catalogoBibliografico').load(url);
-        inicializarEventos();
+
+        if ((parametro == "" || parametro == null) && (primerNombre == "" || primerNombre == null) &&
+                (segundoNombre == "" || segundoNombre == null) && (titulo == "" || titulo == null) && (desde == "" || desde == null)
+                && (hasta == "" || hasta == null) && (tipoProduccion = 0)) {
+
+            var url;
+            url = "{{ path('gs_contenidos_produccionintelectual_buscar', {'tamano':'text'}) }}";
+            url = url.replace("text", tamano);
+            window.open(url, '_self');
+
+        }
+        else {
+            
+            if (parametro == "" || parametro == null) {
+                var formulario;
+                formulario = $('#formularioBuscarProduccion');
+                var url;
+                url = "{{ path('gs_consultas_produccionintelectual_busquedaavanzadacomunidad', {'limite':'text'}) }}";
+                url = url.replace("text", tamano);
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    contentType: "application/x-www-form-urlencoded",
+                    data: formulario.serialize(),
+                    beforeSend: inicioEnvio,
+                    success: function(data)
+                    {
+                        $('#catalogoBibliografico').html(data);
+                    },
+                    timeout: 4000,
+                    error: problemas
+                });
+                return false;
+            } else {
+                var url;
+                url = "{{ path('gs_contenidos_produccionintelectual_buscar', {'tamano':'text','parametro': 'text1'}) }}";
+                url = url.replace("text1", parametro);
+                url = url.replace("text", tamano);
+                window.open(url, '_self');
+            }
+        }
     }
 
 </script>

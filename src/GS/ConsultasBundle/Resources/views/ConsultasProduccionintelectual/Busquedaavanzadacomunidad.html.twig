@@ -1,6 +1,5 @@
-{% extends "::base.html.twig" %}
-{% block body %}  
-<table class="table table-hover">
+  
+<table class="table table-hover table-striped table-condensed">
     <thead>
         <tr>
             <th>Titulo</th>
@@ -17,13 +16,13 @@
             <td>
                     {{ produccion.titulo | upper}}. <b>Tema:</b> {{ produccion.tema.titulo }}
 
-                   <strong>Autor(es):</strong> {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '1' })) }}
+                <strong>Autor(es):</strong> {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '1' })) }}
 
-                   <strong>Director(es):</strong>  {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '3' })) }}
+                <strong>Director(es):</strong>  {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '3' })) }}
 
-                     <strong>Codirector(es):</strong> {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '2' })) }}
+                <strong>Codirector(es):</strong> {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '2' })) }}
             </td>
-             <td>
+            <td>
                     {{ produccion.tipoproduccion.nombre }}
             </td>
             <td>
@@ -48,4 +47,3 @@
 
 </table>
 
-{% endblock%} 

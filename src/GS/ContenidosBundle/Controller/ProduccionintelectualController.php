@@ -16,14 +16,13 @@ class ProduccionintelectualController extends Controller {
         $produccionintelectual = new Produccionintelectual();
         $produccionIntelectualDestacada = new Produccionintelectual();
         $produccionIntelectualMasVista = new Produccionintelectual();
-
         $tipoProduccion = new Tipoproduccion();
         $em = $this->getDoctrine()->getManager();
         $produccionintelectual = $em->getRepository('GSContenidosBundle:Produccionintelectual')->buscarProduccion($tamano, $parametro);
-        $produccionIntelectualDestacada = $em->getRepository('GSContenidosBundle:Produccionintelectual')->findBy(array('destacado' => true));
-        $produccionIntelectualMasVista = $em->getRepository('GSContenidosBundle:Produccionintelectual')->findBy(array(), array('vecesvisto' => 'DESC'), 5);
+        $produccionIntelectualDestacada = $em->getRepository('GSContenidosBundle:Produccionintelectual')->findBy(array('destacado' => true, 'estado' => true));
+        $produccionIntelectualMasVista = $em->getRepository('GSContenidosBundle:Produccionintelectual')->findBy(array('estado' => true), array('vecesvisto' => 'DESC'), 5);
         $tipoProduccion = $em->getRepository('GSConsultasBundle:Tipoproduccion')->findAll();
-        return $this->render('GSContenidosBundle:Produccionintelectual:Buscar.html.twig', array('produccionIntelectual' => $produccionintelectual, 'tipoProduccion' => $tipoProduccion, 'produccionIntelectualDestacada' => $produccionIntelectualDestacada, 'produccionIntelectualMasVista' => $produccionIntelectualMasVista));
+        return $this->render('GSContenidosBundle:Produccionintelectual:Buscar.html.twig', array( 'produccionIntelectual' => $produccionintelectual, 'tipoProduccion' => $tipoProduccion, 'produccionIntelectualDestacada' => $produccionIntelectualDestacada, 'produccionIntelectualMasVista' => $produccionIntelectualMasVista));
     }
 
     public function VerAction($id) {

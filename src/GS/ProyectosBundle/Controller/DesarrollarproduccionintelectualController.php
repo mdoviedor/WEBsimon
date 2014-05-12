@@ -11,6 +11,7 @@ use GS\ProyectosBundle\Entity\Usuario;
 use GS\UserBundle\Entity\User;
 use GS\ProyectosBundle\Entity\TemaBibliografia;
 use GS\ProyectosBundle\Entity\Tema;
+use GS\ProyectosBundle\Entity\Seminario;
 use GS\ProyectosBundle\Entity\Tipoproduccion;
 use GS\ProyectosBundle\Entity\Produccionintelectual;
 use GS\ProyectosBundle\Entity\Espaciotrabajo;
@@ -838,7 +839,6 @@ class DesarrollarproduccionintelectualController extends Controller {
         $produccionIntelectual = new Produccionintelectual();
         $usuario = new Usuario();
         $usuario = $em->getRepository('GSProyectosBundle:Usuario')->findBy(array('user' => $id));
-
         $produccionIntelectual = $em->getRepository('GSProyectosBundle:Produccionintelectual')->buscarProduccionUsuario($usuario[0]->getNumerodocumentoidentidad(), $limite);
         return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Vistaperfil.html.twig', array('id' => $id, 'usuario' => $usuario, 'produccionIntelectual' => $produccionIntelectual));
     }
