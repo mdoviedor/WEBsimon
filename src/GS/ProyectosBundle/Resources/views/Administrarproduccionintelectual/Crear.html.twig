@@ -107,7 +107,7 @@
          {{ form_label(formProduccionIntelectual.archivo, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
         {{ form_errors(formProduccionIntelectual.archivo) }}
                 <div class="col-sm-8">
-        {{ form_widget(formProduccionIntelectual.archivo) }}
+        {{ form_widget(formProduccionIntelectual.archivo, {'attr':{'required':'true'}}) }}
                 </div>
             </div>
 

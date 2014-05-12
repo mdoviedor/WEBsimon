@@ -594,15 +594,22 @@ class DesarrollarproduccionintelectualController extends Controller {
     }
 
     /*
-     * Esta acción permite visualizar la producción intelectual 
+     * Esta acción permite visualizar la producción intelectual y realizar la respectiva
+     * consulta por parte de los miembros del grupo simon de investigación. 
      */
 
-    public function CatalogobibliograficoAction() {
+    public function CatalogobibliograficoAction($tamano, $parametro) {
         $em = $this->getDoctrine()->getManager();
         $tipoProduccion = new Tipoproduccion();
         $produccionIntelectual = new Produccionintelectual();
         $tipoProduccion = $em->getRepository('GSProyectosBundle:Tipoproduccion')->findAll();
-        $produccionIntelectual = $em->getRepository('GSProyectosBundle:Produccionintelectual')->findBy(array(), array('fecharegistro' => 'DESC'), 30);
+
+        if ($parametro == 'XXX' || $parametro == '') {
+            $produccionIntelectual = $em->getRepository('GSProyectosBundle:Produccionintelectual')->findBy(array('estado' => true), array('fecharegistro' => 'DESC'), $tamano);
+        } else {
+            $produccionIntelectual = $em->getRepository('GSProyectosBundle:Produccionintelectual')->buscarProduccionParametro($tamano, $parametro);
+        }
+
         return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Catalogobibliografico.html.twig', array('produccionIntelectual' => $produccionIntelectual, 'tipoProduccion' => $tipoProduccion));
     }
 

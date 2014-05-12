@@ -20,66 +20,69 @@ class AdministrarproduccionintelectualController extends Controller {
      */
 
     public function CrearAction(Request $request) {
-        $produccionIntelectual = new Produccionintelectual(); // objeto del Modelo Produccionintelectual
-        $tema = new Tema(); // objeto del Modelo Tema
-        $identircarFecha = new IdentificadorFecha(); // Objeto de la clase Identificador fecha
-        $formProduccionIntelectual = $this->createForm(new ProduccionintelectualType(), $produccionIntelectual); //Formulario del modelo Produccionintelectual
-        $mensaje = 0;
+        try {
+            $produccionIntelectual = new Produccionintelectual(); // objeto del Modelo Produccionintelectual
+            $tema = new Tema(); // objeto del Modelo Tema
+            $identircarFecha = new IdentificadorFecha(); // Objeto de la clase Identificador fecha
+            $formProduccionIntelectual = $this->createForm(new ProduccionintelectualType(), $produccionIntelectual); //Formulario del modelo Produccionintelectual
+            $mensaje = 0;
 
-        if ($request->getMethod() == 'POST') {
-            $formProduccionIntelectual->bind($request);
-            if ($formProduccionIntelectual->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $ultimoRegistro = $em->getRepository('GSProyectosBundle:ProduccionIntelectual')->buscarUltimoProduccionIntelectual(); // Obtener el ultimo registro hecho en Produccionintelectual
-                $produccionIntelectual->setIdproduccionintelectual($identircarFecha->generarIdProduccionIntelectual($ultimoRegistro)); // Crear e instanciar la llave primaria en Produccionintelectual
+            if ($request->getMethod() == 'POST') {
+                $formProduccionIntelectual->bind($request);
+                if ($formProduccionIntelectual->isValid()) {
+                    $em = $this->getDoctrine()->getManager();
+                    $ultimoRegistro = $em->getRepository('GSProyectosBundle:ProduccionIntelectual')->buscarUltimoProduccionIntelectual(); // Obtener el ultimo registro hecho en Produccionintelectual
+                    $produccionIntelectual->setIdproduccionintelectual($identircarFecha->generarIdProduccionIntelectual($ultimoRegistro)); // Crear e instanciar la llave primaria en Produccionintelectual
 
-                $fechaRegistro = new \DateTime("now"); //Obtener la fecha de ahora.
+                    $fechaRegistro = new \DateTime("now"); //Obtener la fecha de ahora.
 
-                $fechaInicioPublicacion = $formProduccionIntelectual->get('fechainiciopublicacion')->getData(); // Se obtenie la fecha registrada en el formulario
-                if (!$fechaInicioPublicacion) { // Si la fecha en nula, se le asigna la fecha de ahora. 
-                    $produccionIntelectual->setFechainiciopublicacion($fechaRegistro);
-                }
-                $produccionIntelectual->setFechamodificacion($fechaRegistro); //Instancia del modelo Produccionintelectual, fechamodificacion
-                $produccionIntelectual->setFecharegistro($fechaRegistro); //Instancia del modelo Produccionintelectual, fecharegistro
-                $produccionIntelectual->setVecesvisto(0);  //Instancia del modelo Produccionintelectual, Veces Visto
-
-                /*
-                 * MANEJO DEL ARCHIVO
-                 */
-                $em = $this->getDoctrine()->getManager();
-                $idTema = $formProduccionIntelectual->get('tema')->getViewData(); //Se obtiene el id del tema, del formulario
-                //Generación del nombre y direccion del archivo
-                $tipoProduccion = $formProduccionIntelectual->get('tipoproduccion')->getViewData();
-                $dir = 'produccionIntelectual/';
-                $nombreArchivo = $idTema . $tipoProduccion . rand(10000, 99999);
-                $produccionIntelectual->setNombre($nombreArchivo); //Instancia del modelo Produccionintelectual, nombre
-
-
-                $file = $formProduccionIntelectual['archivo']->getData();
-                $extension = $file->guessExtension(); //Obtener la extensión del archivo cargado
-                if ($extension && $extension == "zip") {
-                    $file->move($dir, $nombreArchivo . '.' . $extension); //Mover el archivo al directorio
-                    $produccionIntelectual->setArchivo($dir); //Instancia del modelo Produccionintelectual, arcivo
-                    $em->persist($produccionIntelectual);
-                    $em->flush();
+                    $fechaInicioPublicacion = $formProduccionIntelectual->get('fechainiciopublicacion')->getData(); // Se obtenie la fecha registrada en el formulario
+                    if (!$fechaInicioPublicacion) { // Si la fecha en nula, se le asigna la fecha de ahora. 
+                        $produccionIntelectual->setFechainiciopublicacion($fechaRegistro);
+                    }
+                    $produccionIntelectual->setFechamodificacion($fechaRegistro); //Instancia del modelo Produccionintelectual, fechamodificacion
+                    $produccionIntelectual->setFecharegistro($fechaRegistro); //Instancia del modelo Produccionintelectual, fecharegistro
+                    $produccionIntelectual->setVecesvisto(0);  //Instancia del modelo Produccionintelectual, Veces Visto
 
                     /*
-                     * Cambio del estado del tema, para que desaparezca automaticamente del listado de posible temas para
-                     * asignar produccion intelectual
+                     * MANEJO DEL ARCHIVO
                      */
-
                     $em = $this->getDoctrine()->getManager();
-                    $tema = $em->getRepository('GSProyectosBundle:Tema')->find($produccionIntelectual->getTema());
-                    $tema->setEstado(false);
-                    $em->persist($tema);
-                    $em->flush();
+                    $idTema = $formProduccionIntelectual->get('tema')->getViewData(); //Se obtiene el id del tema, del formulario
+                    //Generación del nombre y direccion del archivo
+                    $tipoProduccion = $formProduccionIntelectual->get('tipoproduccion')->getViewData();
+                    $dir = 'produccionIntelectual/';
+                    $nombreArchivo = $idTema . $tipoProduccion . rand(10000, 99999);
+                    $produccionIntelectual->setNombre($nombreArchivo); //Instancia del modelo Produccionintelectual, nombre
+                    $file = $formProduccionIntelectual['archivo']->getData();
+                    $extension = $file->guessExtension(); //Obtener la extensión del archivo cargado
+                    if ($extension && $extension == "zip") {
+                        $file->move($dir, $nombreArchivo . '.' . $extension); //Mover el archivo al directorio
+                        $produccionIntelectual->setArchivo($dir); //Instancia del modelo Produccionintelectual, arcivo
+                        $em->persist($produccionIntelectual);
+                        $em->flush();
 
-                    return $this->redirect($this->generateUrl('gs_proyectos_produccionintelectual_buscar', array('limite' => '30')));
+                        /*
+                         * Cambio del estado del tema, para que desaparezca automaticamente del listado de posible temas para
+                         * asignar produccion intelectual
+                         */
+
+                        $em = $this->getDoctrine()->getManager();
+                        $tema = $em->getRepository('GSProyectosBundle:Tema')->find($produccionIntelectual->getTema());
+                        $tema->setEstado(false);
+                        $em->persist($tema);
+                        $em->flush();
+
+                        return $this->redirect($this->generateUrl('gs_proyectos_produccionintelectual_buscar', array('limite' => '30')));
+                    }
                 }
+                $mensaje = 1;
             }
-            $mensaje = 1;
+            return $this->render('GSProyectosBundle:Administrarproduccionintelectual:crear.html.twig', array('formProduccionIntelectual' => $formProduccionIntelectual->createView(), 'mensaje' => $mensaje));
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+            return $this->redirect($this->generateUrl('gs_contenidos_errores_alertageneral'));
         }
-        return $this->render('GSProyectosBundle:Administrarproduccionintelectual:crear.html.twig', array('formProduccionIntelectual' => $formProduccionIntelectual->createView(), 'mensaje' => $mensaje));
     }
 
     /*
@@ -169,7 +172,7 @@ class AdministrarproduccionintelectualController extends Controller {
         $em->flush();
         return $this->redirect($this->generateUrl('gs_proyectos_produccionintelectual_buscar'));
     }
-    
+
     /*
      * Acción para buscar la producción intelectual. 
      * Los ultimos 30 registros     

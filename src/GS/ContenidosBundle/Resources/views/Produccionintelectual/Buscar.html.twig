@@ -123,13 +123,13 @@
 </div>
 <br>
 <div id="catalogoBibliografico">
-    <table class="table table-hover">
+    <table class="table table-hover table-striped table-condensed">
         <thead>
             <tr>
                 <th>Titulo</th>   
                 <th>Tipo</th>
                 <th>Fecha</th>
-                <th></th>
+                <th> </th>
             </tr>
 
         </thead>
@@ -160,14 +160,6 @@
             </tr>
             {% endfor %}
         </tbody>
-        <tfoot>
-            <tr align="center">
-                <td colspan="6">
-
-                </td>
-            </tr>
-        </tfoot>
-
     </table>
 </div>   
 <select class="center-block" id="listaTamano" name="listaTamano">
@@ -181,7 +173,7 @@
 </select>
 <hr>
 <h3>Producción Intelectual más Vista</h3>
-<table class="table table-hover">
+<table class="table table-hover table-condensed table-striped">
     <thead>
         <tr>
             <th>Titulo</th>   
@@ -229,7 +221,7 @@
 </table>
 <hr>
 <h3>Producción Intelectual Destacada</h3>
-<table class="table table-hover">
+<table class="table table-hover table-condensed table-striped">
     <thead>
         <tr>
             <th>Titulo</th>   
@@ -367,7 +359,7 @@
 
         if ((parametro == "" || parametro == null) && (primerNombre == "" || primerNombre == null) &&
                 (segundoNombre == "" || segundoNombre == null) && (titulo == "" || titulo == null) && (desde == "" || desde == null)
-                && (hasta == "" || hasta == null) && (tipoProduccion = 0)) {
+                && (hasta == "" || hasta == null) && (tipoProduccion == 0)) {
 
             var url;
             url = "{{ path('gs_contenidos_produccionintelectual_buscar', {'tamano':'text'}) }}";
@@ -376,7 +368,7 @@
 
         }
         else {
-            
+
             if (parametro == "" || parametro == null) {
                 var formulario;
                 formulario = $('#formularioBuscarProduccion');

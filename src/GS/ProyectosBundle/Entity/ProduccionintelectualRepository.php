@@ -28,8 +28,21 @@ class ProduccionintelectualRepository extends EntityRepository {
     public function buscarProduccionUsuario($usuario, $limite) {
         return $this->getEntityManager()
                         ->createQuery('SELECT p FROM GSProyectosBundle:Produccionintelectual p JOIN GSProyectosBundle:TemaUsuario tu WITH tu.usuario = :numeroDocumentoIdentidad AND tu.tema = p.tema ORDER BY p.fecharegistro DESC')
-                        ->setParameter('numeroDocumentoIdentidad', $usuario )                
+                        ->setParameter('numeroDocumentoIdentidad', $usuario)
                         ->setMaxResults($limite)
+                        ->getResult();
+    }
+
+    /*
+     * Buscar producción por parametro de busqueda. 
+     */
+
+    public function buscarProduccionParametro($tamano, $parametro) {
+        return $this->getEntityManager()
+                        ->createQuery('SELECT u FROM GSProyectosBundle:Produccionintelectual u WHERE u.estado = true AND (u.titulo LIKE :titulo  OR u.palabrasclave LIKE :palabraclave)')
+                        ->setParameter('titulo', '%' . $parametro . '%')
+                        ->setParameter('palabraclave', '%' . $parametro . '%')
+                        ->setMaxResults($tamano)
                         ->getResult();
     }
 

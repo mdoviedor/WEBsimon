@@ -13,28 +13,20 @@
 {% block submenuizquierdo %}  
 <div class="form-inline">
     <div class="form-group">
-        <input type="search" class="form-control">
+        <input type="search" class="form-control" id="campoBuscar" name="campoBuscar">
     </div>
     <div class="form-group">
-        <button type="button" class="btn btn-default btn-sm">
+        <button type="submit" id="botonBuscar" name="botonBuscar" class="btn btn-default btn-sm">
             <span class="glyphicon glyphicon-search"> Buscar</span> 
         </button>
+
     </div>
+    <p class="help-block">Palabras claves que identifiquen la producción.</p>  
 </div>
 {% endblock %}
 
 {% block contenido %}
 <br>
-<div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-8">  
-
-
-    </div>
-    <div class="col-xs-6 col-md-4">
-
-
-    </div>
-</div>
 <div class="panel-group" id="accordion">
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -63,6 +55,7 @@
                             <div class="form-group">
                                 <label for="listaTipoProduccion">Tipo de Producción: </label>
                                 <select id="listaTipoProduccion" name="listaTipoProduccion" class="form-control">
+                                    <option value="0">Seleccionar</option>
                                     {%for tipo in tipoProduccion%}
                                     <option value="{{ tipo.idtipoproduccion }}"> {{ tipo.nombre }}</option>
                                     {% endfor %}                        
@@ -86,6 +79,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="form-group">
@@ -100,6 +94,8 @@
                             </div>
                         </div>
                     </div>
+                    {#
+              
                     <div class="panel panel-default">
                         <div class="panel-body">
 
@@ -110,6 +106,7 @@
                             </div>                            
                         </div>
                     </div>
+#}
                     <br>
                     <div style="text-align: right">
                         <button type="submit" id="botonBuscarFiltro" name="botonBuscarFiltro" class="btn btn-primary" >
@@ -124,16 +121,15 @@
 
     </div>
 </div>
+<br>
 <div id="catalogoBibliografico">
-    <table class="table table-hover">
+    <table class="table table-hover table-striped table-condensed">
         <thead>
             <tr>
-                <th>Titulo</th>
-                <th>Autor(es)</th>
-                <th>Director(es)</th>
-                <th>Codirector(es)</th>
+                <th>Titulo</th>   
+                <th>Tipo</th>
                 <th>Fecha</th>
-                <th></th>
+                <th> </th>
             </tr>
 
         </thead>
@@ -142,21 +138,20 @@
             {%for produccion in produccionIntelectual%}
             <tr>
                 <td>
-                    {{ produccion.titulo | upper}}. <b>Tema:</b> {{ produccion.tema.titulo }}
+                    {{ produccion.titulo | upper}}. <b>Tema:</b> {{ produccion.tema.titulo }}                 
+                    <strong>Autor(es):</strong>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '1' })) }}
+
+                    <strong>Director(es):</strong>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '3' })) }}
+
+                    <strong>Codirector(es):</strong> {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '2' })) }}
                 </td>
                 <td>
-                   {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '1' })) }}
-                </td>
-                <td>
-                    {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '3' })) }}
-                </td>
-                <td>                         
-                     {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '2' })) }}
+                    {{ produccion.tipoproduccion.nombre }}
                 </td>
                 <td>
                     {{ produccion.fecharegistro | date('m-Y') }}
                 </td>
-                <td>
+                <td>                    
                     <a href="{{ path('gs_proyectos_desarrollarproduccionintelectual_catalogobibliografico_vista',{'id': produccion.idproduccionintelectual})}}">
                         <span class="glyphicon glyphicon-eye-open"></span> Abrir
                     </a>
@@ -165,25 +160,146 @@
             </tr>
             {% endfor %}
         </tbody>
-        <tfoot>
-            <tr align="center">
-                <td colspan="6">
-                    <select >
-                        <option>30</option>
-                    </select>
-                </td>
-            </tr>
-        </tfoot>
-
     </table>
-
 </div>
+<select class="center-block" id="listaTamano" name="listaTamano">
+    <option value="0">Seleccionar</option> 
+    <option value="1">1</option> 
+    <option value="5">5</option>
+    <option value="30">30</option>
+    <option value="60">60</option>
+    <option value="90">90</option>
+    <option value="120">120</option>
+    <option value="100000">Todos</option>                        
+</select>
+<br>
 
 {% endblock %}
-
-
-
-
-
 {% block javascripts %}
+{{ parent()}}
+<script type="text/javascript">
+    var x;
+    x = $(document);
+    x.ready(inicializarEventos);
+    function inicializarEventos() {
+        var btn;
+        btn = $('#botonBuscar');
+        btn.click(buscar);
+
+        var btnFiltro;
+        btnFiltro = $('#botonBuscarFiltro');
+        btnFiltro.click(buscarFiltro);
+
+        var sltTamano;
+        sltTamano = $('#listaTamano');
+        sltTamano.change(buscarFiltroTamano);
+    }
+    function buscar() {
+        var parametro;
+        var tamano;
+        parametro = $('#campoBuscar').val();
+        tamano = $('#listaTamano').val();
+        if (parametro == "" || parametro == null) {
+            parametro = 'XXX';
+        }
+        var url;
+        url = "{{ path('gs_proyectos_desarrollarproduccionintelectual_catalogobibliografico', {'parametro': 'text1'}) }}";
+        url = url.replace("text1", parametro);
+        window.open(url, '_self');
+
+    }
+    function buscarFiltro() {
+        var formulario;
+        formulario = $('#formularioBuscarProduccion');
+        var url;
+        url = "{{ path('gs_consultas_produccionintelectual_busquedaavanzadacomunidad')}}";
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            contentType: "application/x-www-form-urlencoded",
+            data: formulario.serialize(),
+            beforeSend: inicioEnvio,
+            success: function(data)
+            {
+                $('#catalogoBibliografico').html(data);
+            },
+            timeout: 4000,
+            error: problemas
+        });
+        return false;
+    }
+    function inicioEnvio()
+    {
+        var x = $("#catalogoBibliografico");
+        x.html('Cargando ...');
+    }
+    function problemas()
+    {
+        $("#catalogoBibliografico").text('Problemas en el servidor. Intentelo de nuevo.');
+    }
+    function buscarFiltroTamano() {
+
+        var primerNombre;
+        var segundoNombre;
+        var titulo;
+        var tipoProduccion;
+        var tamano;
+        var parametro;
+        var desde;
+        var hasta;
+        parametro = $('#campoBuscar').val();
+        primerNombre = $('#campoPrimerNombre').val();
+        segundoNombre = $('#campoSegundoNombre').val();
+        titulo = $('#campoTitulo').val();
+        tipoProduccion = $('#listaTipoProduccion').val();
+        desde = $('#fechaDesde').val();
+        hasta = $('#fechaHasta').val();
+        tamano = $('#listaTamano').val();
+
+
+        if ((parametro == "" || parametro == null) && (primerNombre == "" || primerNombre == null) &&
+                (segundoNombre == "" || segundoNombre == null) && (titulo == "" || titulo == null) && (desde == "" || desde == null)
+                && (hasta == "" || hasta == null) && (tipoProduccion == 0)) {
+
+            var url;
+            url = "{{ path('gs_proyectos_desarrollarproduccionintelectual_catalogobibliografico', {'tamano':'text'}) }}";
+            url = url.replace("text", tamano);
+            window.open(url, '_self');
+
+        }
+        else {
+          
+            if (parametro == "" || parametro == null) {
+                var formulario;
+                formulario = $('#formularioBuscarProduccion');
+                var url;
+                url = "{{ path('gs_consultas_produccionintelectual_busquedaavanzadacomunidad', {'limite':'text'}) }}";
+                url = url.replace("text", tamano);
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    contentType: "application/x-www-form-urlencoded",
+                    data: formulario.serialize(),
+                    beforeSend: inicioEnvio,
+                    success: function(data)
+                    {
+                        $('#catalogoBibliografico').html(data);
+                    },
+                    timeout: 4000,
+                    error: problemas
+                });
+                return false;
+            } else {
+                var url;
+                url = "{{ path('gs_proyectos_desarrollarproduccionintelectual_catalogobibliografico', {'tamano':'text','parametro': 'text1'}) }}";
+                url = url.replace("text1", parametro);
+                url = url.replace("text", tamano);
+                window.open(url, '_self');
+            }
+        }
+    }
+
+</script>
 {% endblock %}

@@ -89,8 +89,8 @@ gs_proyectos_desarrollarproduccionintelectual_perfil:
     defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Perfil }
     
 gs_proyectos_desarrollarproduccionintelectual_catalogobibliografico:
-    pattern: usuario/produccionIntelectual/catalogoBibliografico
-    defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Catalogobibliografico }
+    pattern: usuario/produccionIntelectual/catalogoBibliografico/{tamano}.{parametro}
+    defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Catalogobibliografico, tamano: 30, parametro: XXX }
 
 #Se pasa el idproduccionintelectual correspondiente al modelo ProduccionIntelectual
 gs_proyectos_desarrollarproduccionintelectual_catalogobibliografico_vista:
