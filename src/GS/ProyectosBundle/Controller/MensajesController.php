@@ -267,6 +267,7 @@ class MensajesController extends Controller {
         /*
          * 
          */
+        $limite = 30;
         $mensajeEnviado = new Mensajeenviado();
         $em = $this->getDoctrine()->getManager();
         $mensajeEnviado = $em->getRepository('GSProyectosBundle:Mensajeenviado')->findBy(array('de' => $user), array('fecha' => 'DESC'), $limite);

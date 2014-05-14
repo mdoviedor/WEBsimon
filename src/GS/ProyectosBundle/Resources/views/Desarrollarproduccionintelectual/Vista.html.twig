@@ -178,7 +178,7 @@
     <tbody>
           {%for bibliografia in temaBibliografia%}
         <tr>
-            <td><input type="radio" id="radioBibliografia" value="{{ bibliografia.bibliografia.idbibliografia }}"></td>
+            <td><input type="radio" id="radioBibliografia" name="radioBibliografia" value="{{ bibliografia.bibliografia.idbibliografia }}"></td>
             <td>{{ bibliografia.bibliografia.nombre }}</td>
             <td>{{ bibliografia.bibliografia.tipoelementobibliografico.nombre }}</td>
             <td>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Existelecturaconproposito', { 'id': bibliografia.bibliografia.idbibliografia })) }}</td>

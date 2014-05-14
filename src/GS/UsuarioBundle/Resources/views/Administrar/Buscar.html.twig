@@ -255,7 +255,7 @@
     function  modalEliminarUsuario() {
 
         var rtUsuario;
-        rtUsuario = $('#radioRecurso:checked').val();
+        rtUsuario = $('#radioUsuario:checked').val();
         var url;
         url = "{{ path('gs_usuario_eliminar', {'id': 'text'}) }}";
         url = url.replace("text", rtUsuario);

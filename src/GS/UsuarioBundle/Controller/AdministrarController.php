@@ -127,7 +127,8 @@ class AdministrarController extends Controller {
                 $em->persist($usuario); //
                 $em->flush(); //Guarda en la base de datos U
                 $mensaje = "1";
-                return $this->redirect($this->generateUrl('gs_usuario_modificar', array('id' => $id, 'mensaje' => $mensaje)));
+                //return $this->redirect($this->generateUrl('gs_usuario_modificar', array('id' => $id, 'mensaje' => $mensaje)));
+                return $this->redirect($this->generateUrl('gs_usuario_buscar'));
             }
             $mensaje = "0";
         }

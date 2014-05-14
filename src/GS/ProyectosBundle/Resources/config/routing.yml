@@ -17,8 +17,8 @@ gs_proyectos_tema_eliminar:
     defaults: { _controller: GSProyectosBundle:Administrartema:Eliminar }
 
 gs_proyectos_tema_buscar:
-    pattern: administrador/administrarTema
-    defaults: { _controller: GSProyectosBundle:Administrartema:Buscar }
+    pattern: administrador/administrarTema/{tamano}.{parametro}
+    defaults: { _controller: GSProyectosBundle:Administrartema:Buscar, tamano: 30, parametro: XXX }
 #Se pasa el idtema correspondiente al modelo Tema
 gs_proyectos_tema_asignarsuario:
     pattern: administrador/administrarTema/asignarUsuario/{tema}
@@ -221,8 +221,7 @@ gs_proyectos_mensajes_leereliminado:
 gs_proyectos_mensajes_eliminar:
     pattern: usuario/mensajes/eliminar/{id}
     defaults: { _controller: GSProyectosBundle:Mensajes:Eliminar }
-    requirements:
-        id:  \d+ 
+
 gs_proyectos_mensajes_eliminarenviado:
     pattern: usuario/mensajes/eliminarenviado/
     defaults: { _controller: GSProyectosBundle:Mensajes:Eliminarenviado }
@@ -231,32 +230,29 @@ gs_proyectos_mensajes_eliminarenviado:
 gs_proyectos_mensajes_eliminarborrado:
     pattern: usuario/mensajes/eliminarborrado/{id}
     defaults: { _controller: GSProyectosBundle:Mensajes:Eliminarborrado }
-    requirements:
-        id:  \d+ 
+
 #Se pasa el limite o el tamaño de la cantidad de resultados mostrados
 gs_proyectos_mensajes_buscar:
-    pattern: usuario/mensajes/{limite}
+    pattern: usuario/mensajes/entrada/{limite}
     defaults: { _controller: GSProyectosBundle:Mensajes:Buscar, limite: 30 }
-    requirements:
-        limite:  \d+ 
+
 #Se pasa el limite o el tamaño de la cantidad de resultados mostrados
 gs_proyectos_mensajes_buscarenviado:
     pattern: usuario/mensajes/enviado/{limite}
     defaults: { _controller: GSProyectosBundle:Mensajes:Buscarenviado, limite: 30 }
-    requirements:
-        limite:  \d+ 
+
+   
 #Se pasa el limite o el tamaño de la cantidad de resultados mostrados
 gs_proyectos_mensajes_buscareliminado:
     pattern: usuario/mensajes/eliminado/{limite}
     defaults: { _controller: GSProyectosBundle:Mensajes:Buscareliminado, limite: 30 }
-    requirements:
-        limite:  \d+ 
+
+    
 #Se pasa el idmensajeborrado correspondiente al modelo Mensajeborrado
 gs_proyectos_mensajes_restaurar:
     pattern: usuario/mensajes/restaurar/{id}
     defaults: { _controller: GSProyectosBundle:Mensajes:Restaurar }
-    requirements:
-        id:  \d+ 
+
         
 #########################################
 #PANEL DE HERRAMIENTAS DEL ADMINISTRADOR#

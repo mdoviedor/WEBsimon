@@ -48,7 +48,7 @@ class BibliografiaType extends AbstractType {
                 ->add('fechaedicion', 'date', array(
                     'empty_value' => array('year' => 'Año', 'month' => 'Mes', 'day' => 'Día'),
                     'years' => range(1980, $Ahora),
-                    'label' => 'fechaedicion:',
+                    'label' => 'Fecha de edición:',
                     'required' => false,
                 ))
                 ->add('editorial', 'textarea', array(

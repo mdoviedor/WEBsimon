@@ -153,13 +153,13 @@ class DesarrollarproduccionintelectualController extends Controller {
                     }
 
                     $em->persist($lecturaConProposito);
-                    $em->flush($lecturaConProposito);
+                    $em->flush();
+                    return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_agregarlecturaproposito', array('id' => $id)));
                 }
             }
             return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Agregarlecturaproposito.html.twig', array('formLecturaConProposito' => $formLecturaConProposito->createView(), 'idBibliografia' => $id, 'idTema' => $temaBibliografia[0]->getTema()->getIdtema()));
-        } else {
-            return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_buscar'));
         }
+        return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_buscar'));
     }
 
     /*
@@ -187,6 +187,7 @@ class DesarrollarproduccionintelectualController extends Controller {
         $identificadorFecha = new IdentificadorFecha(); // Objeto de la clase IdentificaorFehca
         $formBibliografia = $this->createForm(new BibliografiaType(), $bibliografia); // Formulario del modelo Bibliografia 
         $temaUsuario = $em->getRepository('GSProyectosBundle:TemaUsuario')->findBy(array('tema' => $id)); // Consulta 
+        $mensaje = null;
 
         /*
          * Si el usuario es participante del proyecto podra ver el entorno de 
@@ -237,7 +238,9 @@ class DesarrollarproduccionintelectualController extends Controller {
                                 $em->persist($temaBibliografia);
                                 $em->flush();
 
-                                return $this->redirect($this->generateUrl('gs_proyectos_produccionintelectual_buscar', array('limite' => '30')));
+                                return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_vista', array('id' => $id)));
+                            } else {
+                                $mensaje = 1;
                             }
                         } else {
 
@@ -264,7 +267,7 @@ class DesarrollarproduccionintelectualController extends Controller {
                         //return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_vista', array('id' => $id)));
                     }
                 }
-                return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Agregarbibliografia.html.twig', array('formBibliografia' => $formBibliografia->createView(), 'idTema' => $id));
+                return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Agregarbibliografia.html.twig', array('formBibliografia' => $formBibliografia->createView(), 'idTema' => $id, 'mensaje' => $mensaje));
             }
         }
     }
@@ -299,6 +302,14 @@ class DesarrollarproduccionintelectualController extends Controller {
             return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_buscar'));
         }
     }
+
+    /*
+     * 
+     * Recibe el idtema correspondiente al modelo tema y 
+     * idbibliografia correspondiente al modelo Bibliografia, siendo este
+     * el id del elemento bibliografico que se ha de modificar. 
+     * 
+     */
 
     public function ModificarbibliografiaAction(Request $request, $id, $idbibliografia) {
 
@@ -342,7 +353,7 @@ class DesarrollarproduccionintelectualController extends Controller {
                     if ($formBibliografia->get('archivo')->getData()) {
                         if ($bibliografia->getNombrearchivo()) {
                             $fs = new Filesystem();
-                            $fs->remove($bibliografia->getArchivo(), $bibliografia->getNombrearchivo());
+                            $fs->remove($bibliografia->getArchivo() . $bibliografia->getNombrearchivo());
                         }
                         $dir = 'bibliografia/';
                         $nombreArchivo = $id . rand(10000, 99999);
@@ -361,22 +372,6 @@ class DesarrollarproduccionintelectualController extends Controller {
 
                         $em->persist($bibliografia);
                         $em->flush();
-
-                        /*
-                         * Guardar Registro. TemaBibliografia
-                         */
-
-//                        $em = $this->getDoctrine()->getManager();
-//                        $ultimoRegistro = $em->getRepository('GSProyectosBundle:TemaBibliografia')->buscarUltimoTemaBibliografia();
-//                        $temaBibliografia->setIdtemaBibliografia($identificadorFecha->generarIdTemaBibliografia($ultimoRegistro));
-//                        $tema = $em->getRepository('GSProyectosBundle:Tema')->find($id);
-//
-//                        $temaBibliografia->setTema($tema);
-//                        $temaBibliografia->setBibliografia($bibliografia);
-//
-//                        $em->persist($temaBibliografia);
-//                        $em->flush();
-
                         return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_vista', array('id' => $id)));
                     }
                     //return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_vista', array('id' => $id)));
@@ -625,6 +620,11 @@ class DesarrollarproduccionintelectualController extends Controller {
         $temaUsuario = new TemaUsuario();
         $temaBibliografia = new TemaBibliografia();
         $produccionIntelectual = $em->getRepository('GSProyectosBundle:Produccionintelectual')->find($id);
+
+        $produccionIntelectual->setVecesvisto($produccionIntelectual->getVecesvisto() + 1);
+        $em->persist($produccionIntelectual);
+        $em->flush();
+
         $temaUsuario = $em->getRepository('GSProyectosBundle:TemaUsuario')->findBy(array('tema' => $produccionIntelectual->getTema()->getIdtema()));
         $temaBibliografia = $em->getRepository('GSProyectosBundle:TemaBibliografia')->findBy(array('tema' => $produccionIntelectual->getTema()->getIdtema()));
         return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Catalogobibliograficovista.html.twig', array('produccionIntelectual' => $produccionIntelectual, 'temaUsuario' => $temaUsuario, 'temaBibliografia' => $temaBibliografia));

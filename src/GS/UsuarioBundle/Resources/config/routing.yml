@@ -6,12 +6,14 @@ gs_usuario_crear:
     pattern: administrador/administrarUsuario/crear
     defaults: { _controller: GSUsuarioBundle:Administrar:Crear }
 
+#recibe el id (numeroDocumentoIdentidad) correspondiente a la tabla Usuario
 gs_usuario_modificar:
     pattern: administrador/administrarUsuario/modificar/{id}.{mensaje}
     defaults: { _controller: GSUsuarioBundle:Administrar:Modificar, mensaje: 0 }
 
+#recibe el id (numeroDocumentoIdentidad) correspondiente a la tabla Usuario
 gs_usuario_eliminar:
-    pattern: administrador/administrarUsuario/eliminar
+    pattern: administrador/administrarUsuario/eliminar/{id}
     defaults: { _controller: GSUsuarioBundle:Administrar:Eliminar }
 
 gs_usuario_buscar:

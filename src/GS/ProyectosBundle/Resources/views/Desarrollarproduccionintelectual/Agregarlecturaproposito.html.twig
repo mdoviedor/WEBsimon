@@ -7,26 +7,42 @@
 {% endblock %}
 
 {% block submenuderecho %} 
-<form  action="{{ path('gs_proyectos_desarrollarproduccionintelectual_agregarbibliografia',{'id': idBibliografia}) }}" method="post" {{ form_enctype(formLecturaConProposito) }}>
-    <button type="submit"  class="btn btn-success btn-xs" id="botonGuardar">
-        <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
-    </button>
-    <a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_desarrollarproduccionintelectual_vista',{'id':idTema})}}">
-        <span class="glyphicon glyphicon-log-out"></span> Salir
-    </a>
+
 {% endblock %}
 
 {% block contenido %}
 
+<form  role="form" action="{{ path('gs_proyectos_desarrollarproduccionintelectual_agregarlecturaproposito',{'id': idBibliografia}) }}" method="post" {{ form_enctype(formLecturaConProposito) }}>
+
+    <div class="row">
+        <div class="col-xs-6 col-md-4" style="border-color: #000;">
+
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-8" style="text-align: right;">           
+            <button type="submit"  class="btn btn-success btn-xs" id="botonGuardar">
+                <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
+            </button>
+            <a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_desarrollarproduccionintelectual_vista',{'id':idTema})}}">
+                <span class="glyphicon glyphicon-log-out"></span> Salir
+            </a>
+        </div>
+    </div>
+    <br>
+    <div class="center-block" style="width: 700px;">
+
 {{ form_errors(formLecturaConProposito) }}            
 
-
+        <div class="form-group">
       {{ form_label(formLecturaConProposito.propositogeneral) }}
      {{ form_errors(formLecturaConProposito.propositogeneral) }}
+
      {{ form_widget(formLecturaConProposito.propositogeneral) }}
 
+        </div>
+
     {{ form_rest(formLecturaConProposito) }}
-</form> 
+    </div>
+</form>
 
 {% endblock %}
 

@@ -36,10 +36,10 @@
 {% block submenuizquierdo %}  
 <div class="form-inline">
     <div class="form-group">
-        <input type="search" class="form-control">
+        <input type="search" class="form-control" id="campoBuscar" name="campoBuscar">
     </div>
     <div class="form-group">
-        <button type="button" class="btn btn-default btn-sm">
+        <button type="button" class="btn btn-default btn-sm" id="botonBuscar" name="botonBuscar">
             <span class="glyphicon glyphicon-search"> Buscar</span> 
         </button>
     </div>
@@ -50,16 +50,47 @@
 
 {% block contenido %}
 <br>
-<div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-8">  
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="collapsed">
+                    Filtros
+                </a>
+            </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse">
+            <div class="panel-body">
 
+                <form class="form-inline" id="formularioBuscarProduccion" name="formularioBuscarProduccion" rol="form" action="#" enctype="multipart/form-data" method="post">
 
-    </div>
-    <div class="col-xs-6 col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="campoTitulo">Título: </label>
+                                <input class="form-control" name="campoTitulo" id="campoTitulo">          
+                                <label for="checkEstado">Estado: </label>   
+                                <div class="checkbox">
+                                    <input type="checkbox" value="true" id="checkEstado" name="checkEstado">
+                                </div>
+                            </div>
+                        </div>
+                    </div>                
+                    <br>
+                    <div style="text-align: right">
+                        <button type="submit" id="botonBuscarFiltro" name="botonBuscarFiltro" class="btn btn-primary" >
+                            <span class="glyphicon glyphicon-search"> Buscar</span> 
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
 
 
     </div>
 </div>
+<br>
 <div id="temas">
     <table class="table table-hover table-condensed table-striped">
         <thead>
@@ -238,6 +269,18 @@
 
         /************************/
 
+        var btn;
+        btn = $('#botonBuscar');
+        btn.click(buscar);
+
+        var btnFiltro;
+        btnFiltro = $('#botonBuscarFiltro');
+        btnFiltro.click(buscarFiltro);
+
+        var sltTamano;
+        sltTamano = $('#listaTamano');
+        sltTamano.change(buscarFiltroTamano);
+
     }
 
     function  modalEliminarTema() {
@@ -320,6 +363,24 @@
             url = url.replace("text", rtTema);
             window.open(url, '_self');
         }
+    }
+    /*
+     * Busquedas
+     */
+
+    function buscar() {
+        var parametro;
+        var tamano;
+        parametro = $('#campoBuscar').val();
+        tamano = $('#listaTamano').val();
+        if (parametro == "" || parametro == null) {
+            parametro = 'XXX';
+        }
+        var url;
+        url = "{{ path('gs_proyectos_desarrollarproduccionintelectual_catalogobibliografico', {'parametro': 'text1'}) }}";
+        url = url.replace("text1", parametro);
+        window.open(url, '_self');
+
     }
 
 </script>

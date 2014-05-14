@@ -187,14 +187,14 @@
     }
 
     function buscarTamano() {
-
+alert('Entro aca');
         var tamano;
         tamano = $('#listaTamano').val()
         var url;
         url = "{{ path('gs_proyectos_mensajes_buscareliminado', {'limite': 'text'}) }}";
         url = url.replace("text", tamano);
         window.open(url, '_self');
-        inicializarEventos();
+       
     }
 
 </script>
