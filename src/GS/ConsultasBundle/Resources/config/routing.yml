@@ -23,8 +23,8 @@ gs_consultas_recurso_busquedaavanzada:
     defaults: { _controller: GSConsultasBundle:ConsultasRecurso:Busquedaavanzada }
 
 gs_consultas_produccionintelectual_busquedaavanzadaadministrador:
-    pattern: administrador/consultas/produccionintelectual/busquedaAvanzada/{titulo}.{tipoproduccion}.{primernombre}.{primerapellido}.{estado}.{numeroresultados}
-    defaults: { _controller: GSConsultasBundle:ConsultasProduccionintelectual:Busquedaavanzada }
+    pattern: administrador/consultas/produccionintelectual/busquedaAvanzada/{limite}
+    defaults: { _controller: GSConsultasBundle:ConsultasProduccionintelectual:Busquedaavanzada, limite: 30 }
     
 gs_consultas_produccionintelectual_busquedaavanzadacomunidad:
     pattern: consultas/produccionintelectual/busquedaAvanzada/{limite}

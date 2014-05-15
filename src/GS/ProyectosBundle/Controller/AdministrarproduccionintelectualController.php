@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use GS\ProyectosBundle\Entity\Produccionintelectual;
 use GS\ProyectosBundle\Form\ProduccionintelectualType;
 use GS\ProyectosBundle\Entity\TemaUsuario;
+use GS\ProyectosBundle\Entity\Tipoproduccion;
 use GS\ProyectosBundle\Entity\Tema;
 use Symfony\Component\HttpFoundation\Request;
 use GS\ProyectosBundle\Funciones\IdentificadorFecha;
@@ -178,14 +179,23 @@ class AdministrarproduccionintelectualController extends Controller {
      * Los ultimos 30 registros     
      */
 
-    public function BuscarAction() {
+    public function BuscarAction($limite, $parametro) {
+        $valor = null;
         $produccionIntelectual = new Produccionintelectual();
         $temaUsuario = new TemaUsuario();
+        $tipoProduccion = new Tipoproduccion();
         $em = $this->getDoctrine()->getManager();
-        $produccionIntelectual = $em->getRepository('GSProyectosBundle:Produccionintelectual')->findBy(array(), array('tema' => 'DESC', 'fecharegistro' => 'DESC'), 30);
+
+        if ($parametro == 'XXX') {
+            $produccionIntelectual = $em->getRepository('GSProyectosBundle:Produccionintelectual')->findBy(array(), array('tema' => 'DESC', 'fecharegistro' => 'DESC'), $limite);
+        } else {
+            $valor = $parametro;
+        }
+        $tipoProduccion = $em->getRepository('GSProyectosBundle:Tipoproduccion')->findAll();
 
 
-        return $this->render('GSProyectosBundle:Administrarproduccionintelectual:buscar.html.twig', array('produccionIntelectual' => $produccionIntelectual));
+
+        return $this->render('GSProyectosBundle:Administrarproduccionintelectual:buscar.html.twig', array('produccionIntelectual' => $produccionIntelectual, 'tipoProduccion' => $tipoProduccion, 'valor' => $valor, 'limite' => $limite));
     }
 
     /*

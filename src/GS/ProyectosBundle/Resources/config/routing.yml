@@ -60,8 +60,8 @@ gs_proyectos_produccionintelectual_eliminar:
 
 #El limite por defecto sera 30, el cual corresponde al maximo de elementos mostrados de la consulta
 gs_proyectos_produccionintelectual_buscar:
-    pattern: administrador/administrarProduccionIntelectual/
-    defaults: { _controller: GSProyectosBundle:Administrarproduccionintelectual:Buscar }
+    pattern: administrador/administrarProduccionIntelectual/{limite}.{parametro}
+    defaults: { _controller: GSProyectosBundle:Administrarproduccionintelectual:Buscar, limite: 30, parametro: XXX }
  
 #Se pasa el idtema correspondiente al modelo Tema
 gs_proyectos_produccionintelectual_buscarparticipantes:

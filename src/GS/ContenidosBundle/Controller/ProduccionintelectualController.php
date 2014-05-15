@@ -13,16 +13,27 @@ use GS\ContenidosBundle\Entity\TemaBibliografia;
 class ProduccionintelectualController extends Controller {
 
     public function BuscarAction($tamano, $parametro) {
+        $valor = null;
         $produccionintelectual = new Produccionintelectual();
         $produccionIntelectualDestacada = new Produccionintelectual();
         $produccionIntelectualMasVista = new Produccionintelectual();
         $tipoProduccion = new Tipoproduccion();
         $em = $this->getDoctrine()->getManager();
-        $produccionintelectual = $em->getRepository('GSContenidosBundle:Produccionintelectual')->buscarProduccion($tamano, $parametro);
-        $produccionIntelectualDestacada = $em->getRepository('GSContenidosBundle:Produccionintelectual')->findBy(array('destacado' => true, 'estado' => true));
-        $produccionIntelectualMasVista = $em->getRepository('GSContenidosBundle:Produccionintelectual')->findBy(array('estado' => true), array('vecesvisto' => 'DESC'), 5);
-        $tipoProduccion = $em->getRepository('GSConsultasBundle:Tipoproduccion')->findAll();
-        return $this->render('GSContenidosBundle:Produccionintelectual:Buscar.html.twig', array( 'produccionIntelectual' => $produccionintelectual, 'tipoProduccion' => $tipoProduccion, 'produccionIntelectualDestacada' => $produccionIntelectualDestacada, 'produccionIntelectualMasVista' => $produccionIntelectualMasVista));
+
+        if ($parametro == "XXX") {
+            $produccionintelectual = $em->getRepository('GSContenidosBundle:Produccionintelectual')->findBy(array(), array('fecharegistro' => 'DESC'), $tamano);
+            $tipoProduccion = $em->getRepository('GSConsultasBundle:Tipoproduccion')->findAll();
+            $produccionIntelectualDestacada = $em->getRepository('GSContenidosBundle:Produccionintelectual')->findBy(array('destacado' => true, 'estado' => true));
+            $produccionIntelectualMasVista = $em->getRepository('GSContenidosBundle:Produccionintelectual')->findBy(array('estado' => true), array('vecesvisto' => 'DESC'), 5);
+        } else {
+            $valor = $parametro;
+            $produccionintelectual = $em->getRepository('GSContenidosBundle:Produccionintelectual')->buscarProduccion($tamano, $parametro);
+        }
+
+        return $this->render('GSContenidosBundle:Produccionintelectual:Buscar.html.twig', array(
+                    'produccionIntelectual' => $produccionintelectual, 'tipoProduccion' => $tipoProduccion,
+                    'produccionIntelectualDestacada' => $produccionIntelectualDestacada,
+                    'produccionIntelectualMasVista' => $produccionIntelectualMasVista, 'valor' => $valor, 'tamano' => $tamano));
     }
 
     public function VerAction($id) {

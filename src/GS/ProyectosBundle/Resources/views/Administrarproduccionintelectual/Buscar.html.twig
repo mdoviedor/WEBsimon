@@ -28,10 +28,10 @@
 {% block submenuizquierdo %}  
 <div class="form-inline">
     <div class="form-group">
-        <input type="search" class="form-control">
+        <input type="search" value="{{valor}}" class="form-control" id="campoBuscar" name="campoBuscar">
     </div>
     <div class="form-group">
-        <button type="button" class="btn btn-default btn-sm">
+        <button type="button" class="btn btn-default btn-sm" id="botonBuscar" name="botonBuscar">
             <span class="glyphicon glyphicon-search"> Buscar</span> 
         </button>
     </div>
@@ -40,18 +40,102 @@
 
 {% block contenido %}
 <br>
-<div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-8">  
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="collapsed">
+                    Filtros
+                </a>
+            </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse">
+            <div class="panel-body">
 
+                <form class="form-inline" id="formularioBuscarProduccion" name="formularioBuscarProduccion" rol="form" action="#" enctype="multipart/form-data" method="post">
 
-    </div>
-    <div class="col-xs-6 col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="campoTitulo">Título: </label>
+                                <input class="form-control" name="campoTitulo" id="campoTitulo">
+                                <p class="help-block">Título de la producción.</p>                        
+                            </div>
+                        </div>
+                    </div>                    
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="listaTipoProduccion">Tipo de Producción: </label>
+                                <select id="listaTipoProduccion" name="listaTipoProduccion" class="form-control">
+                                    <option value="0">Seleccionar</option>
+                                    {%for tipo in tipoProduccion%}
+                                    <option value="{{ tipo.idtipoproduccion }}"> {{ tipo.nombre }}</option>
+                                    {% endfor %}                        
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="campoPrimerNombre">Primer Nombre: </label>
+                                <input class="form-control" name="campoPrimerNombre" id="campoPrimerNombre">
+                                <p class="help-block">Primer nombre del autor.</p> 
+
+                            </div>
+                            <div class="form-group">
+                                <label for="campoSegundoNombre"> Primer Apellido: </label>
+                                <input class="form-control" name="campoSegundoNombre" id="campoSegundoNombre" >
+                                <p class="help-block">Primer apellido del autor.</p> 
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="fechaDesde">Desde: </label>
+                                <input type="date" class="form-control" id="fechaDesde" name="fechaDesde">
+                                <p class="help-block"> Formato de la fecha: DD/MM/AAAA</p> 
+                            </div>
+                            <div class="form-group">
+                                <label for="fechaHasta">Hasta: </label>
+                                <input type="date" class="form-control" id="fechaHasta" name="fechaHasta">
+                                <p class="help-block"> Formato de la fecha: DD/MM/AAAA</p> 
+                            </div>
+                        </div>
+                    </div>
+                    {#
+              
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+
+                            <div class="checkbox">
+                                <label for="destacado">
+                                    <input type="checkbox" id="destacado" name="destacado"value="true"> Producción destacada 
+                                </label>                    
+                            </div>                            
+                        </div>
+                    </div>
+#}
+                    <br>
+                    <div style="text-align: right">
+                        <button type="submit" id="botonBuscarFiltro" name="botonBuscarFiltro" class="btn btn-primary" >
+                            <span class="glyphicon glyphicon-search"> Buscar</span> 
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
 
 
     </div>
 </div>
-<div id="produccion">
-    <table class="table table-hover">
+<div id="catalogoBibliografico">
+    <table class="table table-hover table-condensed table-striped">
         <thead>
             <tr align="center">
                 <th>
@@ -128,7 +212,8 @@
     </table>
 </div>
 <select class="center-block" id="listaTamano" name="listaTamano">  
-    <option>Seleccionar</option>
+    <option value="{{limite}}">{{limite}}</option>
+    <option value="1">1</option>
     <option value="5">5</option>
     <option value="10">10</option>
     <option value="20">20</option>
@@ -216,6 +301,18 @@
         btnModalEliminarProduccionIntelectual = $('#botonModalEliminarProduccionIntelectual');
         btnModalEliminarProduccionIntelectual.click(modalEliminarProduccionIntelectual);
 
+        var btn;
+        btn = $('#botonBuscar');
+        btn.click(buscar);
+
+        var btnFiltro;
+        btnFiltro = $('#botonBuscarFiltro');
+        btnFiltro.click(buscarFiltro);
+
+        var sltTamano;
+        sltTamano = $('#listaTamano');
+        sltTamano.change(buscarFiltroTamano);
+
     }
 
     function  modalEliminarProduccionIntelectual() {
@@ -252,6 +349,116 @@
             url = "{{ path('gs_proyectos_produccionintelectual_modificar', {'id': 'text'}) }}";
             url = url.replace("text", rtProduccionIntelectual);
             window.open(url, '_self');
+        }
+    }
+
+    function buscar() {
+        var parametro;
+        var tamano;
+        parametro = $('#campoBuscar').val();
+        tamano = $('#listaTamano').val();
+        if (parametro == "" || parametro == null) {
+            parametro = 'XXX';
+        }
+        var url;
+        url = "{{ path('gs_proyectos_produccionintelectual_buscar', {'parametro': 'text1'}) }}";
+        url = url.replace("text1", parametro);
+        //url = url.replace("text", tamano);
+        window.open(url, '_self');
+
+    }
+    function buscarFiltro() {
+        $('#campoBuscar').val("");
+        var formulario;
+        formulario = $('#formularioBuscarProduccion');
+        var url;
+        url = "{{ path('gs_consultas_produccionintelectual_busquedaavanzadaadministrador')}}";
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            contentType: "application/x-www-form-urlencoded",
+            data: formulario.serialize(),
+            beforeSend: inicioEnvio,
+            success: function(data)
+            {
+                $('#catalogoBibliografico').html(data);
+            },
+            timeout: 4000,
+            error: problemas
+        });
+        return false;
+    }
+
+    function inicioEnvio()
+    {
+        var x = $("#catalogoBibliografico");
+        x.html('Cargando ...');
+    }
+    function problemas()
+    {
+        $("#catalogoBibliografico").text('Problemas en el servidor. Intentelo de nuevo.');
+    }
+    function buscarFiltroTamano() {
+
+        var primerNombre;
+        var segundoNombre;
+        var titulo;
+        var tipoProduccion;
+        var tamano;
+        var parametro;
+        var desde;
+        var hasta;
+        parametro = $('#campoBuscar').val();
+        primerNombre = $('#campoPrimerNombre').val();
+        segundoNombre = $('#campoSegundoNombre').val();
+        titulo = $('#campoTitulo').val();
+        tipoProduccion = $('#listaTipoProduccion').val();
+        desde = $('#fechaDesde').val();
+        hasta = $('#fechaHasta').val();
+        tamano = $('#listaTamano').val();
+
+
+        if ((parametro == "" || parametro == null) && (primerNombre == "" || primerNombre == null) &&
+                (segundoNombre == "" || segundoNombre == null) && (titulo == "" || titulo == null) && (desde == "" || desde == null)
+                && (hasta == "" || hasta == null) && (tipoProduccion == 0)) {
+
+            var url;
+            url = "{{ path('gs_proyectos_produccionintelectual_buscar', {'limite':'text'}) }}";
+            url = url.replace("text", tamano);
+            window.open(url, '_self');
+
+        }
+        else {
+
+            if (parametro == "" || parametro == null) {
+                var formulario;
+                formulario = $('#formularioBuscarProduccion');
+                var url;
+                url = "{{ path('gs_consultas_produccionintelectual_busquedaavanzadaadministrador', {'limite':'text'}) }}";
+                url = url.replace("text", tamano);
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    contentType: "application/x-www-form-urlencoded",
+                    data: formulario.serialize(),
+                    beforeSend: inicioEnvio,
+                    success: function(data)
+                    {
+                        $('#catalogoBibliografico').html(data);
+                    },
+                    timeout: 4000,
+                    error: problemas
+                });
+                return false;
+            } else {
+                var url;
+                url = "{{ path('gs_proyectos_produccionintelectual_buscar', {'limite':'text','parametro': 'text1'}) }}";
+                url = url.replace("text1", parametro);
+                url = url.replace("text", tamano);
+                window.open(url, '_self');
+            }
         }
     }
 

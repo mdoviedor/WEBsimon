@@ -1,54 +1,76 @@
 
-<table class="table table-hover table-striped table-condensed">
-    <thead>
-        <tr>
-            <th>Seleccionar</th>
-            <th>Titulo</th>
-            <th>Tipo de produccion intelectual</th>
-            <th>Autor(es)</th>
-            <th>Director(es)</th>
-            <th>Codirector(es)</th>
-            <th>Estado</th>
-            <th>Fecha de Registro</th>
-        </tr>
-    </thead>
-    <tbody>
-        {%for produccionIntelectual in produccionesIntelectuales %}
-        <tr>
-            <td>
-                <input type="radio" name="busquedaProduccionintelectual" value="" required="true">
-            </td>
-            <td>
-                {{ produccionIntelectual.titulo}} 
-            </td>
-            <td>
-                {{ produccionIntelectual.tipoproduccion.nombre }} 
-            </td>
-            <td>
-                {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccionIntelectual.tema.idtema , 'funcion': '1' })) }}    
-            </td>
-            <td>
-                {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccionIntelectual.tema.idtema , 'funcion': '3' })) }}    
-            </td>
-              <td>
-                {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccionIntelectual.tema.idtema , 'funcion': '2' })) }}    
-            </td>
-            <td>
-                {%if produccionIntelectual.tema.estado%}
-                <a type="submit"  href="{{path('gs_proyectos_produccionintelectual_habilitartema',{'id': produccionIntelectual.idproduccionintelectual}) }}">
-                    <span class="glyphicon glyphicon-ok-circle" ></span></a>
+ <table class="table table-hover table-condensed table-striped">
+        <thead>
+            <tr align="center">
+                <th>
+
+                </th>
+                <th> 
+                    Titulo
+                </th>
+                <th>
+                    Tema
+                </th>
+                <th>
+                    Autor(es)
+                </th>
+                <th>
+                    Codirector(es)
+                </th>
+                <th>
+                    Director(es)
+                </th>
+                <th>
+                    Tipo de Producción
+                </th>
+                <th>
+                    Estado Tema
+                </th>
+                <td>
+                    Descargar
+                </td>
+            </tr>
+
+        </thead>
+        <tbody>
+    {%for produccion in produccionIntelectual%}
+            <tr>
+                <td>
+                    <input type="radio" id="radioProduccionIntelectual" name="radioProduccionIntelectual" value="{{ produccion.idproduccionintelectual }}">
+                </td>
+                <td>
+                {{ produccion.titulo  }}
+                </td>
+                <td>
+                {{ produccion.tema.titulo  }}
+                </td>
+                <td>
+                {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '1' })) }}
+                </td>
+                <td>
+               {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '2' })) }}
+                </td>
+                <td>
+                 {{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': produccion.tema.idtema , 'funcion': '3' })) }}
+                </td>
+                <td>
+                {{ produccion.tipoproduccion.nombre }}
+                </td>
+                <td >
+                 {%if produccion.tema.estado%}
+                    <a type="submit"  href="{{path('gs_proyectos_produccionintelectual_habilitartema',{'id': produccion.idproduccionintelectual}) }}">
+                        <span class="glyphicon glyphicon-ok-circle" ></span></a>
                 {%else%}
-                <a type="submit"  href="{{path('gs_proyectos_produccionintelectual_habilitartema',{'id': produccionIntelectual.idproduccionintelectual}) }}">
-                    <span class="glyphicon glyphicon-remove-circle"></span></a>
+                    <a type="submit"  href="{{path('gs_proyectos_produccionintelectual_habilitartema',{'id': produccion.idproduccionintelectual}) }}">
+                        <span class="glyphicon glyphicon-remove-circle"></span></a>
                 {%endif%}
-            </td>
-            <td>
-               {{ produccionIntelectual.fecharegistro | date("m/d/Y")}} 
-            </td>
-            <td>
-                <a href="#">Ver más</a>
-            </td>
-        </tr>
+
+                </td>
+                <td>
+                    <a href="{{ asset(produccion.archivo~produccion.nombre~'.zip')}}">Ver</a>
+                </td>
+            </tr>
         {% endfor %}
-    </tbody>
-</table>
+
+        </tbody>
+    </table>

@@ -13,7 +13,7 @@
 {% block submenuizquierdo %}  
 <div class="form-inline">
     <div class="form-group">
-        <input type="search" class="form-control" id="campoBuscar" name="campoBuscar">
+        <input type="search" value="{{valor}}"class="form-control" id="campoBuscar" name="campoBuscar">
     </div>
     <div class="form-group">
         <button type="submit" id="botonBuscar" name="botonBuscar" class="btn btn-default btn-sm">
@@ -163,7 +163,8 @@
     </table>
 </div>   
 <select class="center-block" id="listaTamano" name="listaTamano">
-    <option value="1">1</option> 
+    <option value="{{tamano}}">{{tamano}}</option> 
+    <option value="1">1</option>
     <option value="5">5</option>
     <option value="30">30</option>
     <option value="60">60</option>
@@ -301,13 +302,14 @@
             parametro = 'XXX';
         }
         var url;
-        url = "{{ path('gs_contenidos_produccionintelectual_buscar', {'tamano':'text','parametro': 'text1'}) }}";
+        url = "{{ path('gs_contenidos_produccionintelectual_buscar', {'parametro': 'text1'}) }}";
         url = url.replace("text1", parametro);
-        url = url.replace("text", tamano);
+        // url = url.replace("text", tamano);
         window.open(url, '_self');
 
     }
     function buscarFiltro() {
+        $('#campoBuscar').val("");
         var formulario;
         formulario = $('#formularioBuscarProduccion');
         var url;

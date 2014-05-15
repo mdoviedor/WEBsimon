@@ -14,11 +14,50 @@ class ConsultasProduccionintelectualController extends Controller {
      * Implementada en la plantilla Busqueda avanzada
      */
 
-    public function BusquedaavanzadaAction($estado, $titulo, $tipoproduccion, $numeroresultados, $primernombre, $primerapellido) {
+    public function BusquedaavanzadaAction(Request $request, $limite) {
+        $estado = true;
         $produccionIntelectual = new Produccionintelectual(); // objeto del Modelo Produccionintelectual
-        $em = $this->getDoctrine()->getEntityManager();
-        $produccionIntelectual = $em->getRepository('GSConsultasBundle:Produccionintelectual')->busquedaAvanzada($estado, $titulo, $tipoproduccion, $numeroresultados, $primernombre, $primerapellido);
-        return $this->render('GSConsultasBundle:ConsultasProduccionintelectual:Busquedaavanzada.html.twig', array('produccionesIntelectuales' => $produccionIntelectual));
+        $em = $this->getDoctrine()->getManager();
+        /*
+         * Asignacion de los campos recibidos del formulario a
+         * las variables.
+         */
+        $numeroresultados = $limite;
+
+        $primernombre = $request->request->get('campoPrimerNombre', 'null');
+        $primerapellido = $request->request->get('campoSegundoNombre', 'null');
+        $titulo = $request->request->get('campoTitulo', 'null');
+        $tipoproduccion = $request->request->get('listaTipoProduccion', 'null');
+        $desde = $request->request->get('fechaDesde', 'null');
+        $hasta = $request->request->get('fechaHasta', 'null');
+        //$destacado = $request->request->get('destacado', 'XXX');
+
+        if (!$titulo) {
+            $titulo = "XXXXXXX";
+        }
+        if (!$primerapellido) {
+            $primerapellido = "XXXXXXX";
+        }
+        if (!$primernombre) {
+            $primernombre = "XXXXXXX";
+        }
+        if (!$tipoproduccion) {
+            $tipoproduccion = "XXXXXXX";
+        }
+        if (!$desde) {
+            $desde = '1000-07-08';
+        }
+        if (!$hasta) {
+            $hasta = '1100-07-08';
+        }
+        $produccionIntelectual = $em->getRepository('GSConsultasBundle:Produccionintelectual')->busquedaAvanzada(
+                $estado, $titulo, $tipoproduccion, $numeroresultados, $primernombre, $primerapellido, $desde, $hasta);
+
+        if (!$produccionIntelectual) {
+            echo '<div class="alert alert-info"><b>No se encontro ningun resultado.</b> Intentelo de nuveo.</div>';
+        }
+
+        return $this->render('GSConsultasBundle:ConsultasProduccionintelectual:Busquedaavanzada.html.twig', array('produccionIntelectual' => $produccionIntelectual));
     }
 
     /*
@@ -33,6 +72,7 @@ class ConsultasProduccionintelectualController extends Controller {
         $produccionIntelectual = new Produccionintelectual();
         $em = $this->getDoctrine()->getManager();
         $numeroresultados = $limite;
+
         /*
          * Asignacion de los campos recibidos del formulario a
          * las variables.
@@ -65,14 +105,13 @@ class ConsultasProduccionintelectualController extends Controller {
         }
         $produccionIntelectual = $em->getRepository('GSConsultasBundle:Produccionintelectual')->busquedaAvanzada(
                 $estado, $titulo, $tipoproduccion, $numeroresultados, $primernombre, $primerapellido, $desde, $hasta);
-        
-         if(!$produccionIntelectual){
+
+        if (!$produccionIntelectual) {
             echo '<div class="alert alert-info"><b>No se encontro ningun resultado.</b> Intentelo de nuveo.</div>';
-        }  
-        
+        }
+
         return $this->render('GSConsultasBundle:ConsultasProduccionintelectual:Busquedaavanzadacomunidad.html.twig', array(
                     'produccionesIntelectuales' => $produccionIntelectual));
-        
     }
 
     public function VistaperfilAction($id, $limite) {
