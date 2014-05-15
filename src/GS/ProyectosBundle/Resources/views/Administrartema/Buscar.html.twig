@@ -36,7 +36,7 @@
 {% block submenuizquierdo %}  
 <div class="form-inline">
     <div class="form-group">
-        <input type="search" class="form-control" id="campoBuscar" name="campoBuscar">
+        <input type="search" value="{{ valor }}" class="form-control" id="campoBuscar" name="campoBuscar">
     </div>
     <div class="form-group">
         <button type="button" class="btn btn-default btn-sm" id="botonBuscar" name="botonBuscar">
@@ -62,17 +62,18 @@
         <div id="collapseOne" class="panel-collapse collapse">
             <div class="panel-body">
 
-                <form class="form-inline" id="formularioBuscarProduccion" name="formularioBuscarProduccion" rol="form" action="#" enctype="multipart/form-data" method="post">
+                <form class="form-inline" id="formulario" name="formulario" rol="form" action="{{ path('gs_consultas_tema_busquedaavanzada')}}" method="post">
 
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="form-group">
                                 <label for="campoTitulo">Título: </label>
                                 <input class="form-control" name="campoTitulo" id="campoTitulo">          
-                                <label for="checkEstado">Estado: </label>   
-                                <div class="checkbox">
-                                    <input type="checkbox" value="true" id="checkEstado" name="checkEstado">
-                                </div>
+                                <label> Disponible: </label>   
+                                <input type="radio" id="radioEstadoTema" name="radioEstadoTema" value="1" >
+                                <label>No Disponible: </label>   
+                                <input type="radio" id="radioEstadoTema" name="radioEstadoTema" value="0" >  
+
                             </div>
                         </div>
                     </div>                
@@ -139,6 +140,7 @@
 
 <select class="center-block" id="listaTamano" name="listaTamano">  
     <option>Seleccionar</option>
+    <option value="1">1</option>
     <option value="5">5</option>
     <option value="10">10</option>
     <option value="20">20</option>
@@ -377,10 +379,88 @@
             parametro = 'XXX';
         }
         var url;
-        url = "{{ path('gs_proyectos_desarrollarproduccionintelectual_catalogobibliografico', {'parametro': 'text1'}) }}";
+        url = "{{ path('gs_proyectos_tema_buscar', {'parametro': 'text1'}) }}";
         url = url.replace("text1", parametro);
         window.open(url, '_self');
 
+    }
+
+    function buscarFiltro() {
+         campoBuscar = $('#campoBuscar').val("");
+        
+        var formulario;
+        formulario = $('#formulario');
+        var url;
+        url = "{{ path('gs_consultas_tema_busquedaavanzada')}}";
+        $.ajax({
+            type: "POST",
+            url: url,
+            contentType: "application/x-www-form-urlencoded",
+            data: formulario.serialize(),
+            beforeSend: inicioEnvio,
+            success: function(data)
+            {
+                $('#temas').html(data);
+            },
+            timeout: 4000,
+            error: problemas
+        });
+        return false;
+    }
+    function inicioEnvio()
+    {
+        var x = $("#temas");
+        x.html('Cargando ...');
+    }
+    function problemas()
+    {
+        $("#temas").text('Problemas en el servidor. Intentelo de nuevo.');
+    }
+
+    function buscarFiltroTamano() {
+        var titulo;
+        var estado;
+        var tamano;
+        var campoBuscar;
+        campoBuscar = $('#campoBuscar').val();
+        titulo = $('#campoTitulo').val();
+        estado = $('#radioEstadoTema:checked').val();
+        tamano = $('#listaTamano').val();
+        if ((titulo == "" || titulo == null) && (estado == "" || estado == null) && (campoBuscar == "" || campoBuscar == null)) {
+            var url;
+            url = "{{ path('gs_proyectos_tema_buscar', {'limite': 'text'}) }}";
+            url = url.replace("text", tamano);
+            window.open(url, '_self');
+        } else {
+            if (campoBuscar == "" || campoBuscar == null) {
+                var formulario;
+                formulario = $('#formulario');
+                var url;
+                url = "{{ path('gs_consultas_tema_busquedaavanzada',{'limite':'text4'})}}";
+                url = url.replace("text4", tamano);
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    contentType: "application/x-www-form-urlencoded",
+                    data: formulario.serialize(),
+                    beforeSend: inicioEnvio,
+                    success: function(data)
+                    {
+                        $('#temas').html(data);
+                    },
+                    timeout: 4000,
+                    error: problemas
+                });
+                return false;
+            } else {
+                var url;
+                url = "{{ path('gs_proyectos_tema_buscar', {'limite': 'text','parametro':'text1'}) }}";
+                url = url.replace("text", tamano);
+                url = url.replace("text1", campoBuscar);
+               window.open(url, '_self');
+                //window.open(url, '_self');
+            }
+        }
     }
 
 </script>

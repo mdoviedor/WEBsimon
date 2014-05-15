@@ -33,6 +33,10 @@ class ConsultasProduccionintelectualController extends Controller {
         $produccionIntelectual = new Produccionintelectual();
         $em = $this->getDoctrine()->getManager();
         $numeroresultados = $limite;
+        /*
+         * Asignacion de los campos recibidos del formulario a
+         * las variables.
+         */
         $primernombre = $request->request->get('campoPrimerNombre', 'null');
         $primerapellido = $request->request->get('campoSegundoNombre', 'null');
         $titulo = $request->request->get('campoTitulo', 'null');

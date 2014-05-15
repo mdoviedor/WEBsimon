@@ -17,8 +17,8 @@ gs_proyectos_tema_eliminar:
     defaults: { _controller: GSProyectosBundle:Administrartema:Eliminar }
 
 gs_proyectos_tema_buscar:
-    pattern: administrador/administrarTema/{tamano}.{parametro}
-    defaults: { _controller: GSProyectosBundle:Administrartema:Buscar, tamano: 30, parametro: XXX }
+    pattern: administrador/administrarTema/{limite}.{parametro}
+    defaults: { _controller: GSProyectosBundle:Administrartema:Buscar, limite: 30, parametro: XXX }
 #Se pasa el idtema correspondiente al modelo Tema
 gs_proyectos_tema_asignarsuario:
     pattern: administrador/administrarTema/asignarUsuario/{tema}

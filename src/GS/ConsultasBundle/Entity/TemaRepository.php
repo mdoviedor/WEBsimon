@@ -16,7 +16,7 @@ class TemaRepository extends EntityRepository {
 
      */
 
-    public function busquedaAvanzada($titulo, $estado, $numeroResultados) {
+    public function busquedaAvanzada($titulo, $estado, $limite) {
         $em = $this->getEntityManager();
 
         $dql = "select t
@@ -26,7 +26,7 @@ class TemaRepository extends EntityRepository {
         $query = $em->createQuery($dql);
         $query->setParameter('titulo', '%' . $titulo . '%');
         $query->setParameter('estado', $estado);
-        $query->setMaxResults($numeroResultados);
+        $query->setMaxResults($limite);
         $temas = $query->getResult();
 
         return $temas;

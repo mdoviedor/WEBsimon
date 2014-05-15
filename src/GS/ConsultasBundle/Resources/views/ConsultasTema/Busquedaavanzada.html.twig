@@ -1,45 +1,44 @@
-{% extends "::base.html.twig" %}
-{% block body %}  
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>Seleccionar</th>
-            <th>Titulo del tema</th>
-            <th>Estado</th>
-            <th>Id</th>    
-        </tr>
-    </thead>
-    <tbody>
-        {%for tema in temas %}
-        <tr>
-            <td>
-                <input type="radio" name="busquedaTema" value="{{ tema.idtema }}" required="true">
-            </td>
-            <td>
-                {{ tema.titulo }} 
-            </td>
-            <td>
-                {{ tema.estado }} 
-            </td>
-            <td>
-                {{ tema.idtema }} 
-            </td>
-            <td>
-                {% spaceless %}
-                <a href="{{
-                   path(
-                      'gs_consultas_tema_vermas',
-                     { 'titulo': tema.titulo,
-                       'estado': tema.estado,
-                       }
-                   )
-                  }}">
-                   Ver mas
-                </a>
-                {% endspaceless %}
-            </td>
-        </tr>   
-        {% endfor %}
-    </tbody>
-</table>
-{% endblock%} 
+
+ <table class="table table-hover table-condensed table-striped">
+        <thead>
+            <tr>
+                <th>
+
+                </th>
+                <th>
+                    Titulo
+                </th>
+                <th>
+                    Estado
+                </th>
+                <th>
+                    Fecha Registro
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        {%for tema in temas%}
+            <tr>
+                <td>
+                    <input type="radio" name="radioTema" id="radioTema" value="{{ tema.idtema }}">
+
+                </td>
+                <td>
+                {{ tema.titulo }}
+                </td>
+                <td>
+
+                {%if tema.estado %}
+                    Disponible
+                 {%else%}
+                    No Disponible
+                 {%endif%}
+                </td>
+                <td>
+                {{ tema.fecharegistro | date('M-Y')}}
+                </td>
+            </tr>
+        {%endfor%}
+        </tbody>
+
+    </table>

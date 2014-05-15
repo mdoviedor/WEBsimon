@@ -11,8 +11,8 @@ gs_consultas_usuario_vermas:
     defaults: { _controller: GSConsultasBundle:Consultasusuario:Vermas }
 
 gs_consultas_tema_busquedaavanzada:
-    pattern: consultas/tema/busquedaAvanzada/{titulo}.{estado}.{numeroresultados}
-    defaults: { _controller: GSConsultasBundle:ConsultasTema:Busquedaavanzada }
+    pattern: consultas/tema/busquedaAvanzada/{limite}
+    defaults: { _controller: GSConsultasBundle:ConsultasTema:Busquedaavanzada, limite: 30 }
     
 gs_consultas_tema_vermas:
     pattern: consultas/tema/vermas/{titulo}.{estado}

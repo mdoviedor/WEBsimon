@@ -119,15 +119,21 @@ class AdministrartemaController extends Controller {
         return $this->redirect($this->generateUrl('gs_proyectos_tema_buscar'));
     }
 
-    public function BuscarAction($tamano, $parametro) {
+    /*
+     * Recibe el parametro de busqueda para el tema. 
+     */
+
+    public function BuscarAction($limite, $parametro) {
         $em = $this->getDoctrine()->getManager();
         $tema = new Tema();
+        $valor = null; //Variable correspondiente al parametro si existe, para llenar nuevamente el campo de busqueda
         if ($parametro == "XXX") {
-            $tema = $em->getRepository('GSProyectosBundle:Tema')->findBY(array(), array('idtema' => 'DESC'), $tamano);
+            $tema = $em->getRepository('GSProyectosBundle:Tema')->findBY(array(), array('idtema' => 'DESC'), $limite);
         } else {
-            
+            $tema = $em->getRepository('GSProyectosBundle:Tema')->buscarTema($parametro, $limite);
+            $valor = $parametro;
         }
-        return $this->render('GSProyectosBundle:Administrartema:buscar.html.twig', array('tema' => $tema));
+        return $this->render('GSProyectosBundle:Administrartema:buscar.html.twig', array('tema' => $tema, 'valor' => $valor));
     }
 
     /*
