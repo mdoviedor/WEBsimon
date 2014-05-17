@@ -190,6 +190,7 @@ class AdministrarproduccionintelectualController extends Controller {
             $produccionIntelectual = $em->getRepository('GSProyectosBundle:Produccionintelectual')->findBy(array(), array('tema' => 'DESC', 'fecharegistro' => 'DESC'), $limite);
         } else {
             $valor = $parametro;
+            $produccionIntelectual = $em->getRepository('GSProyectosBundle:Produccionintelectual')->buscarProduccionParametro($limite, $parametro);
         }
         $tipoProduccion = $em->getRepository('GSProyectosBundle:Tipoproduccion')->findAll();
 

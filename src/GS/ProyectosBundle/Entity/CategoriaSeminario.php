@@ -10,14 +10,14 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="categoria_seminario", indexes={@ORM\Index(name="categoriaSeminario_categoriaSeminario_idx", columns={"categoriaPublicacion"}), @ORM\Index(name="seminario_categoriaSeminario_idx", columns={"seminario"})})
  * @ORM\Entity
  */
-class CategoriaSeminario
-{
+class CategoriaSeminario {
+
     /**
+     * 
      * @var string
      *
      * @ORM\Column(name="idcategoria_seminario", type="string", length=10, nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Id     
      */
     private $idcategoriaSeminario;
 
@@ -41,16 +41,25 @@ class CategoriaSeminario
      */
     private $seminario;
 
-
-
     /**
      * Get idcategoriaSeminario
      *
      * @return string 
      */
-    public function getIdcategoriaSeminario()
-    {
+    public function getIdcategoriaSeminario() {
         return $this->idcategoriaSeminario;
+    }
+
+    /**
+     * Set idcategoriaSeminario
+     *
+     * @param string idcategoriaSeminario
+     * @return CategoriaSeminario
+     */
+    public function setIdcategoriaSeminario($idcategoriaSeminario) {
+        $this->idcategoriaSeminario = $idcategoriaSeminario;
+
+        return $this;
     }
 
     /**
@@ -59,8 +68,7 @@ class CategoriaSeminario
      * @param \GS\ProyectosBundle\Entity\Categoriapublicacion $categoriapublicacion
      * @return CategoriaSeminario
      */
-    public function setCategoriapublicacion(\GS\ProyectosBundle\Entity\Categoriapublicacion $categoriapublicacion = null)
-    {
+    public function setCategoriapublicacion(\GS\ProyectosBundle\Entity\Categoriapublicacion $categoriapublicacion = null) {
         $this->categoriapublicacion = $categoriapublicacion;
 
         return $this;
@@ -71,8 +79,7 @@ class CategoriaSeminario
      *
      * @return \GS\ProyectosBundle\Entity\Categoriapublicacion 
      */
-    public function getCategoriapublicacion()
-    {
+    public function getCategoriapublicacion() {
         return $this->categoriapublicacion;
     }
 
@@ -82,8 +89,7 @@ class CategoriaSeminario
      * @param \GS\ProyectosBundle\Entity\Seminario $seminario
      * @return CategoriaSeminario
      */
-    public function setSeminario(\GS\ProyectosBundle\Entity\Seminario $seminario = null)
-    {
+    public function setSeminario(\GS\ProyectosBundle\Entity\Seminario $seminario = null) {
         $this->seminario = $seminario;
 
         return $this;
@@ -94,8 +100,8 @@ class CategoriaSeminario
      *
      * @return \GS\ProyectosBundle\Entity\Seminario 
      */
-    public function getSeminario()
-    {
+    public function getSeminario() {
         return $this->seminario;
     }
+
 }

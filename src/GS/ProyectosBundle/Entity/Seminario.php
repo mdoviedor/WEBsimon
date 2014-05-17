@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Seminario
  *
  * @ORM\Table(name="seminario", indexes={@ORM\Index(name="prioridad_seminario_idx", columns={"prioridad"}), @ORM\Index(name="usuario_seminario_idx", columns={"usuario"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="GS\ProyectosBundle\Entity\SeminarioRepository")
  */
 class Seminario
 {

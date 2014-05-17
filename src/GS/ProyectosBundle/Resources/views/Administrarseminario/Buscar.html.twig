@@ -23,21 +23,19 @@
 {% block submenuizquierdo %}  
 <div class="form-inline">
     <div class="form-group">
-        <input type="search" class="form-control">
+        <input  type="search" value="{{valor}}" class="form-control" id="campoBuscar" name="campoBuscar">
     </div>
     <div class="form-group">
-        <button type="button" class="btn btn-default btn-sm">
+        <button type="button" class="btn btn-default btn-sm" id="botonBuscar" name="botonBuscar">
             <span class="glyphicon glyphicon-search"> Buscar</span> 
         </button>
     </div>
 </div>
+<p class="help-block">Título o año de realización del seminario.</p>
 {% endblock %}
 
 
 {% block contenido %}
-<br>
-<br>
-
 <table class="table table-hover table-condensed table-striped">
     <thead>
         <tr>
@@ -99,7 +97,7 @@
 </table>
 
 <select class="center-block" id="listaTamano" name="listaTamano">  
-    <option>Seleccionar</option>
+    <option value="{{limite}}">{{limite}}</option>
     <option value="5">5</option>
     <option value="10">10</option>
     <option value="20">20</option>
@@ -181,6 +179,19 @@
         btnModalEliminarSeminario = $('#botonModalEliminarSeminario');
         btnModalEliminarSeminario.click(modalEliminarSeminario);
 
+        /*
+         * Buscar
+         */
+
+        var btn;
+        btn = $('#botonBuscar');
+        btn.click(buscar);
+
+        var sltTamano;
+        sltTamano = $('#listaTamano');
+        sltTamano.change(buscarFiltroTamano);
+
+
 
 
     }
@@ -219,6 +230,63 @@
             url = "{{ path('gs_proyectos_seminarios_modificar', {'id': 'text'}) }}";
             url = url.replace("text", rtSeminario);
             window.open(url, '_self');
+        }
+    }
+
+    function buscar() {
+        var campoBuscar;
+        var tamano;
+        campoBuscar = $('#campoBuscar').val();
+        tamano = $('#listaTamano').val();
+        if (campoBuscar == "" || campoBuscar == null) {
+            campoBuscar = 'XXX';
+        }
+        var url;
+        url = "{{ path('gs_proyectos_seminarios_buscar', {'parametro':'text1'}) }}";
+        url = url.replace("text1", campoBuscar);
+        window.open(url, '_self');
+    }
+    
+    function buscarFiltroTamano() {    
+        var campoBuscar;
+        var tamano;
+        campoBuscar = $('#campoBuscar').val();
+        tamano = $('#listaTamano').val();
+        if ((campoBuscar == "" || campoBuscar == null)) {
+            var url;
+            url = "{{ path('gs_proyectos_seminarios_buscar', {'limite': 'text'}) }}";
+            url = url.replace("text", tamano);
+            window.open(url, '_self');
+        } else {
+            if (campoBuscar == "" || campoBuscar == null) {
+                /*
+                var formulario;
+                formulario = $('#formularioBuscarUsuario');
+                var url;
+                url = "{{ path('gs_consultas_usuario_busquedaavanzada',{'numeroresultados':'text4'})}}";
+                url = url.replace("text4", tamano);
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    contentType: "application/x-www-form-urlencoded",
+                    data: formulario.serialize(),
+                    beforeSend: inicioEnvio,
+                    success: function(data)
+                    {
+                        $('#usuarios').html(data);
+                    },
+                    timeout: 4000,
+                    error: problemas
+                });
+                return false;
+                */
+            } else {
+                var url;
+                url = "{{ path('gs_proyectos_seminarios_buscar', {'limite': 'text','parametro':'text1'}) }}";
+                url = url.replace("text", tamano);
+                url = url.replace("text1", campoBuscar);
+                window.open(url, '_self');
+            }
         }
     }
 

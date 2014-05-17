@@ -50,7 +50,7 @@ class ConsultasProduccionintelectualController extends Controller {
         if (!$hasta) {
             $hasta = '1100-07-08';
         }
-        $produccionIntelectual = $em->getRepository('GSConsultasBundle:Produccionintelectual')->busquedaAvanzada(
+        $produccionIntelectual = $em->getRepository('GSConsultasBundle:Produccionintelectual')->busquedaAvanzadaAdministrador(
                 $estado, $titulo, $tipoproduccion, $numeroresultados, $primernombre, $primerapellido, $desde, $hasta);
 
         if (!$produccionIntelectual) {

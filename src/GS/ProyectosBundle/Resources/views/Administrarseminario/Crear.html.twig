@@ -45,6 +45,16 @@
         {{ form_widget(formSeminario.fecha) }} 
             </div>
 
+            <div class="form-group">
+                <label>Categoría</label>
+                 <br>
+                    {%for categoria in categoriaPublicacion %}               
+                 <input type="checkbox"  id="categoriaPublicacion" name="categoriaPublicacion[]" value="{{categoria.idcategoriapublicacion}}"> {{categoria.nombre}}
+                    {% endfor %}
+
+
+            </div>
+
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">

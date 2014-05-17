@@ -175,4 +175,19 @@ class IdentificadorFecha {
         }
     }
 
+    public function generarIdCategoriaSeminario($ultimoRegistro) {
+        if ($ultimoRegistro != null && $ultimoRegistro != "") {//Si no existe ningun registro previo en la base de datos
+            $variable = $ultimoRegistro; //Se pasa el valor del array
+            $ano = substr($variable, 0, 4); //Se separa el año del array
+            if ($ano == $this->ano) {
+                $consecutivo = $variable + 1; //Se suma uno al id
+                return $consecutivo;
+            } else {
+                return $this->ano . '000000'; //Si ha cambiado el año, empieza el consecutivo nuevamente en cero
+            }
+        } else {
+            return $this->ano . '000000'; //Registro inicial
+        }
+    }
+
 }

@@ -303,10 +303,13 @@ gs_proyectos_seminarios_modificar:
     pattern: administrador/administrarSeminarios/modificar/{id}
     defaults: { _controller: GSProyectosBundle:Administrarseminario:Modificar }
 
+#Se pasa el limite, correspondiente al numero de resultados que se esperan
+#y un parametro de busqueda del seminario. 
 gs_proyectos_seminarios_buscar:
-    pattern: administrador/administrarSeminarios/
-    defaults: { _controller: GSProyectosBundle:Administrarseminario:Buscar }
+    pattern: administrador/administrarSeminarios/{limite}.{parametro}
+    defaults: { _controller: GSProyectosBundle:Administrarseminario:Buscar, limite: 30, parametro: XXX }
 
+#Se pasa el idseminario correspondiente al modelo Seminario
 gs_proyectos_seminarios_eliminar:
     pattern: administrador/administrarSeminarios/eliminar/{id}
     defaults: { _controller: GSProyectosBundle:Administrarseminario:Eliminar }

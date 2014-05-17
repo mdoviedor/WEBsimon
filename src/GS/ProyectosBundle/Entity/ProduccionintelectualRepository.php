@@ -39,7 +39,7 @@ class ProduccionintelectualRepository extends EntityRepository {
 
     public function buscarProduccionParametro($tamano, $parametro) {
         return $this->getEntityManager()
-                        ->createQuery('SELECT u FROM GSProyectosBundle:Produccionintelectual u WHERE u.estado = true AND (u.titulo LIKE :titulo  OR u.palabrasclave LIKE :palabraclave)')
+                        ->createQuery('SELECT u FROM GSProyectosBundle:Produccionintelectual u WHERE  (u.titulo LIKE :titulo  OR u.palabrasclave LIKE :palabraclave)')
                         ->setParameter('titulo', '%' . $parametro . '%')
                         ->setParameter('palabraclave', '%' . $parametro . '%')
                         ->setMaxResults($tamano)
