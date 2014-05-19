@@ -15,7 +15,7 @@ class EspaciotrabajoType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('nombre', 'text', array(
-                    'label' => '* Nombre del espcio de trabajo: ',
+                    'label' => '* Nombre del espacio de trabajo: ',
                     'required' => true,
                     'attr' => array('class' => 'form-control')
                 ))

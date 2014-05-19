@@ -7,76 +7,143 @@
 {% endblock %}
 
 {% block submenuderecho %} 
-<form  action="{{ path('gs_proyectos_desarrollarproduccionintelectual_modificarbibliografia',{'id':idTema,'idbibliografia': idBibliografia}) }}" method="post" {{ form_enctype(formBibliografia) }}>
-    <button type="submit"  class="btn btn-success btn-xs" id="botonGuardar">
-        <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
-    </button>
-    <a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_desarrollarproduccionintelectual_vista',{'id':idTema})}}">
-        <span class="glyphicon glyphicon-log-out"></span> Salir
-    </a>
+
 {% endblock %}
 
 {% block contenido %}
 
+<form class="form-horizontal"  action="{{ path('gs_proyectos_desarrollarproduccionintelectual_modificarbibliografia',{'id':idTema,'idbibliografia': idBibliografia}) }}" method="post" {{ form_enctype(formBibliografia) }}>
+
+
+    <div class="row">
+        <div class="col-xs-6 col-md-4" style="border-color: #000;">
+
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-8" style="text-align: right;">           
+            <button type="submit"  class="btn btn-success btn-xs" id="botonGuardar">
+                <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
+            </button>
+            <a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="{{ path('gs_proyectos_desarrollarproduccionintelectual_vista',{'id':idTema})}}">
+                <span class="glyphicon glyphicon-log-out"></span> Salir
+            </a>
+        </div>
+    </div>
+    <br>
+
+    <div class="center-block" style="width: 800px;">
+    {% if mensaje and mensaje == '1' %}
+        <div class="alert alert-danger"><b>Mensaje.</b> El archivo que intenta cargar es incorrecto.</div>
+    {% else %}
+    {% endif %}
+
 {{ form_errors(formBibliografia) }}
-
-     {{ form_label(formBibliografia.tipoelementobibliografico) }}
+        <div class="form-group">
+     {{ form_label(formBibliografia.tipoelementobibliografico, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
      {{ form_errors(formBibliografia.tipoelementobibliografico) }}
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.tipoelementobibliografico) }}
-
-     {{ form_label(formBibliografia.categoria) }}
+            </div>
+        </div>
+        <div class="form-group">
+     {{ form_label(formBibliografia.categoria, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
      {{ form_errors(formBibliografia.categoria) }}
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.categoria) }}
-
-     {{ form_label(formBibliografia.areainvestigacion) }}
-     {{ form_errors(formBibliografia.areainvestigacion) }}
+            </div>
+        </div>
+        <div class="form-group">
+     {{ form_label(formBibliografia.areainvestigacion, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+     {{ form_errors(formBibliografia.areainvestigacion) }}  
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.areainvestigacion) }}
-
-     {{ form_label(formBibliografia.nombre) }}
+            </div>
+        </div>
+        <div class="form-group">
+     {{ form_label(formBibliografia.nombre, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
      {{ form_errors(formBibliografia.nombre) }}
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.nombre) }}
-
-     {{ form_label(formBibliografia.autores) }}
+                <p class="help-block">Nombre / Título / Título de la página.</p>
+            </div>
+        </div>
+        <div class="form-group">
+     {{ form_label(formBibliografia.autores, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
      {{ form_errors(formBibliografia.autores) }}
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.autores) }}
-
-     {{ form_label(formBibliografia.traduccion) }}
+            </div>
+        </div>
+        <div class="form-group">
+     {{ form_label(formBibliografia.traduccion, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
      {{ form_errors(formBibliografia.traduccion) }}
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.traduccion) }}
-
-     {{ form_label(formBibliografia.fechaedicion) }}
+            </div>
+        </div>
+        <div class="form-group">
+     {{ form_label(formBibliografia.fechaedicion, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
      {{ form_errors(formBibliografia.fechaedicion) }}
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.fechaedicion) }}
-
-     {{ form_label(formBibliografia.editorial) }}
+                <p class="help-block">Fecha de edición / Fecha de acceso Sitio WEB</p>
+            </div>
+        </div>
+        <div class="form-group">
+     {{ form_label(formBibliografia.editorial, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
      {{ form_errors(formBibliografia.editorial) }}
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.editorial) }}
-
-       {{ form_label(formBibliografia.ubicacion) }}
+                <p class="help-block">Editorial / Nombre de la Revista</p>
+            </div>
+        </div>
+        <div class="form-group">
+       {{ form_label(formBibliografia.ubicacion, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
      {{ form_errors(formBibliografia.ubicacion) }}
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.ubicacion  ) }}
-
-    {{ form_label(formBibliografia.resumen) }}
+                <p class="help-block">Ubicación / Páginas en las que aparece el artículo / URL</p>
+            </div>
+        </div>
+        <div class="form-group">
+    {{ form_label(formBibliografia.resumen, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
      {{ form_errors(formBibliografia.resumen) }}
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.resumen) }}
-
-    {{ form_label(formBibliografia.recomendacionesuso) }}
+            </div>
+        </div>
+        <div class="form-group">
+    {{ form_label(formBibliografia.recomendacionesuso, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
      {{ form_errors(formBibliografia.recomendacionesuso) }}
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.recomendacionesuso) }}
-
-      {{ form_label(formBibliografia.tablacontenido) }}
+            </div>
+        </div>
+        <div class="form-group">
+      {{ form_label(formBibliografia.tablacontenido, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
      {{ form_errors(formBibliografia.tablacontenido) }}
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.tablacontenido) }}
-
-      {{ form_label(formBibliografia.palabrasclave) }}
+            </div>
+        </div>
+        <div class="form-group">
+      {{ form_label(formBibliografia.palabrasclave, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
      {{ form_errors(formBibliografia.palabrasclave) }}
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.palabrasclave) }}    
-
-      {{ form_label(formBibliografia.archivo) }}
+            </div>
+        </div>
+        <div class="form-group">
+      {{ form_label(formBibliografia.archivo, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
      {{ form_errors(formBibliografia.archivo) }}
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.archivo) }}
+                <p class="help-block">Formato del archivo: zip</p>
+            </div>
+        </div>
+        <br>
 
 {{ form_rest(formBibliografia) }}
+    </div>
 
 </form> 
 

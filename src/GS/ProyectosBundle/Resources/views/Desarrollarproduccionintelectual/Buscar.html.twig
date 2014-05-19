@@ -6,22 +6,14 @@
 <h1>Mi Producción</h1>
 {% endblock %}
 {% block submenuizquierdo %}  
-<div class="form-inline">
-    <div class="form-group">
-        <input type="search" class="form-control">
-    </div>
-    <div class="form-group">
-        <button type="button" class="btn btn-default btn-sm">
-            <span class="glyphicon glyphicon-search"> Buscar</span> 
-        </button>
-    </div>
-</div>
+
 {% endblock %}
 
 {% block contenido %}
 <br>
 <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-8">  
+        <h3>Produccíon en desarrollo</h3>
         <div id="produccion">
             <table class="table table-condensed table-striped table-hover">
                 <thead>
@@ -83,7 +75,8 @@
 
         </div>
         <select class="center-block" id="listaTamano" name="listaTamano">  
-            <option>Seleccionar</option>
+            <option value="{{limitepd}}">{{limitepd}}</option>
+            <option value="0">0</option>
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="20">20</option>
@@ -101,6 +94,102 @@
         {% endfor %}
     </div>
 </div>
+
+<h3>Producción</h3>
+<div id="produccionUsuario">
+    <table class="table table-condensed table-striped table-hover">
+        <thead>
+            <tr>
+
+                <th>
+                    Título
+                </th>
+                <th>
+                    Tipo
+                </th>
+                <th>
+                    Fecha
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for informacion in produccionIntelectual %}
+            <tr>
+
+                <td>
+                    <p>
+                {{ informacion.titulo }}. <strong>Tema: </strong> {{ informacion.tema.titulo }}
+                        <strong>Autor(es):</strong>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': informacion.tema.idtema , 'funcion': '1' })) }}
+                        <strong>Director(es):</strong>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': informacion.tema.idtema , 'funcion': '3' })) }}
+                        <strong> Codirector(es):</strong>{{ render(controller('GSProyectosBundle:Desarrollarproduccionintelectual:Buscarmiembro', { 'tema': informacion.tema.idtema , 'funcion': '2' })) }}            </td>
+                </p>
+                <td>
+                 {{ informacion.tipoproduccion.nombre }}
+                </td>
+                <td>
+                {{ informacion.fecharegistro | date('m-y')}}
+                </td>
+                <td>
+                    <a href="{{ path('gs_proyectos_desarrollarproduccionintelectual_catalogobibliografico_vista',{'id': informacion.idproduccionintelectual})}}">
+                        <span class="glyphicon glyphicon-eye-open"></span> Abrir
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<select class="center-block" id="listaTamanoPt" name="listaTamanoPt">  
+    <option value="{{limitept}}">{{limitept}}</option>
+    <option value="5">5</option>
+    <option value="10">10</option>
+    <option value="20">20</option>
+    <option value="30">30</option>
+    <option value="60">60</option>
+    <option value="90">90</option>
+    <option value="120">120</option>
+    <option value="100000">Todos</option>                        
+</select>
+
+
 {% endblock %}
 {% block javascripts %}
+
+<script type="text/javascript">
+    var x;
+    x = $(document);
+    x.ready(inicializarEventos);
+    function inicializarEventos() {
+
+        var sltTamanoPt;
+        sltTamanoPt = $('#listaTamanoPt');
+        sltTamanoPt.change(buscarFiltroTamanoPt);
+
+        var sltTamano;
+        sltTamano = $('#listaTamano');
+        sltTamano.change(buscarFiltroTamano);
+    }
+    function buscarFiltroTamano() {
+        var tamano;
+        tamano = $('#listaTamano').val();
+        var url;
+        url = "{{ path('gs_proyectos_desarrollarproduccionintelectual_buscar', {'limitepd': 'text'}) }}";
+        url = url.replace("text", tamano);
+        window.open(url, '_self');
+    }
+
+    function buscarFiltroTamanoPt() {
+        var tamano;
+        tamano = $('#listaTamanoPt').val();
+        var url;
+        url = "{{ path('gs_proyectos_desarrollarproduccionintelectual_buscar', {'limitept': 'text'}) }}";
+        url = url.replace("text", tamano);
+        window.open(url, '_self');
+    }
+
+
+
+</script>
 {% endblock %}

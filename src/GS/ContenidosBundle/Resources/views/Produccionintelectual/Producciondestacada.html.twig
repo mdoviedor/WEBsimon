@@ -1,0 +1,25 @@
+{% extends "::contenidos.html.twig" %}
+{% block title %}Grupo Simon: Producción Intelectual Destacada{% endblock %}
+
+{% block titulo %}  
+<h4>Producción Destacada</h4>
+{% endblock %}
+
+{% block contenido %}
+
+{%for produccion in produccionIntelectual %}
+{%if date(produccion.fechainiciopublicacion) < date() and (date(produccion.fechafinpublicacion) > date() or produccion.fechafinpublicacion is null)%}
+<p><a href="{{ path('gs_contenidos_produccionintelectual_ver',{'id': produccion.idproduccionintelectual}) }}" target="_blank" onClick="window.open(this.href, this.target, 'width=702,height=602');
+        return false;">{{ produccion.titulo }}</a></p>
+{%endif%}
+{%endfor%}
+
+<div style="width: 100%" class="text-right">
+    <p>
+        <a href="http://localhost/website/index.php/produccion-intelectual/catalogo-bibliografico" target="_parent">Ver más...</a></p>
+</div>
+{% endblock %}
+{% block javascripts %}
+
+{% endblock %}
+

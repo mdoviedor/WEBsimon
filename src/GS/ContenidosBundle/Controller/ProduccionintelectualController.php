@@ -102,6 +102,7 @@ class ProduccionintelectualController extends Controller {
      * Recibe el idbibliografia correspondiente al modelo Bibliografia; id del elemento
      * bibliografico que se quiere visualizar
      */
+
     public function BibliografiavistaAction($id) {
         $em = $this->getDoctrine()->getManager();
         $bibliografia = new Bibliografia();
@@ -110,5 +111,19 @@ class ProduccionintelectualController extends Controller {
         $lecturaConProposito = $em->getRepository('GSProyectosBundle:Lecturaconproposito')->findBy(array('bibliografia' => $id));
         return $this->render('GSContenidosBundle:Produccionintelectual:Bibliografiavista.html.twig', array('bibliografia' => $bibliografia, 'lecturaConProposito' => $lecturaConProposito));
     }
+
+    public function ProducciondestacadaAction() {
+        $em = $this->getDoctrine()->getManager();
+        $produccionIntelectual = new Produccionintelectual();
+        $produccionIntelectual = $em->getRepository('GSContenidosBundle:Produccionintelectual')->findBy(array('estado' => true, 'destacado' => true), array('fecharegistro' => 'DESC'), 5);
+        return $this->render('GSContenidosBundle:Produccionintelectual:Producciondestacada.html.twig', array('produccionIntelectual' => $produccionIntelectual));
+    }
+
+//    public function VerproducciondestacadaAction($id) {
+//        $em = $this->getDoctrine()->getManager();
+//        $tema = new Tema();
+//        $tema = $em->getRepository('GSContenidosBundle:Tema')->find($id);
+//        return $this->render('GSContenidosBundle:Produccionintelectual:Vertemaofertado.html.twig', array('tema' => $tema));
+//    }
 
 }

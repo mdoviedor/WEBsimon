@@ -61,14 +61,14 @@ class SeminarioType extends AbstractType {
 //                    'attr' => array('class' => 'form-control')
 //                ))
                 ->add('fechainiciopublicacion', 'date', array(
-                    'label' => '* Fecha de inicio de la puclicación:',
+                    'label' => 'Fecha de inicio de la puclicación:',
                     'required' => false,
                     'years' => range($ano, $ano + 5),
                     'empty_value' => array('year' => 'Año', 'month' => 'Mes', 'day' => 'Día'),
                         //'attr' => array('class' => 'form-control')
                 ))
                 ->add('fechafinpublicacion', 'date', array(
-                    'label' => '* Fecha de fin de la publicación:',
+                    'label' => 'Fecha de fin de la publicación:',
                     'required' => false,
                     'years' => range($ano, $ano + 5),
                     'empty_value' => array('year' => 'Año', 'month' => 'Mes', 'day' => 'Día'),

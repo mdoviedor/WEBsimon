@@ -20,7 +20,7 @@
                 <tbody>
                     <tr>
                         <td >
-                            <img width="150" src="../../../{{ usuario.foto }}" class="center-block img-thumbnail">
+                            <img width="150" src="{{ asset(usuario.foto) }}" class="center-block img-thumbnail">
                         </td>
                     </tr>
                     <tr>
@@ -28,6 +28,7 @@
                             <br>
                             {{ form_errors(formUsuario.archivo) }}                       
                             {{ form_widget(formUsuario.archivo) }}
+                             <p class="help-block">Formato de la imagen: jpg o jpeg</p>
                             <br>
                         </td>
                     </tr>

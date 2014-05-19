@@ -124,6 +124,23 @@
         las ciencias del cerebro. <i>Actualidades en Ciencias Cognoscitivas</i>. 14, 330-
         337..</p>
     {% endif %}
+     {#Sugerencia -> Informe#}
+    {%if bibliografia.tipoelementobibliografico.idtipoelementobibliografico == "10"%}
+    <h3>Sugerencia, referencia estilo [APA]</h3>
+    <p>{{bibliografia.autores}}. ( {{ bibliografia.fechaedicion | date('Y')  }}).<i> {{bibliografia.nombre}}</i>. {{ bibliografia.editorial }}. {{bibliografia.ubicacion}}</p>
+
+    <p>Las referencias bibliográficas deben incluir los siguientes datos, en el orden indicado:</p>
+    <ul>
+        <li>Apellido del autor, iniciales del autor.</li>
+        <li>Año de publicación entre paréntesis.</li>
+        <li>Título del libro en cursiva.</li>
+        <li>Nombre de la casa editorial.</li>
+        <li>Lugar de publicación (ciudad, estado, provincia, país), seguido de dos puntos.</li>
+
+    </ul>
+    <p><i><b>Ejemplo:</b></i></p>    
+    <p>González, R. (2010). <i>Introducción a la psicología contemporánea</i>.  Editorial ULACIT. San José, Costa Rica.</p>
+    {% endif %}
 
 {#Sugerencia -> Sitio Web#}
      {%if bibliografia.tipoelementobibliografico.idtipoelementobibliografico == "11"%}
@@ -148,9 +165,9 @@
             página se incluirá al final del trabajo, en la lista de referencias.</b></p>
     <p><i><b>Ejemplo:</b></i></p>    
     <p> 
-Instituto Nacional de Seguros. (2011).  <i>Normas de salud ocupacional para las 
-empresas privadas.</i>Recuperado de http://www.ins.go.cr/normas.html 
-</p>
+        Instituto Nacional de Seguros. (2011).  <i>Normas de salud ocupacional para las 
+            empresas privadas.</i>Recuperado de http://www.ins.go.cr/normas.html 
+    </p>
     {% endif %}
     <div class="page-header">
         <h1>Ficha Bibliográfica:<small> Lectura con proposito</small></h1>

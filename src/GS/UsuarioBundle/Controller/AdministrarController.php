@@ -149,9 +149,11 @@ class AdministrarController extends Controller {
 
     public function EliminarAction($id) {
         $usuario = new Usuario();
+        $user = new User();
         $em = $this->getDoctrine()->getManager();
         $usuario = $em->getRepository('GSUsuarioBundle:Usuario')->find($id);
-        $em->remove($usuario);
+        $user = $em->getRepository('GSProyectosBundle:User')->findOneBy(array('username'=>$usuario->getUser()->getUsername()));
+        $em->remove($user);
         $em->flush();
 
         return $this->redirect($this->generateUrl('gs_usuario_buscar'));

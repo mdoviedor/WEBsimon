@@ -49,3 +49,11 @@ gs_contenidos_produccionintelectual_elementobibliografia_vista:
 gs_contenidos_seminarios_vistaseminario:
     pattern: contenidos/seminario/vista/{limite}
     defaults: { _controller: GSContenidosBundle:Seminarios:Vistaseminario, limite: 5 }
+    
+gs_contenidos_produccionintelectual_producciondestacada:
+    pattern: contenidos/produccionIntelectual/destacado
+    defaults: { _controller: GSContenidosBundle:Produccionintelectual:Producciondestacada }
+
+#gs_contenidos_produccionintelectual_vertemaofertado:
+ #   pattern: contenidos/produccionIntelectual/destacado/ver/{id}
+  #  defaults: { _controller: GSContenidosBundle:Produccionintelectual:Verproducciondestacada }

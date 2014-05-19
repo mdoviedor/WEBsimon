@@ -39,10 +39,11 @@ class DesarrollarproduccionintelectualController extends Controller {
      * consulta la trabla tema_usuario a traves del modelo TemaUsuario, así
      * se trae toda la producción en desarrollo en la cual participa el Usuario,
      * sea en calidad de Autor, Codirector o Director.  
-     * 
+     * Limitepd, corresponde al total de resultados que se mostraran de la produccion en desarrollo.
+     * Limitept, corresponde al total de resultados que se mostraran de la produccion terminada
      */
 
-    public function BuscarAction() {
+    public function BuscarAction($limitepd, $limitept) {
         /*
          * Obtener username de la sesion
          */
@@ -55,8 +56,12 @@ class DesarrollarproduccionintelectualController extends Controller {
 
         $temaUsuario = new TemaUsuario();
         $cronograma = new Cronograma();
-        $temaUsuario = $em->getRepository('GSProyectosBundle:TemaUsuario')->findBy(array('usuario' => $user));
-        return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:buscar.html.twig', array('temaUsuario' => $temaUsuario));
+        $usuario = new Usuario();
+
+        $usuario = $em->getRepository('GSProyectosBundle:Usuario')->findBy(array('numerodocumentoidentidad' => $user));
+        $produccionIntelectual = $em->getRepository('GSProyectosBundle:Produccionintelectual')->buscarProduccionUsuario($usuario[0]->getNumerodocumentoidentidad(), $limitept);
+        $temaUsuario = $em->getRepository('GSProyectosBundle:TemaUsuario')->findBy(array('usuario' => $user), array(), $limitepd);
+        return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:buscar.html.twig', array('temaUsuario' => $temaUsuario, 'limitepd' => $limitepd , 'limitept' => $limitept, 'produccionIntelectual' => $produccionIntelectual));
     }
 
     public function VercronogramasAction($id) {
@@ -331,6 +336,7 @@ class DesarrollarproduccionintelectualController extends Controller {
         $formBibliografia = $this->createForm(new BibliografiaType(), $bibliografia); // Formulario del modelo Bibliografia 
         $temaUsuario = $em->getRepository('GSProyectosBundle:TemaUsuario')->findBy(array('tema' => $id, 'usuario' => $user)); // Consulta 
         $temaBibliografia = $em->getRepository('GSProyectosBundle:TemaBibliografia')->findBy(array('tema' => $id, 'bibliografia' => $idbibliografia));
+        $mensaje = null;
         /*
          * Si el usuario es participante del proyecto podra ver el entorno de 
          * trabajo para desarrollar la produccion intelectual 
@@ -351,22 +357,25 @@ class DesarrollarproduccionintelectualController extends Controller {
 
                     //Generación del nombre y direccion del archivo    
                     if ($formBibliografia->get('archivo')->getData()) {
-                        if ($bibliografia->getNombrearchivo()) {
-                            $fs = new Filesystem();
-                            $fs->remove($bibliografia->getArchivo() . $bibliografia->getNombrearchivo());
-                        }
-                        $dir = 'bibliografia/';
-                        $nombreArchivo = $id . rand(10000, 99999);
-                        $bibliografia->setNombrearchivo($nombreArchivo); //Instancia del modelo Produccionintelectual, nombre
+
                         $file = $formBibliografia['archivo']->getData();
                         $extension = $file->guessExtension(); //Obtener la extensión del archivo cargado
                         if ($extension && $extension == "zip") {
+                            if ($bibliografia->getNombrearchivo()) {
+                                $fs = new Filesystem();
+                                $fs->remove($bibliografia->getArchivo() . $bibliografia->getNombrearchivo() . '.zip');
+                            }
+                            $dir = 'bibliografia/';
+                            $nombreArchivo = $id . rand(10000, 99999);
+                            $bibliografia->setNombrearchivo($nombreArchivo); //Instancia del modelo Produccionintelectual, nombre
                             $file->move($dir, $nombreArchivo . '.' . $extension); //Mover el archivo al directorio
                             $bibliografia->setArchivo($dir); //Instancia del modelo Produccionintelectual, arcivo
                             $em->persist($bibliografia);
                             $em->flush();
 
                             return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_vista', array('id' => $id)));
+                        } else {
+                            $mensaje = 1;
                         }
                     } else {
 
@@ -377,7 +386,7 @@ class DesarrollarproduccionintelectualController extends Controller {
                     //return $this->redirect($this->generateUrl('gs_proyectos_desarrollarproduccionintelectual_vista', array('id' => $id)));
                 }
             }
-            return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Modificarbibliografia.html.twig', array('formBibliografia' => $formBibliografia->createView(), 'idTema' => $id, 'idBibliografia' => $idbibliografia));
+            return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Modificarbibliografia.html.twig', array('formBibliografia' => $formBibliografia->createView(), 'idTema' => $id, 'idBibliografia' => $idbibliografia, 'mensaje' => $mensaje));
         }
     }
 
@@ -847,7 +856,7 @@ class DesarrollarproduccionintelectualController extends Controller {
         $usuario = new Usuario();
         $usuario = $em->getRepository('GSProyectosBundle:Usuario')->findBy(array('user' => $id));
         $produccionIntelectual = $em->getRepository('GSProyectosBundle:Produccionintelectual')->buscarProduccionUsuario($usuario[0]->getNumerodocumentoidentidad(), $limite);
-        return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Vistaperfil.html.twig', array('id' => $id, 'usuario' => $usuario, 'produccionIntelectual' => $produccionIntelectual));
+        return $this->render('GSProyectosBundle:Desarrollarproduccionintelectual:Vistaperfil.html.twig', array('id' => $id, 'usuario' => $usuario, 'limite' => $limite, 'produccionIntelectual' => $produccionIntelectual));
     }
 
 }

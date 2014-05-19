@@ -77,8 +77,8 @@ gs_proyectos_produccionintelectual_habilitartema:
 #DESARROLLAR PRODUCCION INTELECTUAL#
 ####################################
 gs_proyectos_desarrollarproduccionintelectual_buscar:
-    pattern: usuario/produccionIntelectual/
-    defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Buscar }
+    pattern: usuario/produccionIntelectual/{limitepd}.{limitept}
+    defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Buscar, limitepd: 10, limitept: 10 }
     
 gs_proyectos_desarrollarproduccionintelectual_produccionendesarrollo:
     pattern: usuario/produccionIntelectual/produccionEnDesarrollo/
