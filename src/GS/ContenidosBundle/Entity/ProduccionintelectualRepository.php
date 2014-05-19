@@ -29,7 +29,7 @@ class ProduccionintelectualRepository extends EntityRepository {
 
     public function buscarProduccionUsuario($usuario, $limite) {
         return $this->getEntityManager()
-                        ->createQuery('SELECT p FROM GSContenidosBundle:Produccionintelectual p JOIN GSContenidosBundle:TemaUsuario tu WITH p.estado = true tu.usuario = :numeroDocumentoIdentidad AND tu.tema = p.tema ORDER BY p.fecharegistro DESC')
+                        ->createQuery('SELECT p FROM GSContenidosBundle:Produccionintelectual p JOIN GSContenidosBundle:TemaUsuario tu WITH p.estado = true AND tu.usuario = :numeroDocumentoIdentidad AND tu.tema = p.tema ORDER BY p.fecharegistro DESC')
                         ->setParameter('numeroDocumentoIdentidad', $usuario )                
                         ->setMaxResults($limite)
                         ->getResult();

@@ -18,7 +18,14 @@
 {% endblock %}
 
 {% block contenido %}
+
+{%if mensaje == "1"%}
 <br>
+<div class="alert alert-success">
+    <p>    xzx</p>
+</div>
+{%endif%}
+
 <h3><label>Titulo:</label> {{ tema.titulo }}</h3>
 <form id="formulario" name="formulario"  action="{{ path('gs_proyectos_tema_asignarsuario',{'tema':tema.idtema}) }}" method="post" {{ form_enctype(formTemaUsuario) }}>
     {{ form_errors(formTemaUsuario) }}
@@ -32,7 +39,7 @@
             <div class="form-inline">
                 <label>Primer Nombre:</label> <input type="text" id="nombre" class="form-control" /> <label>Primer Apellido: </label> <input type="text" id="apellido" class="form-control" />
             </div>
-           
+
             <div id="listadoUsuarios">
             </div>
         </div>

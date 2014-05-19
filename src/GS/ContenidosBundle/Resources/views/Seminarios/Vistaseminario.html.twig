@@ -1,0 +1,83 @@
+{% extends "::contenidos.html.twig" %}
+{% block title %}Grupo Simon: Seminarios{% endblock %}
+
+{% block titulo %}  
+<h1>Seminarios:</h1>
+{% endblock %}
+{% block submenuderecho %}    
+{#
+<a type="submit" class="btn btn-default btn-xs" id="botonSalir" href="javascript:window.history.back();">
+    <span class="glyphicon glyphicon-log-out"></span> Salir
+</a>
+#}
+{% endblock %}
+
+
+{% block contenido %}
+{%for seminario in seminarios %}
+{%if seminario.mostrattitulo%}
+<h2>{{seminario.titulo}}</h2>
+<p>Fecha de realización: {{ seminario.fecha | date('d-m-y') }}</p>
+<p>
+    {{ render(controller('GSContenidosBundle:Produccionintelectual:Decodificardescripciontema', { 'descripcion': seminario.descripcion })) }}
+</p>
+<p>
+    <i>
+    {%if seminario.mostrarautor%}
+        <b>Autor:</b> {{seminario.usuario.primernombre}}
+    {% endif %}
+     {%if seminario.mostrarfechacracion%}
+        <b>Fecha de Creación:</b> {{seminario.fecharegistro | date('d-m-y')}}
+    {% endif %}
+    </i><br>
+    <i>
+    {%if seminario.mostrarfechapublicacion%}
+        <b>Publicado:</b> {{seminario.fechainiciopublicacion | date('d-m-y')}} 
+    {% endif %}
+     {%if seminario.mostrarfechacracion%}
+        <b>Modificado:</b> {{seminario.fechamodificacion | date('d-m-y')}}
+    {% endif %}
+    </i>
+</p>
+
+{% endif %}
+<hr>
+{% endfor %}
+<select class="center-block" id="listaTamano" name="listaTamano">  
+    <option value="{{limite}}">{{limite}}</option>
+    <option value="1">1</option>
+    <option value="5">5</option>
+    <option value="10">10</option>
+    <option value="20">20</option>
+    <option value="30">30</option>
+    <option value="60">60</option>
+    <option value="90">90</option>
+    <option value="120">120</option>
+    <option value="100000">Todos</option>                        
+</select>
+<br>
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript">
+    var x;
+    x = $(document);
+    x.ready(inicializarEventos);
+    function inicializarEventos() {
+
+        var sltTamano;
+        sltTamano = $('#listaTamano');
+        sltTamano.change(buscarFiltroTamano);
+    }
+    function buscarFiltroTamano() {
+        var tamano;
+        tamano = $('#listaTamano').val();
+        var url;
+        url = "{{ path('gs_contenidos_seminarios_vistaseminario', {'limite': 'text'}) }}";
+        url = url.replace("text", tamano);
+        window.open(url, '_self');
+    }
+
+
+
+</script>
+{% endblock %}

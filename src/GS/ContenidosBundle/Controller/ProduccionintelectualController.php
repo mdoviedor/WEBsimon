@@ -97,4 +97,18 @@ class ProduccionintelectualController extends Controller {
         return $this->render('GSContenidosBundle:Produccionintelectual:Vertemaofertado.html.twig', array('tema' => $tema));
     }
 
+    /*
+     * Acción para visualizar el elemento bibliografico con su respectiva lectura con proposito.
+     * Recibe el idbibliografia correspondiente al modelo Bibliografia; id del elemento
+     * bibliografico que se quiere visualizar
+     */
+    public function BibliografiavistaAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $bibliografia = new Bibliografia();
+        $lecturaConProposito = new Lecturaconproposito();
+        $bibliografia = $em->getRepository('GSProyectosBundle:Bibliografia')->find($id);
+        $lecturaConProposito = $em->getRepository('GSProyectosBundle:Lecturaconproposito')->findBy(array('bibliografia' => $id));
+        return $this->render('GSContenidosBundle:Produccionintelectual:Bibliografiavista.html.twig', array('bibliografia' => $bibliografia, 'lecturaConProposito' => $lecturaConProposito));
+    }
+
 }

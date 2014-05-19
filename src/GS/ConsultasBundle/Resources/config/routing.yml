@@ -42,5 +42,4 @@ gs_consultas_proyectos_desarrollarproduccionintelectual_vistaperfilusuario:
 gs_consultas_proyectos_desarrollarproduccionintelectual_vistaperfilusuariocomunidad:
     pattern: consultas/produccionIntelectual/perfilUsuario/vista/{id}.{limite}
     defaults: { _controller: GSConsultasBundle:ConsultasProduccionintelectual:Vistaperfilcomunidad, limite: 5 }
-    requirements:
-        limite:  \d+ 
+

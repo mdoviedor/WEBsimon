@@ -632,7 +632,7 @@ class DesarrollarproduccionintelectualController extends Controller {
 
     public function BibliografiavistaAction($id) {
         $em = $this->getDoctrine()->getManager();
-        $bibliografia = new Produccionintelectual();
+        $bibliografia = new Bibliografia();
         $lecturaConProposito = new Lecturaconproposito();
         $bibliografia = $em->getRepository('GSProyectosBundle:Bibliografia')->find($id);
         $lecturaConProposito = $em->getRepository('GSProyectosBundle:Lecturaconproposito')->findBy(array('bibliografia' => $id));

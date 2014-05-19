@@ -26,116 +26,120 @@
         </div>
     </div>
     <br>
-     <div class="center-block" style="width: 800px;">
+    <div class="center-block" style="width: 800px;">
     {% if mensaje and mensaje == '1' %}
-    <div class="alert alert-danger"><b>Mensaje.</b> El archivo que intenta cargar es incorrecto.</div>
+        <div class="alert alert-danger"><b>Mensaje.</b> El archivo que intenta cargar es incorrecto.</div>
     {% else %}
     {% endif %}
 
 
 {{ form_errors(formBibliografia) }}
-    <div class="form-group">
+        <div class="form-group">
      {{ form_label(formBibliografia.tipoelementobibliografico, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
      {{ form_errors(formBibliografia.tipoelementobibliografico) }}
-        <div class="col-sm-8">
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.tipoelementobibliografico) }}
+            </div>
         </div>
-    </div>
-    <div class="form-group">
+        <div class="form-group">
      {{ form_label(formBibliografia.categoria, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
      {{ form_errors(formBibliografia.categoria) }}
-        <div class="col-sm-8">
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.categoria) }}
+            </div>
         </div>
-    </div>
-    <div class="form-group">
+        <div class="form-group">
      {{ form_label(formBibliografia.areainvestigacion, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
      {{ form_errors(formBibliografia.areainvestigacion) }}  
-        <div class="col-sm-8">
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.areainvestigacion) }}
+            </div>
         </div>
-    </div>
-    <div class="form-group">
+        <div class="form-group">
      {{ form_label(formBibliografia.nombre, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
      {{ form_errors(formBibliografia.nombre) }}
-        <div class="col-sm-8">
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.nombre) }}
+                <p class="help-block">Nombre / Título / Título de la página.</p>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
+        <div class="form-group">
      {{ form_label(formBibliografia.autores, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
      {{ form_errors(formBibliografia.autores) }}
-        <div class="col-sm-8">
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.autores) }}
+            </div>
         </div>
-    </div>
-    <div class="form-group">
+        <div class="form-group">
      {{ form_label(formBibliografia.traduccion, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
      {{ form_errors(formBibliografia.traduccion) }}
-        <div class="col-sm-8">
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.traduccion) }}
+            </div>
         </div>
-    </div>
-    <div class="form-group">
+        <div class="form-group">
      {{ form_label(formBibliografia.fechaedicion, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
      {{ form_errors(formBibliografia.fechaedicion) }}
-        <div class="col-sm-8">
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.fechaedicion) }}
+                <p class="help-block">Fecha de edición / Fecha de acceso Sitio WEB</p>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
+        <div class="form-group">
      {{ form_label(formBibliografia.editorial, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
      {{ form_errors(formBibliografia.editorial) }}
-        <div class="col-sm-8">
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.editorial) }}
+                <p class="help-block">Editorial / Nombre de la Revista</p>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
+        <div class="form-group">
        {{ form_label(formBibliografia.ubicacion, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
      {{ form_errors(formBibliografia.ubicacion) }}
-        <div class="col-sm-8">
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.ubicacion  ) }}
+                <p class="help-block">Ubicación / Páginas en las que aparece el artículo / URL</p>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
+        <div class="form-group">
     {{ form_label(formBibliografia.resumen, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
      {{ form_errors(formBibliografia.resumen) }}
-        <div class="col-sm-8">
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.resumen) }}
+            </div>
         </div>
-    </div>
-    <div class="form-group">
+        <div class="form-group">
     {{ form_label(formBibliografia.recomendacionesuso, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
      {{ form_errors(formBibliografia.recomendacionesuso) }}
-        <div class="col-sm-8">
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.recomendacionesuso) }}
+            </div>
         </div>
-    </div>
-    <div class="form-group">
+        <div class="form-group">
       {{ form_label(formBibliografia.tablacontenido, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
      {{ form_errors(formBibliografia.tablacontenido) }}
-        <div class="col-sm-8">
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.tablacontenido) }}
+            </div>
         </div>
-    </div>
-    <div class="form-group">
+        <div class="form-group">
       {{ form_label(formBibliografia.palabrasclave, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
      {{ form_errors(formBibliografia.palabrasclave) }}
-        <div class="col-sm-8">
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.palabrasclave) }}    
+            </div>
         </div>
-    </div>
-    <div class="form-group">
+        <div class="form-group">
       {{ form_label(formBibliografia.archivo, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
      {{ form_errors(formBibliografia.archivo) }}
-        <div class="col-sm-8">
+            <div class="col-sm-8">
      {{ form_widget(formBibliografia.archivo) }}
+            </div>
         </div>
-    </div>
-    <br>
+        <br>
 
 {{ form_rest(formBibliografia) }}
-     </div>
+    </div>
 
 </form> 
 

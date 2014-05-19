@@ -46,4 +46,17 @@ class ProduccionintelectualRepository extends EntityRepository {
                         ->getResult();
     }
 
+    /*
+     * Buscar producción intelectual realizada en el año en curso
+     */
+
+    public function buscarProduccionAnoCurso() {
+        $ano = \date('Y');
+
+        return $this->getEntityManager()
+                        ->createQuery('SELECT u FROM GSProyectosBundle:Produccionintelectual u WHERE  u.fecharegistro LIKE :ano ORDER BY u.fecharegistro DESC')
+                        ->setParameter('ano', '%' . $ano . '%')
+                        ->getResult();
+    }
+
 }

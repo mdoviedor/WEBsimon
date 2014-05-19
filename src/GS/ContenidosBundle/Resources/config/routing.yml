@@ -41,3 +41,11 @@ gs_contenidos_produccionintelectual_vertemaofertado:
 gs_contenidos_errores_alertageneral:
     pattern: contenidos/errores/alertaGeneral
     defaults: { _controller: GSContenidosBundle:Errores:Alertageneral }
+    
+gs_contenidos_produccionintelectual_elementobibliografia_vista: 
+    pattern: contenidos/produccionIntelectual/bibliografia/vista/{id} 
+    defaults: { _controller: GSProyectosBundle:Desarrollarproduccionintelectual:Bibliografiavista }
+
+gs_contenidos_seminarios_vistaseminario:
+    pattern: contenidos/seminario/vista/{limite}
+    defaults: { _controller: GSContenidosBundle:Seminarios:Vistaseminario, limite: 5 }

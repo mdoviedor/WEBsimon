@@ -23,18 +23,19 @@
 {% block submenuizquierdo %}  
 <div class="form-inline">
     <div class="form-group">
-        <input type="search" class="form-control" id="campoBuscar" name="campoBuscar" placeholder="Primer nombre, apellido o documento de identidad">
+        <input type="search" value="{{valor}}" class="form-control" id="campoBuscar" name="campoBuscar">
 
     </div>
     <div class="form-group">
         <button type="button" id="botonBuscar" name="botonBuscar" class="btn btn-default btn-sm">
-            <span class="glyphicon glyphicon-search"> Buscar</span> 
+            <span class="glyphicon glyphicon-search"> Buscar </span> 
         </button>
     </div>    
 </div>
+<p class="help-block">Primer nombre, apellido o documento de identidad del usuario</p>
 {% endblock %}
 {% block contenido %}
-<br>
+
 <div class="panel-group" id="accordion">
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -136,7 +137,7 @@
              {{usuario.numerodocumentoidentidad}}
                 </td>
                 <td>
-                   {{ usuario.primernombre }} {{ usuario.segundonombre }} {{ usuario.primerapellido }} {{ usuario.segundoapellido }}
+                    <a href="{{ path('gs_contenidos_produccionintelectual_vistaperfilusuario',{'id': usuario.user.id})}}"> {{ usuario.primernombre }} {{ usuario.segundonombre }} {{ usuario.primerapellido }} {{ usuario.segundoapellido }}</a>
 
                 </td>
                 <td>
@@ -294,8 +295,7 @@
         }
 
         var url;
-        url = "{{ path('gs_usuario_buscar', {'limite': 'text','parametro':'text1'}) }}";
-        url = url.replace("text", tamano);
+        url = "{{ path('gs_usuario_buscar', {'parametro':'text1'}) }}";
         url = url.replace("text1", campoBuscar);
         window.open(url, '_self');
     }

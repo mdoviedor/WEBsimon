@@ -44,6 +44,8 @@ class AdministrarController extends Controller {
 
                 if ($tipousuario == '1') {
                     $u->r('ROLE_ADMINISTRADOR'); // Instancia del objeto U  
+                } elseif ($tipousuario == '6') {
+                    $u->r('ROLE_COLABORADOR');
                 } else {
                     $u->r('ROLE_USUARIO'); // Instancia del objeto U
                 }
@@ -109,6 +111,8 @@ class AdministrarController extends Controller {
                 }
                 if ($tipousuario == '1') {
                     $u->r('ROLE_ADMINISTRADOR'); // Instancia del objeto U  
+                } elseif ($tipousuario == '6') {
+                    $u->r('ROLE_COLABORADOR');
                 } else {
                     $u->r('ROLE_USUARIO'); // Instancia del objeto U
                 }
@@ -156,13 +160,15 @@ class AdministrarController extends Controller {
     public function BuscarAction($limite, $parametro) {
         $em = $this->getDoctrine()->getManager();
         $usuario = new Usuario();
-        if ($parametro != "" || $parametro == "XXX") {
-            $usuario = $em->getRepository('GSUsuarioBundle:Usuario')->buscarUsuarios($parametro, $limite);
-        } else {
+        $valor = null;
+        if ($parametro == "XXX") {
             $usuario = $em->getRepository('GSUsuarioBundle:Usuario')->findBy(array(), array('fecharegistro' => 'DESC'), $limite);
+        } else {
+            $valor = $parametro;
+            $usuario = $em->getRepository('GSUsuarioBundle:Usuario')->buscarUsuarios($parametro, $limite);
         }
 
-        return $this->render('GSUsuarioBundle:Administrar:buscar.html.twig', array('usuarios' => $usuario, 'limite' => $limite));
+        return $this->render('GSUsuarioBundle:Administrar:buscar.html.twig', array('valor' => $valor, 'usuarios' => $usuario, 'limite' => $limite));
     }
 
 }

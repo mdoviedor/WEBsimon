@@ -143,31 +143,38 @@ class AdministrartemaController extends Controller {
      */
 
     public function AsignarusuarioAction(Request $request, $tema) {
-        $temaUsuario = new TemaUsuario(); // Objeto del modelo Tema Usuario
-        $identificadorFecha = new IdentificadorFecha(); // Objeto de la calse IdentificarFecha
-        $formTemaUsuario = $this->createForm(new TemaUsuarioType, $temaUsuario); // Formulario TemaUsuario
-        $em = $this->getDoctrine()->getManager();
-        $idTema = $tema;
-        $tema = $em->getRepository('GSProyectosBundle:Tema')->find($idTema);
+        try {
+            $temaUsuario = new TemaUsuario(); // Objeto del modelo Tema Usuario
+            $identificadorFecha = new IdentificadorFecha(); // Objeto de la calse IdentificarFecha
+            $formTemaUsuario = $this->createForm(new TemaUsuarioType, $temaUsuario); // Formulario TemaUsuario
+            $em = $this->getDoctrine()->getManager();
+            $idTema = $tema;
+            $tema = $em->getRepository('GSProyectosBundle:Tema')->find($idTema);
+            $mensaje = null;
 
-        if ($request->getMethod() == 'POST') {
-            $formTemaUsuario->handleRequest($request);
-            if ($formTemaUsuario->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $ultimoTemaUsuario = $em->getRepository('GSProyectosBundle:TemaUsuario')->buscarUltimoTemaUsuario(); //Consulta del identificador del ultimo temaUsuario registrado
-                $temaUsuario->setIdtemaUsuario($identificadorFecha->generarIdTemaUsuario($ultimoTemaUsuario)); //Se genera el nuevo identificador para temaUsuario y se instancia el modelo
-                $usuario = $em->getRepository('GSProyectosBundle:Usuario')->find($request->request->get('busquedaUsuario'));
-                $temaUsuario->setUsuario($usuario); //Se instancia el modelo temaUsuario con el usuario
-                $temaUsuario->setTema($tema);
-                $em->persist($temaUsuario);
-                $em->flush();
+            if ($request->getMethod() == 'POST') {
+                $formTemaUsuario->handleRequest($request);
+                if ($formTemaUsuario->isValid() && $request->request->get('busquedaUsuario')) {
+                    $em = $this->getDoctrine()->getManager();
+                    $ultimoTemaUsuario = $em->getRepository('GSProyectosBundle:TemaUsuario')->buscarUltimoTemaUsuario(); //Consulta del identificador del ultimo temaUsuario registrado
+                    $temaUsuario->setIdtemaUsuario($identificadorFecha->generarIdTemaUsuario($ultimoTemaUsuario)); //Se genera el nuevo identificador para temaUsuario y se instancia el modelo
+                    $usuario = $em->getRepository('GSProyectosBundle:Usuario')->find($request->request->get('busquedaUsuario'));
+                    $temaUsuario->setUsuario($usuario); //Se instancia el modelo temaUsuario con el usuario
+                    $temaUsuario->setTema($tema);
+                    $em->persist($temaUsuario);
+                    $em->flush();
 
-                return $this->redirect($this->generateUrl('gs_proyectos_tema_asignarsuario', array('tema' => $idTema)));
+                    return $this->redirect($this->generateUrl('gs_proyectos_tema_asignarsuario', array('tema' => $idTema)));
+                }
+                $mensaje = 1;
             }
-        }
 
-        $usuariosAsignados = $em->getRepository('GSProyectosBundle:TemaUsuario')->findBy(array('tema' => $idTema));
-        return $this->render('GSProyectosBundle:Administrartema:asignarusuario.html.twig', array('formTemaUsuario' => $formTemaUsuario->createView(), 'tema' => $tema, 'usuariosAsignados' => $usuariosAsignados));
+            $usuariosAsignados = $em->getRepository('GSProyectosBundle:TemaUsuario')->findBy(array('tema' => $idTema));
+            return $this->render('GSProyectosBundle:Administrartema:asignarusuario.html.twig', array('mensaje' => $mensaje, 'formTemaUsuario' => $formTemaUsuario->createView(), 'tema' => $tema, 'usuariosAsignados' => $usuariosAsignados));
+        } catch (\Exception $exc) {
+            echo $exc->getTraceAsString();
+            return $this->redirect($this->generateUrl('gs_contenidos_errores_alertageneral'));
+        }
     }
 
     public function EliminarusuarioasignadoAction(Request $request, $id) {

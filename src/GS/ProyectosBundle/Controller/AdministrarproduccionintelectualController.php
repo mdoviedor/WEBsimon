@@ -80,7 +80,7 @@ class AdministrarproduccionintelectualController extends Controller {
                 $mensaje = 1;
             }
             return $this->render('GSProyectosBundle:Administrarproduccionintelectual:crear.html.twig', array('formProduccionIntelectual' => $formProduccionIntelectual->createView(), 'mensaje' => $mensaje));
-        } catch (Exception $exc) {
+        } catch (\Exception $exc) {
             echo $exc->getTraceAsString();
             return $this->redirect($this->generateUrl('gs_contenidos_errores_alertageneral'));
         }
@@ -153,7 +153,7 @@ class AdministrarproduccionintelectualController extends Controller {
                 }
             }
             return $this->render('GSProyectosBundle:Administrarproduccionintelectual:modificar.html.twig', array('produccionIntelectual' => $produccionIntelectual, 'formProduccionIntelectual' => $formProduccionIntelectual->createView(), 'mensaje' => $mensaje));
-        } catch (Exception $exc) {
+        } catch (\Exception $exc) {
             echo $exc->getTraceAsString();
             return $this->redirect($this->generateUrl('gs_contenidos_errores_alertageneral'));
         }

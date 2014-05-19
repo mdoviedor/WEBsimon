@@ -18,4 +18,4 @@ gs_usuario_eliminar:
 
 gs_usuario_buscar:
     pattern: administrador/administrarUsuario/{limite}.{parametro}
-    defaults: { _controller: GSUsuarioBundle:Administrar:Buscar, limite: 30, parametro: null }
+    defaults: { _controller: GSUsuarioBundle:Administrar:Buscar, limite: 30, parametro: XXX }

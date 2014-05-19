@@ -84,7 +84,7 @@
         {% for bibliografia in temaBibliografia %}
         <tr>
             <td>
-                <a href="{{ path('gs_proyectos_desarrollarproduccionintelectual_elementobibliografia_vista',{'id': bibliografia.bibliografia.idbibliografia}) }}" target="_blank" onClick="window.open(this.href, this.target, 'width=702,height=600');
+                <a href="{{ path('gs_contenidos_produccionintelectual_elementobibliografia_vista',{'id': bibliografia.bibliografia.idbibliografia}) }}" target="_blank" onClick="window.open(this.href, this.target, 'width=702,height=600');
                         return false;">{{ bibliografia.bibliografia.nombre | upper }}.  <i>{{ bibliografia.bibliografia.autores }}</i>. {{ bibliografia.bibliografia.tipoelementobibliografico.nombre }}.</a>
             </td>
 
